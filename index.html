@@ -3,257 +3,397 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Elevra — Data, AI & Growth Consultancy</title>
+<title>Elevra Digital — Data, AI & Growth</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:      #050d1e;
-  --bg2:     #080f22;
-  --bg3:     #0b1428;
-  --navy:    #0d1f3c;
-  --blue:    #2563eb;
-  --blue2:   #3b82f6;
-  --cyan:    #06b6d4;
-  --indigo:  #6366f1;
-  --white:   #f0f4ff;
-  --muted:   #4a5a7a;
-  --muted2:  #8898b8;
-  --border:  rgba(37,99,235,0.12);
-  --border2: rgba(37,99,235,0.22);
+:root{
+  --blue:#1a6fd4; --blue2:#2e8de8; --cyan:#00d4ff; --green:#00e5a0;
+  --white:#eef4ff; --muted:#3d5470; --muted2:#6a8bab;
+  --border:rgba(0,212,255,0.09); --border2:rgba(0,212,255,0.2);
+  --card:rgba(4,12,26,0.82);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased}
-.cur{position:fixed;width:8px;height:8px;background:#fff;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .08s,width .2s,height .2s}
-.cur-ring{position:fixed;width:30px;height:30px;border:1px solid rgba(99,102,241,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .15s ease}
-.cur.big{width:18px;height:18px;background:rgba(99,102,241,.4)}
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.025;pointer-events:none;z-index:1}
-#grid-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.22}
-nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 60px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,13,30,.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.nav-logo{display:flex;align-items:center;gap:10px}
-.logo-mark{width:32px;height:32px;background:linear-gradient(135deg,var(--indigo),var(--blue2));border-radius:7px;display:flex;align-items:center;justify-content:center}
-.logo-mark svg{width:18px;height:18px}
-.logo-word{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;letter-spacing:.12em;color:var(--white)}
+
+/* THE MOST IMPORTANT PART: full page starfield */
+body{
+  font-family:'Outfit',sans-serif;
+  color:var(--white);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  /* starfield rendered by JS into #sky, behind everything */
+  background:#02060e;
+}
+
+/* Sky canvas covers ENTIRE document height, not just viewport */
+#sky{
+  position:absolute;
+  top:0; left:0;
+  width:100%;
+  /* height set by JS */
+  z-index:0;
+  pointer-events:none;
+}
+
+/* Neural overlay — fixed to viewport, always visible while scrolling */
+#neural{
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  opacity:0.6;
+}
+
+/* All content on top */
+nav,section,.ticker-wrap,.proof,.trust,footer{position:relative;z-index:10;}
+
+/* Sections transparent so stars show through */
+section{background:transparent;}
+.problems,.solutions,.results,.process,.why,.pricing,.final{background:transparent;}
+
+/* Cards get semi-transparent dark background */
+.prob-card,.sol-card,.res-card,.proc-step,.why-card,.plan,.kpi,.mini,.dash,.dash-mini,
+.prob-callout,.res-quote{background:var(--card)!important;}
+.dash{background:rgba(4,12,26,0.92)!important;}
+
+nav{background:rgba(2,6,14,.82);backdrop-filter:blur(28px);
+  border-bottom:1px solid var(--border2);
+  position:fixed;top:0;left:0;right:0;height:72px;
+  padding:0 60px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo img{height:52px;filter:drop-shadow(0 0 14px rgba(0,212,255,.6))}
 .nav-links{display:flex;gap:36px;list-style:none}
-.nav-links a{font-size:12px;color:var(--muted2);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:color .2s;font-family:'JetBrains Mono',monospace}
-.nav-links a:hover{color:var(--white)}
-.nav-cta{background:var(--blue);color:#fff;padding:9px 20px;border-radius:6px;font-size:12px;font-weight:500;text-decoration:none;letter-spacing:.04em;transition:all .2s;white-space:nowrap}
-.nav-cta:hover{background:var(--blue2);transform:translateY(-1px)}
-section{position:relative;z-index:2}
-.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:100px 60px 60px;max-width:1280px;margin:0 auto}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.2);padding:5px 14px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#a5b4fc;margin-bottom:32px}
-.hero-eyebrow-dot{width:5px;height:5px;background:#a5b4fc;border-radius:50%;animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.hero h1{font-family:'Syne',sans-serif;font-size:clamp(44px,5.5vw,72px);font-weight:800;line-height:.96;letter-spacing:-.03em;margin-bottom:28px}
-.h1-line1{display:block;color:var(--white)}
-.h1-line2{display:block;background:linear-gradient(90deg,var(--blue2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:16px;color:var(--muted2);line-height:1.8;max-width:480px;margin-bottom:40px}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-.btn-prim{background:var(--blue);color:#fff;padding:14px 28px;border-radius:7px;font-size:14px;font-weight:500;text-decoration:none;letter-spacing:.02em;transition:all .25s;display:inline-flex;align-items:center;gap:8px}
-.btn-prim:hover{background:var(--blue2);transform:translateY(-2px);box-shadow:0 16px 40px rgba(37,99,235,.35)}
-.btn-ghost{border:1px solid var(--border2);color:var(--white);padding:14px 28px;border-radius:7px;font-size:14px;font-weight:500;text-decoration:none;transition:all .25s}
-.btn-ghost:hover{background:rgba(37,99,235,.08);border-color:rgba(99,102,241,.4)}
-.hero-note{margin-top:20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.04em}
-.hero-stats{display:flex;gap:40px;margin-top:48px;padding-top:32px;border-top:1px solid var(--border)}
-.stat-val{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--white),var(--blue2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.stat-label{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase;margin-top:3px}
-.hero-right{position:relative}
-.dash{background:var(--bg3);border:1px solid var(--border2);border-radius:14px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.6)}
-.dash-bar{background:var(--navy);padding:12px 18px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
-.dash-dot{width:9px;height:9px;border-radius:50%}
-.dash-title{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted2);margin-left:6px}
-.dash-body{padding:20px}
-.dash-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
-.kpi{background:var(--navy);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
-.kpi-val{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:2px}
-.kpi-label{font-size:10px;color:var(--muted2);font-family:'JetBrains Mono',monospace;letter-spacing:.05em}
-.kpi-delta{font-size:10px;margin-top:4px;font-family:'JetBrains Mono',monospace}
-.kpi-up{color:#34d399}
-.dash-chart-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:8px;letter-spacing:.05em}
-.chart-area{height:80px;position:relative;overflow:hidden}
-.chart-bars{display:flex;align-items:flex-end;gap:4px;height:100%}
-.bar{flex:1;border-radius:3px 3px 0 0}
-.dash-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.dash-mini{background:var(--navy);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
-.mini-title{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted2);margin-bottom:8px;letter-spacing:.04em}
-.mini-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
-.mini-label{font-size:11px;color:var(--muted2)}
-.mini-val{font-size:11px;font-weight:500;color:var(--white);font-family:'JetBrains Mono',monospace}
-.mini-bar-wrap{height:3px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:2px}
-.mini-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--blue),var(--cyan))}
-.dash-float{position:absolute;top:-14px;right:-14px;background:var(--navy);border:1px solid var(--border2);border-radius:10px;padding:10px 14px}
-.float-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
-.float-val{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#34d399}
-.ticker-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px 0;overflow:hidden;position:relative;z-index:2;background:rgba(8,15,34,.5)}
-.ticker{display:flex;gap:64px;animation:tick 30s linear infinite;white-space:nowrap;width:max-content}
-.t-item{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px}
-.t-item::before{content:'//';color:var(--blue);font-size:10px}
-@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.s-tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue2);margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.s-tag::before{content:'';width:20px;height:1px;background:var(--blue2)}
-.s-title{font-family:'Syne',sans-serif;font-size:clamp(32px,4vw,52px);font-weight:800;line-height:1.08;letter-spacing:-.025em;margin-bottom:56px}
-.accent{background:linear-gradient(90deg,var(--blue2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links a{font-size:12px;color:var(--muted2);text-decoration:none;
+  letter-spacing:.1em;text-transform:uppercase;transition:color .2s;
+  font-family:'JetBrains Mono',monospace}
+.nav-links a:hover{color:var(--cyan)}
+.nav-cta{background:linear-gradient(135deg,var(--blue),var(--blue2));
+  color:#fff;padding:10px 22px;border-radius:6px;font-size:12px;font-weight:600;
+  text-decoration:none;letter-spacing:.06em;text-transform:uppercase;
+  transition:all .3s;white-space:nowrap;border:1px solid rgba(0,212,255,.3);
+  box-shadow:0 0 20px rgba(0,212,255,.15)}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(0,212,255,.4)}
+
 .inner{max-width:1200px;margin:0 auto;padding:0 60px}
-.proof{padding:48px 0;border-bottom:1px solid var(--border);position:relative;z-index:2}
-.proof-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:28px}
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:center;padding:100px 60px 60px;
+  max-width:1320px;margin:0 auto}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:.14em;color:var(--cyan);margin-bottom:28px;text-transform:uppercase}
+.hero-eyebrow-dot{width:6px;height:6px;background:var(--cyan);border-radius:50%;
+  animation:blink 1.8s infinite;box-shadow:0 0 8px var(--cyan)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:'Outfit',sans-serif;font-size:clamp(46px,5.8vw,76px);
+  font-weight:900;line-height:.95;letter-spacing:-.03em;margin-bottom:26px}
+.h1-plain{display:block;color:var(--white)}
+.h1-glow{display:block;background:linear-gradient(90deg,var(--blue2),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 30px rgba(0,212,255,.5))}
+.hero-sub{font-size:16px;color:var(--muted2);line-height:1.85;
+  max-width:480px;margin-bottom:40px;font-weight:300}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.btn-prim{background:linear-gradient(135deg,var(--blue),var(--blue2));
+  color:#fff;padding:15px 30px;border-radius:7px;font-size:14px;font-weight:600;
+  text-decoration:none;letter-spacing:.04em;transition:all .3s;
+  display:inline-flex;align-items:center;gap:9px;
+  border:1px solid rgba(0,212,255,.25);box-shadow:0 0 24px rgba(0,212,255,.2)}
+.btn-prim:hover{transform:translateY(-2px);box-shadow:0 0 44px rgba(0,212,255,.5)}
+.btn-ghost{border:1px solid var(--border2);color:var(--white);
+  padding:15px 28px;border-radius:7px;font-size:14px;font-weight:500;
+  text-decoration:none;transition:all .3s;background:rgba(0,0,0,.3)}
+.btn-ghost:hover{background:rgba(0,212,255,.08);border-color:var(--cyan)}
+.hero-note{margin-top:18px;font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--muted);letter-spacing:.07em}
+.hero-stats{display:flex;gap:40px;margin-top:44px;
+  padding-top:28px;border-top:1px solid var(--border2)}
+.stat-val{font-family:'Outfit',sans-serif;font-size:30px;font-weight:900;
+  background:linear-gradient(135deg,var(--white),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-lbl{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;
+  letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+
+.hero-right{position:relative}
+.dash-float{position:absolute;top:-16px;right:-16px;z-index:5;
+  background:rgba(4,12,28,.95);border:1px solid var(--border2);
+  border-radius:10px;padding:11px 16px;box-shadow:0 0 20px rgba(0,212,255,.2)}
+.float-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--muted2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
+.float-val{font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;
+  color:var(--green);filter:drop-shadow(0 0 8px rgba(0,229,160,.5))}
+.dash{border:1px solid var(--border2);border-radius:16px;overflow:hidden;
+  box-shadow:0 40px 100px rgba(0,0,0,.8),0 0 60px rgba(0,212,255,.07)}
+.dash-bar{background:rgba(8,20,40,.95);padding:12px 18px;
+  display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
+.dd{width:9px;height:9px;border-radius:50%}
+.dash-title{font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--muted2);margin-left:6px;letter-spacing:.06em}
+.dash-body{padding:20px}
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.kpi{border:1px solid var(--border);border-radius:8px;padding:13px}
+.kpi-v{font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;margin-bottom:2px}
+.kpi-l{font-size:9px;color:var(--muted2);font-family:'JetBrains Mono',monospace;letter-spacing:.05em}
+.kpi-d{font-size:9px;color:var(--green);margin-top:4px;font-family:'JetBrains Mono',monospace}
+.chart-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--muted);margin-bottom:8px;letter-spacing:.06em}
+.bars-wrap{height:72px;display:flex;align-items:flex-end;gap:4px}
+.bar{flex:1;border-radius:3px 3px 0 0}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.mini{border:1px solid var(--border);border-radius:8px;padding:12px}
+.mini-t{font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--muted2);margin-bottom:8px;letter-spacing:.05em}
+.mini-row{display:flex;justify-content:space-between;margin-bottom:5px}
+.mini-row span:first-child{font-size:10px;color:var(--muted2)}
+.mini-row span:last-child{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--white)}
+.bar-t{height:2px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:2px}
+.bar-f{height:100%;border-radius:2px}
+
+.ticker-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:12px 0;overflow:hidden;background:rgba(2,6,14,.7)}
+.ticker{display:flex;gap:60px;animation:tick 32s linear infinite;
+  width:max-content;white-space:nowrap}
+.t-item{font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  display:flex;align-items:center;gap:10px}
+.t-item::before{content:'//';color:var(--cyan);font-size:9px}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.proof{padding:48px 0;border-bottom:1px solid var(--border)}
+.proof-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  text-align:center;margin-bottom:24px}
 .proof-logos{display:flex;align-items:center;justify-content:center;gap:44px;flex-wrap:wrap}
-.proof-logo{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.15);transition:color .3s}
-.proof-logo:hover{color:rgba(255,255,255,.38)}
-.proof-logo small{font-size:9px;font-weight:400;display:block;letter-spacing:.05em;margin-top:2px;font-family:'JetBrains Mono',monospace}
+.proof-logo{font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.13);
+  transition:color .3s;cursor:default}
+.proof-logo:hover{color:rgba(0,212,255,.5)}
+.proof-logo small{display:block;font-family:'JetBrains Mono',monospace;
+  font-size:8px;font-weight:400;margin-top:2px;letter-spacing:.05em}
+
+.s-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--cyan);margin-bottom:14px;
+  display:flex;align-items:center;gap:9px}
+.s-tag::before{content:'';width:22px;height:1px;background:var(--cyan)}
+.s-title{font-family:'Outfit',sans-serif;font-size:clamp(34px,4.2vw,56px);
+  font-weight:900;line-height:1.06;letter-spacing:-.025em;margin-bottom:52px}
+.accent{background:linear-gradient(90deg,var(--blue2),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
 .problems{padding:120px 0}
 .prob-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:center}
-.prob-left .s-title{margin-bottom:24px;font-size:clamp(30px,3.5vw,46px)}
-.prob-left p{font-size:15px;color:var(--muted2);line-height:1.85;margin-bottom:32px}
-.prob-callout{background:rgba(37,99,235,.06);border:1px solid var(--border2);border-radius:10px;padding:20px 24px}
-.prob-callout p{font-family:'JetBrains Mono',monospace;font-size:13px;color:#a5b4fc;line-height:1.7;margin:0}
+.prob-left .s-title{margin-bottom:22px;font-size:clamp(28px,3.4vw,46px)}
+.prob-left p{font-size:15px;color:var(--muted2);line-height:1.85;margin-bottom:28px;font-weight:300}
+.prob-callout{border:1px solid var(--border2);border-left:3px solid var(--cyan);
+  border-radius:0 8px 8px 0;padding:18px 22px}
+.prob-callout p{font-family:'JetBrains Mono',monospace;font-size:12px;
+  color:rgba(0,212,255,.8);line-height:1.75}
 .prob-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.prob-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:22px 20px;transition:all .3s}
-.prob-card:hover{border-color:var(--border2);background:rgba(37,99,235,.04)}
-.prob-icon{font-size:20px;margin-bottom:12px}
-.prob-card h4{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:7px}
-.prob-card p{font-size:12.5px;color:var(--muted2);line-height:1.65}
-.solutions{padding:120px 0;background:linear-gradient(180deg,transparent,rgba(8,15,34,.6),transparent)}
-.sol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
-.sol-card{background:var(--bg2);padding:36px 28px;transition:all .3s;position:relative;overflow:hidden}
-.sol-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));transform:scaleX(0);transform-origin:left;transition:transform .35s}
-.sol-card:hover{background:rgba(37,99,235,.05)}
+.prob-card{border:1px solid var(--border);border-radius:10px;
+  padding:22px 18px;transition:all .35s}
+.prob-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.prob-icon{font-size:22px;margin-bottom:11px}
+.prob-card h4{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;margin-bottom:7px}
+.prob-card p{font-size:12px;color:var(--muted2);line-height:1.7;font-weight:300}
+
+.solutions{padding:120px 0}
+.sol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:rgba(0,212,255,.07);border:1px solid var(--border2);
+  border-radius:14px;overflow:hidden}
+.sol-card{padding:36px 28px;transition:all .35s;position:relative;overflow:hidden}
+.sol-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,var(--blue2),var(--cyan));
+  transform:scaleX(0);transform-origin:left;transition:transform .4s}
 .sol-card:hover::after{transform:scaleX(1)}
-.sol-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;margin-bottom:20px}
-.sol-icon{font-size:28px;margin-bottom:16px;display:block}
-.sol-card h3{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:10px}
-.sol-card p{font-size:13px;color:var(--muted2);line-height:1.72}
-.sol-tag{margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue2)}
+.sol-num{font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--muted);letter-spacing:.1em;margin-bottom:18px}
+.sol-icon{font-size:28px;margin-bottom:14px;display:block}
+.sol-card h3{font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;margin-bottom:10px}
+.sol-card p{font-size:12.5px;color:var(--muted2);line-height:1.72;font-weight:300}
+.sol-tag{margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--cyan)}
+
 .results{padding:120px 0}
-.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.res-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:36px;position:relative;overflow:hidden;transition:all .3s}
-.res-card::before{content:'"';position:absolute;top:-10px;right:16px;font-family:'Syne',sans-serif;font-size:100px;color:rgba(37,99,235,.07);line-height:1}
-.res-card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.4)}
-.res-co{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
-.res-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700}
-.res-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue2);background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.18);padding:3px 9px;border-radius:100px}
-.res-metrics{display:flex;gap:14px;margin-bottom:20px;flex-wrap:wrap}
-.res-num{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;background:linear-gradient(135deg,var(--blue2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
-.res-label{font-size:10px;color:var(--muted2);font-family:'JetBrains Mono',monospace;letter-spacing:.05em;text-transform:uppercase}
-.res-quote{border-left:2px solid var(--blue);padding-left:14px}
-.res-quote p{font-size:12.5px;color:var(--white);line-height:1.65;font-style:italic}
-.res-cite{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue2);letter-spacing:.07em;text-transform:uppercase;margin-top:8px}
-.process{padding:120px 0;background:rgba(8,15,34,.5);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.proc-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.proc-step{background:var(--bg2);padding:36px 24px;transition:all .35s}
-.proc-step:hover{background:rgba(37,99,235,.05)}
-.proc-num{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--indigo));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;margin-bottom:20px;box-shadow:0 0 20px rgba(37,99,235,.35)}
-.proc-step h3{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px}
-.proc-step p{font-size:12.5px;color:var(--muted2);line-height:1.72}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.res-card{border:1px solid var(--border);border-radius:14px;
+  padding:32px;transition:all .35s;overflow:hidden;position:relative}
+.res-card::before{content:'"';position:absolute;top:-12px;right:14px;
+  font-size:110px;color:rgba(0,212,255,.05);line-height:1;font-family:'Outfit'}
+.res-card:hover{border-color:var(--border2);transform:translateY(-5px);
+  box-shadow:0 20px 50px rgba(0,0,0,.6),0 0 30px rgba(0,212,255,.06)}
+.res-head{display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.res-name{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700}
+.res-badge{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--cyan);
+  background:rgba(0,212,255,.07);border:1px solid var(--border2);
+  padding:3px 9px;border-radius:100px}
+.res-nums{display:flex;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.res-n{font-family:'Outfit',sans-serif;font-size:28px;font-weight:900;
+  background:linear-gradient(135deg,var(--blue2),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:block;filter:drop-shadow(0 0 8px rgba(0,212,255,.3))}
+.res-l{font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--muted2);letter-spacing:.05em;text-transform:uppercase}
+.res-quote{border-left:2px solid var(--cyan);padding-left:14px}
+.res-quote p{font-size:12.5px;color:var(--white);line-height:1.65;font-style:italic;font-weight:300}
+.res-cite{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--cyan);letter-spacing:.07em;text-transform:uppercase;margin-top:8px}
+
+.process{padding:120px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:rgba(0,212,255,.07);border:1px solid var(--border2);
+  border-radius:14px;overflow:hidden}
+.proc-step{padding:36px 24px;transition:all .35s}
+.proc-num{width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--blue2));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Outfit',sans-serif;font-weight:900;font-size:16px;
+  margin-bottom:18px;box-shadow:0 0 20px rgba(0,212,255,.35)}
+.proc-step h3{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px}
+.proc-step p{font-size:12.5px;color:var(--muted2);line-height:1.72;font-weight:300}
+
 .why{padding:120px 0}
-.why-inner{display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:center}
-.why-left .s-title{margin-bottom:20px;font-size:clamp(28px,3.5vw,46px)}
-.why-left p{font-size:15px;color:var(--muted2);line-height:1.85;margin-bottom:24px}
-.why-quote{border-left:3px solid var(--blue);padding-left:20px;margin-top:32px}
-.why-quote p{font-family:'Syne',sans-serif;font-size:16px;font-weight:600;font-style:italic;color:var(--white);line-height:1.6}
-.why-quote cite{display:block;font-size:11px;color:var(--blue2);margin-top:8px;font-family:'JetBrains Mono',monospace;letter-spacing:.09em;text-transform:uppercase}
-.why-cards{display:flex;flex-direction:column;gap:12px}
-.why-card{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:20px 22px;display:flex;align-items:center;gap:16px;transition:all .3s}
+.why-layout{display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:center}
+.why-left .s-title{margin-bottom:18px;font-size:clamp(28px,3.5vw,46px)}
+.why-left p{font-size:15px;color:var(--muted2);line-height:1.85;margin-bottom:22px;font-weight:300}
+.why-pull{border-left:3px solid var(--cyan);padding-left:20px;margin-top:32px}
+.why-pull p{font-family:'Outfit',sans-serif;font-size:17px;font-weight:600;
+  font-style:italic;color:var(--white);line-height:1.6}
+.why-pull cite{display:block;font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--cyan);margin-top:9px;letter-spacing:.09em;text-transform:uppercase}
+.why-cards{display:flex;flex-direction:column;gap:10px}
+.why-card{border:1px solid var(--border);border-radius:9px;padding:18px 20px;
+  display:flex;align-items:center;gap:16px;transition:all .3s}
 .why-card:hover{border-color:var(--border2);transform:translateX(6px)}
-.why-icon{font-size:20px;width:44px;height:44px;background:rgba(37,99,235,.09);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.why-card h4{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:3px}
-.why-card p{font-size:12px;color:var(--muted2);line-height:1.55}
-.trust{padding:52px 0;background:rgba(8,15,34,.5);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.trust-inner{display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
-.trust-val{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;background:linear-gradient(135deg,var(--white),var(--blue2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.trust-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
-.trust-div{width:1px;height:40px;background:var(--border)}
+.why-icon{font-size:18px;width:42px;height:42px;background:rgba(0,212,255,.08);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.why-card h4{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;margin-bottom:3px}
+.why-card p{font-size:12px;color:var(--muted2);line-height:1.55;font-weight:300}
+
+.trust{padding:52px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.trust-row{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.trust-val{font-family:'Outfit',sans-serif;font-size:30px;font-weight:900;
+  background:linear-gradient(135deg,var(--white),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.trust-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
+.trust-div{width:1px;height:44px;background:var(--border2)}
+
 .pricing{padding:120px 0}
-.price-note{text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-bottom:20px;letter-spacing:.04em}
-.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
-.plan{background:var(--bg2);padding:44px 32px}
-.plan.feat{background:linear-gradient(135deg,rgba(37,99,235,.08),rgba(99,102,241,.08));border-left:2px solid rgba(37,99,235,.45);border-right:2px solid rgba(37,99,235,.45)}
-.plan-badge{display:inline-block;background:linear-gradient(135deg,var(--blue),var(--indigo));color:#fff;padding:3px 11px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
-.plan-name{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:6px}
-.plan-sub{font-size:12.5px;color:var(--muted2);margin-bottom:22px;line-height:1.6}
-.plan-price-block{margin-bottom:24px;padding:16px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.plan-from{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
-.plan-price{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;background:linear-gradient(135deg,var(--white),var(--blue2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
-.plan-psub{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:5px;letter-spacing:.04em}
-.plan-feats{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
-.plan-feats li{font-size:13px;color:var(--muted2);display:flex;align-items:flex-start;gap:9px;line-height:1.5}
-.plan-feats li::before{content:'→';color:var(--blue2);flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:11px;margin-top:1px}
-.plan-cta{display:block;text-align:center;padding:13px;border-radius:7px;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:.02em;text-decoration:none;transition:all .3s}
-.plan-out{border:1px solid var(--border);color:var(--white)}
-.plan-out:hover{border-color:var(--blue2);background:rgba(37,99,235,.1)}
-.plan-fill{background:linear-gradient(135deg,var(--blue),var(--indigo));color:#fff;box-shadow:0 0 24px rgba(37,99,235,.28)}
-.plan-fill:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(37,99,235,.45)}
-.plan-note{text-align:center;margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.05em}
-.final{padding:160px 0;text-align:center;position:relative;overflow:hidden}
-.final-glow{position:absolute;width:600px;height:400px;background:radial-gradient(ellipse,rgba(37,99,235,.16) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
-.final-glow2{position:absolute;width:400px;height:300px;background:radial-gradient(ellipse,rgba(99,102,241,.1) 0%,transparent 65%);top:40%;left:30%;pointer-events:none}
-.final h2{font-family:'Syne',sans-serif;font-size:clamp(38px,5vw,68px);font-weight:800;line-height:1.04;letter-spacing:-.025em;margin-bottom:20px}
-.final p{font-size:16px;color:var(--muted2);max-width:460px;margin:0 auto 44px;line-height:1.8}
-.cta-meta{display:flex;align-items:center;justify-content:center;gap:28px;margin-top:20px;flex-wrap:wrap}
-.cta-meta span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.06em;display:flex;align-items:center;gap:6px}
-.cta-meta span::before{content:'✓';color:var(--cyan);font-size:12px}
-footer{border-top:1px solid var(--border);padding:48px 60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;position:relative;z-index:2}
-.foot-logo{display:flex;align-items:center;gap:9px}
-.foot-word{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;letter-spacing:.12em;opacity:.4;color:var(--white)}
+.price-note{text-align:center;font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.04em}
+.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:rgba(0,212,255,.07);border:1px solid var(--border2);
+  border-radius:14px;overflow:hidden}
+.plan{padding:44px 32px}
+.plan.feat{background:linear-gradient(160deg,rgba(0,212,255,.07),rgba(46,141,232,.04))!important;}
+.plan-badge{display:inline-block;background:linear-gradient(135deg,var(--blue),var(--blue2));
+  color:#fff;padding:3px 12px;border-radius:100px;font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.plan-name{font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;margin-bottom:7px}
+.plan-sub{font-size:12.5px;color:var(--muted2);margin-bottom:22px;line-height:1.65;font-weight:300}
+.plan-price-wrap{padding:16px 0;margin-bottom:24px;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.plan-from{font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.plan-price{font-family:'Outfit',sans-serif;font-size:32px;font-weight:900;
+  background:linear-gradient(135deg,var(--white),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.plan-psub{font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--muted);margin-top:5px;letter-spacing:.04em}
+.plan-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.plan-list li{font-size:12.5px;color:var(--muted2);
+  display:flex;align-items:flex-start;gap:9px;line-height:1.55;font-weight:300}
+.plan-list li::before{content:'→';color:var(--cyan);flex-shrink:0;
+  font-family:'JetBrains Mono',monospace;font-size:10px;margin-top:1px}
+.plan-btn{display:block;text-align:center;padding:14px;border-radius:7px;
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;
+  letter-spacing:.04em;text-decoration:none;transition:all .3s}
+.plan-btn-out{border:1px solid var(--border2);color:var(--white)}
+.plan-btn-out:hover{border-color:var(--cyan);background:rgba(0,212,255,.08);color:var(--cyan)}
+.plan-btn-fill{background:linear-gradient(135deg,var(--blue),var(--blue2));
+  color:#fff;box-shadow:0 0 24px rgba(0,212,255,.25)}
+.plan-btn-fill:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(0,212,255,.45)}
+.plan-note{text-align:center;margin-top:9px;font-family:'JetBrains Mono',monospace;
+  font-size:9px;color:var(--muted);letter-spacing:.05em}
+
+.final{padding:160px 0;text-align:center;position:relative}
+.final-glow{position:absolute;width:700px;height:500px;
+  background:radial-gradient(ellipse,rgba(0,212,255,.1),transparent 65%);
+  top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.final h2{font-family:'Outfit',sans-serif;font-size:clamp(38px,5.2vw,72px);
+  font-weight:900;line-height:1.04;letter-spacing:-.025em;margin-bottom:20px}
+.final p{font-size:16px;color:var(--muted2);max-width:460px;
+  margin:0 auto 44px;line-height:1.85;font-weight:300}
+.cta-meta{display:flex;align-items:center;justify-content:center;
+  gap:28px;margin-top:22px;flex-wrap:wrap}
+.cta-meta span{font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--muted);letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.cta-meta span::before{content:'✓';color:var(--cyan)}
+
+footer{border-top:1px solid var(--border);padding:44px 60px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:20px;background:rgba(2,6,14,.85)}
+.foot-logo img{height:38px;filter:drop-shadow(0 0 8px rgba(0,212,255,.4))}
 .foot-links{display:flex;gap:28px;list-style:none}
-.foot-links a{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:.07em;text-transform:uppercase;transition:color .2s}
-.foot-links a:hover{color:var(--white)}
-.foot-copy{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-.reveal{opacity:0;transform:translateY(32px);transition:all .7s cubic-bezier(.16,1,.3,1)}
+.foot-links a{font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--muted);text-decoration:none;letter-spacing:.07em;
+  text-transform:uppercase;transition:color .2s}
+.foot-links a:hover{color:var(--cyan)}
+.foot-copy{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:all .8s cubic-bezier(.16,1,.3,1)}
 .reveal.on{opacity:1;transform:translateY(0)}
-.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:6px;z-index:300}
-.ham span{display:block;width:22px;height:1.5px;background:var(--white);border-radius:2px;transition:all .3s}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;
+  background:none;border:none;padding:6px}
+.ham span{display:block;width:22px;height:1.5px;background:var(--white);
+  border-radius:2px;transition:all .3s}
 .ham.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
 .ham.open span:nth-child(2){opacity:0}
 .ham.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-.mob-menu{display:none;position:fixed;inset:0;background:rgba(5,13,30,.97);backdrop-filter:blur(20px);z-index:250;flex-direction:column;align-items:center;justify-content:center;gap:36px}
+.mob-menu{display:none;position:fixed;inset:0;background:rgba(2,6,14,.97);
+  backdrop-filter:blur(24px);z-index:500;flex-direction:column;
+  align-items:center;justify-content:center;gap:32px}
 .mob-menu.open{display:flex}
-.mob-menu a{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--white);text-decoration:none;transition:color .2s}
-.mob-menu a:hover{color:var(--blue2)}
-.mob-menu .mob-btn{background:var(--blue);color:#fff!important;padding:14px 32px;border-radius:7px;font-size:18px!important}
+.mob-menu a{font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;
+  color:var(--white);text-decoration:none;transition:color .2s}
+.mob-menu a:hover{color:var(--cyan)}
+.mob-menu .mob-cta{background:linear-gradient(135deg,var(--blue),var(--blue2));
+  color:#fff!important;padding:14px 36px;border-radius:7px;font-size:18px!important}
+
 @media(max-width:1024px){
   .hero{grid-template-columns:1fr;padding:100px 40px 60px}
   .hero-right{display:none}
   .prob-grid{grid-template-columns:1fr;gap:40px}
-  .why-inner{grid-template-columns:1fr;gap:48px}
+  .why-layout{grid-template-columns:1fr;gap:48px}
 }
 @media(max-width:900px){
-  body{cursor:auto}.cur,.cur-ring{display:none}
   nav{padding:0 24px}.nav-links{display:none}.ham{display:flex}
   .inner{padding:0 24px}
-  .hero{padding:90px 24px 50px}.hero-stats{gap:24px}
   .sol-grid{grid-template-columns:1fr 1fr}
-  .proc-steps{grid-template-columns:1fr 1fr}
+  .proc-grid{grid-template-columns:1fr 1fr}
   .res-grid{grid-template-columns:1fr}
-  .price-grid{grid-template-columns:1fr}
-  .trust-inner{justify-content:center;gap:20px}.trust-div{display:none}
-  .final{padding:100px 24px}
+  .plan-grid{grid-template-columns:1fr}
+  .trust-row{justify-content:center;gap:16px}.trust-div{display:none}
   footer{padding:36px 24px;flex-direction:column;align-items:center;text-align:center}
   .foot-links{flex-wrap:wrap;justify-content:center;gap:16px}
 }
 @media(max-width:600px){
-  .sol-grid,.proc-steps,.prob-cards{grid-template-columns:1fr}
-  .hero h1{font-size:40px}.hero-stats{flex-wrap:wrap;gap:16px}
+  .sol-grid,.proc-grid,.prob-cards{grid-template-columns:1fr}
+  .hero h1{font-size:42px}
+  .hero-stats{flex-wrap:wrap;gap:16px}
 }
 </style>
 </head>
 <body>
 
-<div class="cur" id="cur"></div>
-<div class="cur-ring" id="curRing"></div>
-<canvas id="grid-canvas"></canvas>
+<!-- FULL PAGE STARFIELD (absolute, scrolls with page) -->
+<canvas id="sky"></canvas>
+<!-- NEURAL NETWORK (fixed viewport overlay) -->
+<canvas id="neural"></canvas>
 
 <nav>
-  <div class="nav-logo">
-    <div class="logo-mark">
-      <svg viewBox="0 0 18 18" fill="none">
-        <path d="M3 13 L3 5 L11 5 L11 8 L6 8 L6 10 L10 10 L10 12 L6 12 L6 13 Z" fill="white"/>
-        <path d="M10 7 L14 3 L14 7 Z" fill="white" opacity=".7"/>
-      </svg>
-    </div>
-    <span class="logo-word">ELEVRA</span>
-  </div>
+  <div class="nav-logo"><img id="logo-img" src="" alt="Elevra Digital"></div>
   <ul class="nav-links">
     <li><a href="#solutions">Solutions</a></li>
     <li><a href="#results">Results</a></li>
@@ -261,92 +401,73 @@ footer{border-top:1px solid var(--border);padding:48px 60px;display:flex;align-i
     <li><a href="#pricing">Pricing</a></li>
   </ul>
   <a href="https://wa.me/17543056145" target="_blank" class="nav-cta">Book a Strategy Call</a>
-  <button class="ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="ham" id="ham"><span></span><span></span><span></span></button>
 </nav>
-
 <div class="mob-menu" id="mobMenu">
   <a href="#solutions" class="mob-link">Solutions</a>
   <a href="#results" class="mob-link">Results</a>
   <a href="#process" class="mob-link">Process</a>
   <a href="#pricing" class="mob-link">Pricing</a>
-  <a href="https://wa.me/17543056145" target="_blank" class="mob-btn">Book a Strategy Call</a>
+  <a href="https://wa.me/17543056145" target="_blank" class="mob-cta mob-link">Book a Strategy Call</a>
 </div>
 
-<section style="position:relative;z-index:2;background:linear-gradient(180deg,rgba(5,13,30,0) 0%,rgba(5,13,30,.3) 100%)">
+<section>
 <div class="hero">
-  <div class="hero-left">
+  <div>
     <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>Data · AI · Growth Consultancy</div>
-    <h1>
-      <span class="h1-line1">Turn Data</span>
-      <span class="h1-line2">Into Growth.</span>
-    </h1>
+    <h1><span class="h1-plain">Turn Data</span><span class="h1-glow">Into Growth.</span></h1>
     <p class="hero-sub">We help businesses make smarter decisions, automate operations, and accelerate revenue through AI, Analytics, and Business Intelligence.</p>
     <div class="hero-actions">
       <a href="https://wa.me/17543056145" target="_blank" class="btn-prim">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Book a Free Strategy Call
       </a>
       <a href="#solutions" class="btn-ghost">See Our Solutions</a>
     </div>
     <p class="hero-note">No commitment · 30-min session · Free business audit included</p>
     <div class="hero-stats">
-      <div class="stat"><div class="stat-val">$8.4M+</div><div class="stat-label">Revenue Attributed</div></div>
-      <div class="stat"><div class="stat-val">3×</div><div class="stat-label">Avg Growth Lift</div></div>
-      <div class="stat"><div class="stat-val">30d</div><div class="stat-label">Time to Live</div></div>
+      <div><div class="stat-val">$8.4M+</div><div class="stat-lbl">Revenue Attributed</div></div>
+      <div><div class="stat-val">3×</div><div class="stat-lbl">Avg Growth Lift</div></div>
+      <div><div class="stat-val">30d</div><div class="stat-lbl">Time to Live</div></div>
     </div>
   </div>
   <div class="hero-right">
-    <div class="dash-float">
-      <div class="float-label">Lead Conversion</div>
-      <div class="float-val">+35.4%</div>
-    </div>
-    <div class="dash">
-      <div class="dash-bar">
-        <div class="dash-dot" style="background:#ff5f57"></div>
-        <div class="dash-dot" style="background:#ffbd2e"></div>
-        <div class="dash-dot" style="background:#28c840"></div>
-        <span class="dash-title">Growth Intelligence Dashboard · Elevra</span>
-      </div>
-      <div class="dash-body">
-        <div class="dash-kpis">
-          <div class="kpi">
-            <div class="kpi-val" style="background:linear-gradient(135deg,#60a5fa,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">$2.4M</div>
-            <div class="kpi-label">Pipeline Value</div>
-            <div class="kpi-delta kpi-up">↑ 28.3% MoM</div>
-          </div>
-          <div class="kpi">
-            <div class="kpi-val" style="background:linear-gradient(135deg,#a78bfa,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">847</div>
-            <div class="kpi-label">Leads Captured</div>
-            <div class="kpi-delta kpi-up">↑ 41.2% MoM</div>
-          </div>
-          <div class="kpi">
-            <div class="kpi-val" style="background:linear-gradient(135deg,#34d399,#059669);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">67%</div>
-            <div class="kpi-label">Automation Rate</div>
-            <div class="kpi-delta kpi-up">↑ 19.1% MoM</div>
-          </div>
+    <div style="position:relative">
+      <div class="dash-float"><div class="float-lbl">Lead Conversion</div><div class="float-val">+35.4%</div></div>
+      <div class="dash">
+        <div class="dash-bar">
+          <div class="dd" style="background:#ff5f57"></div>
+          <div class="dd" style="background:#ffbd2e"></div>
+          <div class="dd" style="background:#28c840"></div>
+          <span class="dash-title">Growth Intelligence Dashboard · Elevra</span>
         </div>
-        <div class="dash-chart-label">Revenue vs Target — Last 12 Months</div>
-        <div class="chart-area">
-          <div class="chart-bars" id="bars"></div>
-        </div>
-        <div class="dash-row">
-          <div class="dash-mini">
-            <div class="mini-title">Channel Attribution</div>
-            <div class="mini-row"><span class="mini-label">Paid Search</span><span class="mini-val">34%</span></div>
-            <div class="mini-bar-wrap"><div class="mini-fill" style="width:34%;background:linear-gradient(90deg,#3b82f6,#6366f1)"></div></div>
-            <div class="mini-row"><span class="mini-label">Organic</span><span class="mini-val">28%</span></div>
-            <div class="mini-bar-wrap"><div class="mini-fill" style="width:28%;background:linear-gradient(90deg,#06b6d4,#3b82f6)"></div></div>
-            <div class="mini-row"><span class="mini-label">Referral</span><span class="mini-val">21%</span></div>
-            <div class="mini-bar-wrap"><div class="mini-fill" style="width:21%;background:linear-gradient(90deg,#8b5cf6,#6366f1)"></div></div>
+        <div class="dash-body">
+          <div class="kpi-row">
+            <div class="kpi"><div class="kpi-v" style="background:linear-gradient(135deg,#2e8de8,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">$2.4M</div><div class="kpi-l">Pipeline Value</div><div class="kpi-d">↑ 28.3% MoM</div></div>
+            <div class="kpi"><div class="kpi-v" style="background:linear-gradient(135deg,#a78bfa,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">847</div><div class="kpi-l">Leads Captured</div><div class="kpi-d">↑ 41.2% MoM</div></div>
+            <div class="kpi"><div class="kpi-v" style="background:linear-gradient(135deg,#00e5a0,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">67%</div><div class="kpi-l">Automation Rate</div><div class="kpi-d">↑ 19.1% MoM</div></div>
           </div>
-          <div class="dash-mini">
-            <div class="mini-title">AI Automation Status</div>
-            <div class="mini-row"><span class="mini-label">Lead Response</span><span class="mini-val" style="color:#34d399">Active</span></div>
-            <div class="mini-bar-wrap"><div class="mini-fill" style="width:100%"></div></div>
-            <div class="mini-row"><span class="mini-label">Follow-up Seq.</span><span class="mini-val" style="color:#34d399">Active</span></div>
-            <div class="mini-bar-wrap"><div class="mini-fill" style="width:88%"></div></div>
-            <div class="mini-row"><span class="mini-label">Report Gen.</span><span class="mini-val" style="color:#34d399">Active</span></div>
-            <div class="mini-bar-wrap"><div class="mini-fill" style="width:76%"></div></div>
+          <div class="chart-lbl">Revenue vs Target — Last 12 Months</div>
+          <div class="bars-wrap" id="bars"></div>
+          <div class="mini-grid">
+            <div class="mini">
+              <div class="mini-t">Channel Attribution</div>
+              <div class="mini-row"><span>Paid Search</span><span>34%</span></div>
+              <div class="bar-t"><div class="bar-f" style="width:34%;background:linear-gradient(90deg,#2e8de8,#00d4ff)"></div></div>
+              <div class="mini-row"><span>Organic</span><span>28%</span></div>
+              <div class="bar-t"><div class="bar-f" style="width:28%;background:linear-gradient(90deg,#00d4ff,#2e8de8)"></div></div>
+              <div class="mini-row"><span>Referral</span><span>21%</span></div>
+              <div class="bar-t"><div class="bar-f" style="width:21%;background:linear-gradient(90deg,#a78bfa,#2e8de8)"></div></div>
+            </div>
+            <div class="mini">
+              <div class="mini-t">AI Automation Status</div>
+              <div class="mini-row"><span>Lead Response</span><span style="color:#00e5a0">Active</span></div>
+              <div class="bar-t"><div class="bar-f" style="width:100%;background:linear-gradient(90deg,#00d4ff,#00e5a0)"></div></div>
+              <div class="mini-row"><span>Follow-up Seq.</span><span style="color:#00e5a0">Active</span></div>
+              <div class="bar-t"><div class="bar-f" style="width:88%;background:linear-gradient(90deg,#00d4ff,#00e5a0)"></div></div>
+              <div class="mini-row"><span>Report Gen.</span><span style="color:#00e5a0">Active</span></div>
+              <div class="bar-t"><div class="bar-f" style="width:76%;background:linear-gradient(90deg,#00d4ff,#00e5a0)"></div></div>
+            </div>
           </div>
         </div>
       </div>
@@ -357,27 +478,12 @@ footer{border-top:1px solid var(--border);padding:48px 60px;display:flex;align-i
 
 <div class="ticker-wrap">
   <div class="ticker">
-    <span class="t-item">Marketing Analytics</span>
-    <span class="t-item">Business Intelligence</span>
-    <span class="t-item">AI Automation</span>
-    <span class="t-item">Data Consulting</span>
-    <span class="t-item">Custom AI Solutions</span>
-    <span class="t-item">Process Automation</span>
-    <span class="t-item">Growth Strategy</span>
-    <span class="t-item">Revenue Intelligence</span>
-    <span class="t-item">Marketing Analytics</span>
-    <span class="t-item">Business Intelligence</span>
-    <span class="t-item">AI Automation</span>
-    <span class="t-item">Data Consulting</span>
-    <span class="t-item">Custom AI Solutions</span>
-    <span class="t-item">Process Automation</span>
-    <span class="t-item">Growth Strategy</span>
-    <span class="t-item">Revenue Intelligence</span>
+    <span class="t-item">Marketing Analytics</span><span class="t-item">Business Intelligence</span><span class="t-item">AI Automation</span><span class="t-item">Data Consulting</span><span class="t-item">Custom AI Solutions</span><span class="t-item">Process Automation</span><span class="t-item">Growth Strategy</span><span class="t-item">Revenue Intelligence</span>
+    <span class="t-item">Marketing Analytics</span><span class="t-item">Business Intelligence</span><span class="t-item">AI Automation</span><span class="t-item">Data Consulting</span><span class="t-item">Custom AI Solutions</span><span class="t-item">Process Automation</span><span class="t-item">Growth Strategy</span><span class="t-item">Revenue Intelligence</span>
   </div>
 </div>
-
 <div class="proof">
-  <p class="proof-label">Companies we've helped scale</p>
+  <p class="proof-lbl">Companies we've helped scale</p>
   <div class="proof-logos">
     <div class="proof-logo">Northside Roofing<small>Construction · TX</small></div>
     <div class="proof-logo">Lumière Med Spa<small>Aesthetics · FL</small></div>
@@ -394,18 +500,16 @@ footer{border-top:1px solid var(--border);padding:48px 60px;display:flex;align-i
       <div class="prob-left">
         <div class="s-tag">The Problem</div>
         <h2 class="s-title">Most businesses don't have a marketing problem.<br><span class="accent">They have a visibility problem.</span></h2>
-        <p>Your data is scattered. Your decisions are based on gut. Your team spends hours on reports that should be automated. You're running a $1M–$10M business with $50k tools and no intelligence layer to connect them.</p>
-        <div class="prob-callout reveal">
-          <p>"Companies that invest in data and AI automation grow 2.5× faster than those that don't — and spend 40% less on manual operations." — McKinsey Global Institute, 2024</p>
-        </div>
+        <p>Your data is scattered. Your decisions are based on gut. Your team spends hours on reports that should be automated.</p>
+        <div class="prob-callout reveal"><p>"Companies that invest in data and AI automation grow 2.5× faster than those that don't — and spend 40% less on manual operations." — McKinsey, 2024</p></div>
       </div>
       <div class="prob-cards reveal">
-        <div class="prob-card"><div class="prob-icon">📊</div><h4>Data Scattered Everywhere</h4><p>CRM, ads, website, finance — all in different platforms. No single source of truth. Every report is a manual effort.</p></div>
-        <div class="prob-card"><div class="prob-icon">🔍</div><h4>Unclear ROI on Marketing</h4><p>You're spending on ads, agencies, and tools — but can't attribute which dollar drives which revenue.</p></div>
-        <div class="prob-card"><div class="prob-icon">⏱</div><h4>Manual Reporting Killing Time</h4><p>Your team spends 15–20 hours/week building reports that should be automated and real-time.</p></div>
-        <div class="prob-card"><div class="prob-icon">🐌</div><h4>Slow Decision-Making</h4><p>By the time you have the data you need, the opportunity has already passed. Speed of insight = speed of growth.</p></div>
-        <div class="prob-card"><div class="prob-icon">🔁</div><h4>Repetitive Ops Burning Resources</h4><p>Lead follow-up, scheduling, onboarding, reporting — all manual. Your team is an expensive automation system.</p></div>
-        <div class="prob-card"><div class="prob-icon">📉</div><h4>No Predictive Visibility</h4><p>You see what happened last month. You need to see what will happen next quarter — and where to act now.</p></div>
+        <div class="prob-card"><div class="prob-icon">📊</div><h4>Data Scattered Everywhere</h4><p>CRM, ads, website, finance — all in different platforms. No single source of truth.</p></div>
+        <div class="prob-card"><div class="prob-icon">🔍</div><h4>Unclear ROI on Marketing</h4><p>You're spending on ads and tools — but can't attribute which dollar drives which revenue.</p></div>
+        <div class="prob-card"><div class="prob-icon">⏱</div><h4>Manual Reporting Killing Time</h4><p>Your team spends 15–20 hours/week on reports that should be automated and real-time.</p></div>
+        <div class="prob-card"><div class="prob-icon">🐌</div><h4>Slow Decision-Making</h4><p>By the time you have the data you need, the opportunity has already passed.</p></div>
+        <div class="prob-card"><div class="prob-icon">🔁</div><h4>Repetitive Ops Burning Resources</h4><p>Lead follow-up, scheduling, onboarding — all manual. Your team is expensive automation.</p></div>
+        <div class="prob-card"><div class="prob-icon">📉</div><h4>No Predictive Visibility</h4><p>You see what happened last month. You need to see what will happen next quarter.</p></div>
       </div>
     </div>
   </div>
@@ -416,12 +520,12 @@ footer{border-top:1px solid var(--border);padding:48px 60px;display:flex;align-i
     <div class="s-tag">Solutions</div>
     <h2 class="s-title reveal">A complete growth<br><span class="accent">intelligence system</span></h2>
     <div class="sol-grid reveal">
-      <div class="sol-card"><div class="sol-num">01</div><span class="sol-icon">📈</span><h3>Marketing Analytics</h3><p>Full-funnel attribution from first click to closed revenue. Understand exactly which channels, campaigns, and messages drive growth — and eliminate what doesn't.</p><div class="sol-tag">→ Attribution · Funnel Analysis · ROI Reporting</div></div>
-      <div class="sol-card"><div class="sol-num">02</div><span class="sol-icon">🧠</span><h3>Business Intelligence</h3><p>Custom BI dashboards that consolidate every data source into one command center. Real-time KPIs, revenue forecasts, and operational metrics — visible at a glance.</p><div class="sol-tag">→ Power BI · Looker · Custom Dashboards</div></div>
-      <div class="sol-card"><div class="sol-num">03</div><span class="sol-icon">🤖</span><h3>AI Automation</h3><p>Eliminate repetitive work with intelligent automation. Lead response, follow-up sequences, reporting, data pipelines — all automated and running 24/7 without your team.</p><div class="sol-tag">→ CRM Automation · AI Workflows · Smart Routing</div></div>
-      <div class="sol-card"><div class="sol-num">04</div><span class="sol-icon">💡</span><h3>Data Consulting</h3><p>We audit your data landscape, clean and unify your sources, build the infrastructure for reliable analytics, and train your team to operate data-first.</p><div class="sol-tag">→ Data Audit · ETL · Governance · Warehousing</div></div>
-      <div class="sol-card"><div class="sol-num">05</div><span class="sol-icon">⚙️</span><h3>Custom AI Solutions</h3><p>Purpose-built AI models and applications for your specific business. Trained on your data, integrated into your workflows, and optimized for your outcomes.</p><div class="sol-tag">→ Custom Models · Voice AI · Intelligent Agents</div></div>
-      <div class="sol-card"><div class="sol-num">06</div><span class="sol-icon">🏗</span><h3>Custom Applications</h3><p>Web-based tools, client portals, and internal systems built for how your business actually operates — not off-the-shelf, but engineered for your exact process.</p><div class="sol-tag">→ Web Apps · Client Portals · Internal Tools</div></div>
+      <div class="sol-card"><div class="sol-num">01</div><span class="sol-icon">📈</span><h3>Marketing Analytics</h3><p>Full-funnel attribution from first click to closed revenue. Understand exactly which channels, campaigns, and messages drive growth.</p><div class="sol-tag">→ Attribution · Funnel Analysis · ROI Reporting</div></div>
+      <div class="sol-card"><div class="sol-num">02</div><span class="sol-icon">🧠</span><h3>Business Intelligence</h3><p>Custom BI dashboards that consolidate every data source into one command center. Real-time KPIs and revenue forecasts.</p><div class="sol-tag">→ Power BI · Looker · Custom Dashboards</div></div>
+      <div class="sol-card"><div class="sol-num">03</div><span class="sol-icon">🤖</span><h3>AI Automation</h3><p>Eliminate repetitive work with intelligent automation. Lead response, follow-up sequences, reporting — automated 24/7.</p><div class="sol-tag">→ CRM Automation · AI Workflows · Smart Routing</div></div>
+      <div class="sol-card"><div class="sol-num">04</div><span class="sol-icon">💡</span><h3>Data Consulting</h3><p>We audit your data landscape, clean and unify your sources, build the infrastructure for reliable analytics.</p><div class="sol-tag">→ Data Audit · ETL · Governance · Warehousing</div></div>
+      <div class="sol-card"><div class="sol-num">05</div><span class="sol-icon">⚙️</span><h3>Custom AI Solutions</h3><p>Purpose-built AI models trained on your data, integrated into your workflows, and optimized for your outcomes.</p><div class="sol-tag">→ Custom Models · Voice AI · Intelligent Agents</div></div>
+      <div class="sol-card"><div class="sol-num">06</div><span class="sol-icon">🏗</span><h3>Custom Applications</h3><p>Web-based tools, client portals, and internal systems built for how your business actually operates.</p><div class="sol-tag">→ Web Apps · Client Portals · Internal Tools</div></div>
     </div>
   </div>
 </section>
@@ -432,40 +536,19 @@ footer{border-top:1px solid var(--border);padding:48px 60px;display:flex;align-i
     <h2 class="s-title reveal">Business outcomes,<br><span class="accent">not vanity metrics.</span></h2>
     <div class="res-grid">
       <div class="res-card reveal">
-        <div class="res-co"><div class="res-name">Northside Roofing</div><div class="res-tag">Construction · TX</div></div>
-        <div class="res-metrics">
-          <div class="res-metric"><span class="res-num">340%</span><div class="res-label">More Booked Estimates</div></div>
-          <div class="res-metric"><span class="res-num">47s</span><div class="res-label">Lead Response Time</div></div>
-          <div class="res-metric"><span class="res-num">$1.2M</span><div class="res-label">New Pipeline / 90d</div></div>
-        </div>
-        <div class="res-quote">
-          <p>"From 12 to 53 booked estimates per month in 90 days. The AI response system alone paid for everything in the first week."</p>
-          <cite class="res-cite">— Marcus T., Owner · Northside Roofing</cite>
-        </div>
+        <div class="res-head"><div class="res-name">Northside Roofing</div><div class="res-badge">Construction · TX</div></div>
+        <div class="res-nums"><div><span class="res-n">340%</span><div class="res-l">More Booked Estimates</div></div><div><span class="res-n">47s</span><div class="res-l">Lead Response</div></div><div><span class="res-n">$1.2M</span><div class="res-l">New Pipeline / 90d</div></div></div>
+        <div class="res-quote"><p>"From 12 to 53 booked estimates per month in 90 days. The AI response system paid for everything in week one."</p><cite class="res-cite">— Marcus T., Owner · Northside Roofing</cite></div>
       </div>
       <div class="res-card reveal">
-        <div class="res-co"><div class="res-name">Lumière Med Spa</div><div class="res-tag">Aesthetics · FL</div></div>
-        <div class="res-metrics">
-          <div class="res-metric"><span class="res-num">$82k</span><div class="res-label">Revenue Recovered</div></div>
-          <div class="res-metric"><span class="res-num">97%</span><div class="res-label">No-Show Reduction</div></div>
-          <div class="res-metric"><span class="res-num">3.1×</span><div class="res-label">Return Client Rate</div></div>
-        </div>
-        <div class="res-quote">
-          <p>"We recovered $82,000 in 90 days from automation alone. Now our staff focuses on patients, not chasing confirmations."</p>
-          <cite class="res-cite">— Dr. Camila R., Medical Director · Lumière</cite>
-        </div>
+        <div class="res-head"><div class="res-name">Lumière Med Spa</div><div class="res-badge">Aesthetics · FL</div></div>
+        <div class="res-nums"><div><span class="res-n">$82k</span><div class="res-l">Revenue Recovered</div></div><div><span class="res-n">97%</span><div class="res-l">No-Show Reduction</div></div><div><span class="res-n">3.1×</span><div class="res-l">Return Client Rate</div></div></div>
+        <div class="res-quote"><p>"We recovered $82,000 in 90 days from automation alone. Now our staff focuses on patients, not chasing confirmations."</p><cite class="res-cite">— Dr. Camila R., Medical Director · Lumière</cite></div>
       </div>
       <div class="res-card reveal">
-        <div class="res-co"><div class="res-name">SolarEdge Pro</div><div class="res-tag">Solar · CA</div></div>
-        <div class="res-metrics">
-          <div class="res-metric"><span class="res-num">2.4×</span><div class="res-label">Close Rate</div></div>
-          <div class="res-metric"><span class="res-num">4h→47s</span><div class="res-label">Response Time</div></div>
-          <div class="res-metric"><span class="res-num">+$640k</span><div class="res-label">Incremental Revenue</div></div>
-        </div>
-        <div class="res-quote">
-          <p>"The dashboard showed exactly where we were losing deals. Fixed 3 friction points and our close rate doubled in 6 weeks."</p>
-          <cite class="res-cite">— Jason W., VP Sales · SolarEdge Pro</cite>
-        </div>
+        <div class="res-head"><div class="res-name">SolarEdge Pro</div><div class="res-badge">Solar · CA</div></div>
+        <div class="res-nums"><div><span class="res-n">2.4×</span><div class="res-l">Close Rate</div></div><div><span class="res-n">4h→47s</span><div class="res-l">Response Time</div></div><div><span class="res-n">+$640k</span><div class="res-l">Incremental Revenue</div></div></div>
+        <div class="res-quote"><p>"The dashboard showed exactly where we were losing deals. Fixed 3 friction points and our close rate doubled in 6 weeks."</p><cite class="res-cite">— Jason W., VP Sales · SolarEdge Pro</cite></div>
       </div>
     </div>
   </div>
@@ -475,34 +558,31 @@ footer{border-top:1px solid var(--border);padding:48px 60px;display:flex;align-i
   <div class="inner">
     <div class="s-tag">How We Work</div>
     <h2 class="s-title reveal">From scattered data<br><span class="accent">to intelligent systems</span></h2>
-    <div class="proc-steps reveal">
-      <div class="proc-step"><div class="proc-num">1</div><h3>Discover</h3><p>We audit your current data infrastructure, tools, processes, and revenue leaks. No generic framework — a custom diagnostic built around your business.</p></div>
-      <div class="proc-step"><div class="proc-num">2</div><h3>Analyze</h3><p>We map every data source, identify gaps in attribution, and build the intelligence architecture that will power your growth decisions going forward.</p></div>
-      <div class="proc-step"><div class="proc-num">3</div><h3>Automate</h3><p>We build and deploy your systems — dashboards, AI models, automation flows, and integrations — all live and operational within 30 days.</p></div>
-      <div class="proc-step"><div class="proc-num">4</div><h3>Scale</h3><p>Once the foundation is profitable, we layer in advanced models, new channels, and deeper intelligence — compounding your advantage every month.</p></div>
+    <div class="proc-grid reveal">
+      <div class="proc-step"><div class="proc-num">1</div><h3>Discover</h3><p>We audit your current data infrastructure, tools, processes, and revenue leaks. A custom diagnostic built around your business.</p></div>
+      <div class="proc-step"><div class="proc-num">2</div><h3>Analyze</h3><p>We map every data source, identify attribution gaps, and build the intelligence architecture for your growth decisions.</p></div>
+      <div class="proc-step"><div class="proc-num">3</div><h3>Automate</h3><p>We build and deploy your systems — dashboards, AI models, automation flows — live and operational within 30 days.</p></div>
+      <div class="proc-step"><div class="proc-num">4</div><h3>Scale</h3><p>Once profitable, we layer in advanced models, new channels, and deeper intelligence — compounding your advantage every month.</p></div>
     </div>
   </div>
 </section>
 
 <section class="why">
   <div class="inner">
-    <div class="why-inner">
+    <div class="why-layout">
       <div class="why-left">
         <div class="s-tag">Why Elevra</div>
         <h2 class="s-title">Built for companies<br><span class="accent">ready to scale.</span></h2>
-        <p>Most agencies deliver deliverables. We deliver intelligence — the data infrastructure, AI systems, and commercial clarity that actually move revenue. We work with companies doing $500k–$20M+ because that's where our approach creates the most impact.</p>
-        <p>We measure success the way you do: revenue growth, operational efficiency, and decisions made with data — not gut. If those numbers don't move, neither does our engagement.</p>
-        <div class="why-quote">
-          <p>"Stop guessing. Start scaling. — Data and AI are no longer optional for companies serious about growth."</p>
-          <cite>— Elevra Digital</cite>
-        </div>
+        <p>Most agencies deliver deliverables. We deliver intelligence — the data infrastructure, AI systems, and commercial clarity that actually move revenue.</p>
+        <p>We measure success the way you do: revenue growth, operational efficiency, and decisions made with data — not gut.</p>
+        <div class="why-pull"><p>"Stop guessing. Start scaling. — Data and AI are no longer optional for companies serious about growth."</p><cite>— Elevra Digital</cite></div>
       </div>
       <div class="why-cards">
         <div class="why-card reveal"><div class="why-icon">📊</div><div><h4>Data-First Approach</h4><p>Every recommendation is backed by data. We don't guess — we measure, model, and act.</p></div></div>
         <div class="why-card reveal"><div class="why-icon">🤖</div><div><h4>AI-Powered Systems</h4><p>AI isn't a feature we bolt on. It's the foundation of every system we build.</p></div></div>
         <div class="why-card reveal"><div class="why-icon">🔧</div><div><h4>Custom-Built Solutions</h4><p>No templates. Every dashboard, model, and workflow is engineered for your specific business.</p></div></div>
         <div class="why-card reveal"><div class="why-icon">🎯</div><div><h4>Growth-Focused Execution</h4><p>We don't deliver reports — we deliver systems that compound. Results in 30 days, momentum in 90.</p></div></div>
-        <div class="why-card reveal"><div class="why-icon">👁</div><div><h4>Executive-Level Visibility</h4><p>Real-time dashboards give you the clarity to make decisions in minutes, not weeks.</p></div></div>
+        <div class="why-card reveal"><div class="why-icon">👁</div><div><h4>Executive-Level Visibility</h4><p>Real-time dashboards give you clarity to make decisions in minutes, not weeks.</p></div></div>
       </div>
     </div>
   </div>
@@ -510,16 +590,16 @@ footer{border-top:1px solid var(--border);padding:48px 60px;display:flex;align-i
 
 <div class="trust">
   <div class="inner">
-    <div class="trust-inner">
-      <div class="trust-stat"><div class="trust-val">$500k–$20M+</div><div class="trust-label">Client Revenue Range</div></div>
+    <div class="trust-row">
+      <div><div class="trust-val">$500k–$20M+</div><div class="trust-lbl">Client Revenue Range</div></div>
       <div class="trust-div"></div>
-      <div class="trust-stat"><div class="trust-val">$8.4M+</div><div class="trust-label">Revenue Attributed</div></div>
+      <div><div class="trust-val">$8.4M+</div><div class="trust-lbl">Revenue Attributed</div></div>
       <div class="trust-div"></div>
-      <div class="trust-stat"><div class="trust-val">30d</div><div class="trust-label">Time to First System</div></div>
+      <div><div class="trust-val">30d</div><div class="trust-lbl">Time to First System</div></div>
       <div class="trust-div"></div>
-      <div class="trust-stat"><div class="trust-val">12+</div><div class="trust-label">Industries Served</div></div>
+      <div><div class="trust-val">12+</div><div class="trust-lbl">Industries Served</div></div>
       <div class="trust-div"></div>
-      <div class="trust-stat"><div class="trust-val">100%</div><div class="trust-label">Custom Builds</div></div>
+      <div><div class="trust-val">100%</div><div class="trust-lbl">Custom Builds</div></div>
     </div>
   </div>
 </div>
@@ -528,70 +608,31 @@ footer{border-top:1px solid var(--border);padding:48px 60px;display:flex;align-i
   <div class="inner">
     <div class="s-tag">Investment</div>
     <h2 class="s-title reveal">Premium infrastructure.<br><span class="accent">Transparent tiers.</span></h2>
-    <p class="price-note reveal">Final scope and investment defined on strategy call based on your current infrastructure, goals, and industry.</p>
-    <div class="price-grid reveal">
+    <p class="price-note reveal">Final scope defined on strategy call — based on your infrastructure, goals, and industry.</p>
+    <div class="plan-grid reveal">
       <div class="plan">
         <div class="plan-name">Data Foundation</div>
         <div class="plan-sub">For companies ready to unify their data and gain real visibility into business performance.</div>
-        <div class="plan-price-block">
-          <div class="plan-from">Monthly retainer from</div>
-          <div class="plan-price">$3,500 / mo</div>
-          <div class="plan-psub">+ one-time setup · scoped on call</div>
-        </div>
-        <ul class="plan-feats">
-          <li>Data Audit & Source Mapping</li>
-          <li>Custom KPI Dashboard (Power BI / Looker)</li>
-          <li>CRM Implementation & Pipeline Setup</li>
-          <li>AI Lead Response System (&lt;60s)</li>
-          <li>Automated Follow-Up Sequences</li>
-          <li>Monthly Revenue Intelligence Report</li>
-          <li>Bi-weekly Strategy Session</li>
-        </ul>
-        <a href="https://wa.me/17543056145" target="_blank" class="plan-cta plan-out">Schedule a Call</a>
+        <div class="plan-price-wrap"><div class="plan-from">Monthly retainer from</div><div class="plan-price">$3,500 / mo</div><div class="plan-psub">+ one-time setup · scoped on call</div></div>
+        <ul class="plan-list"><li>Data Audit & Source Mapping</li><li>Custom KPI Dashboard (Power BI / Looker)</li><li>CRM Implementation & Pipeline Setup</li><li>AI Lead Response System (&lt;60s)</li><li>Automated Follow-Up Sequences</li><li>Monthly Revenue Intelligence Report</li><li>Bi-weekly Strategy Session</li></ul>
+        <a href="https://wa.me/17543056145" target="_blank" class="plan-btn plan-btn-out">Schedule a Call</a>
         <p class="plan-note">30-min discovery · No commitment</p>
       </div>
       <div class="plan feat">
         <div class="plan-badge">Most Chosen</div>
         <div class="plan-name">Growth Intelligence</div>
         <div class="plan-sub">The complete AI and data infrastructure for companies scaling revenue through intelligence and automation.</div>
-        <div class="plan-price-block">
-          <div class="plan-from">Monthly retainer from</div>
-          <div class="plan-price">$7,500 / mo</div>
-          <div class="plan-psub">+ one-time setup · custom on call</div>
-        </div>
-        <ul class="plan-feats">
-          <li>Everything in Data Foundation +</li>
-          <li>Full Marketing Analytics & Attribution</li>
-          <li>Paid Traffic Management (Meta + Google)</li>
-          <li>Funnel Analytics & Conversion Modeling</li>
-          <li>BI Integration & Data Warehouse Setup</li>
-          <li>Predictive Revenue Dashboards</li>
-          <li>Weekly Performance Reporting</li>
-          <li>Dedicated Growth Strategist</li>
-        </ul>
-        <a href="https://wa.me/17543056145" target="_blank" class="plan-cta plan-fill">Book Strategy Session</a>
+        <div class="plan-price-wrap"><div class="plan-from">Monthly retainer from</div><div class="plan-price">$7,500 / mo</div><div class="plan-psub">+ one-time setup · custom on call</div></div>
+        <ul class="plan-list"><li>Everything in Data Foundation +</li><li>Full Marketing Analytics & Attribution</li><li>Paid Traffic Management (Meta + Google)</li><li>Funnel Analytics & Conversion Modeling</li><li>BI Integration & Data Warehouse Setup</li><li>Predictive Revenue Dashboards</li><li>Weekly Performance Reporting</li><li>Dedicated Growth Strategist</li></ul>
+        <a href="https://wa.me/17543056145" target="_blank" class="plan-btn plan-btn-fill">Book Strategy Session</a>
         <p class="plan-note">30-min call · We'll scope your build live</p>
       </div>
       <div class="plan">
         <div class="plan-name">Enterprise AI</div>
         <div class="plan-sub">For market leaders who want full-stack AI, custom applications, and end-to-end intelligence ownership.</div>
-        <div class="plan-price-block">
-          <div class="plan-from">Monthly retainer from</div>
-          <div class="plan-price">$15,000 / mo</div>
-          <div class="plan-psub">Custom scoped on strategy call</div>
-        </div>
-        <ul class="plan-feats">
-          <li>Everything in Growth Intelligence +</li>
-          <li>Custom AI Model Training</li>
-          <li>Voice AI Receptionist</li>
-          <li>Custom Web Application / Client Portal</li>
-          <li>Advanced Predictive Modeling & LTV</li>
-          <li>Process Automation (Full Ops Stack)</li>
-          <li>SEO & Content Intelligence</li>
-          <li>Weekly C-Level Strategy Calls</li>
-          <li>White-Glove Onboarding</li>
-        </ul>
-        <a href="https://wa.me/17543056145" target="_blank" class="plan-cta plan-out">Schedule a Call</a>
+        <div class="plan-price-wrap"><div class="plan-from">Monthly retainer from</div><div class="plan-price">$15,000 / mo</div><div class="plan-psub">Custom scoped on strategy call</div></div>
+        <ul class="plan-list"><li>Everything in Growth Intelligence +</li><li>Custom AI Model Training</li><li>Voice AI Receptionist</li><li>Custom Web Application / Client Portal</li><li>Advanced Predictive Modeling & LTV</li><li>Process Automation (Full Ops Stack)</li><li>SEO & Content Intelligence</li><li>Weekly C-Level Strategy Calls</li><li>White-Glove Onboarding</li></ul>
+        <a href="https://wa.me/17543056145" target="_blank" class="plan-btn plan-btn-out">Schedule a Call</a>
         <p class="plan-note">For companies serious about data leadership</p>
       </div>
     </div>
@@ -600,105 +641,338 @@ footer{border-top:1px solid var(--border);padding:48px 60px;display:flex;align-i
 
 <section class="final" id="contact">
   <div class="final-glow"></div>
-  <div class="final-glow2"></div>
-  <div class="s-tag" style="justify-content:center">Ready to Transform?</div>
-  <h2 class="reveal">Stop guessing.<br><span class="accent">Start scaling.</span></h2>
-  <p class="reveal">In 30 days you could have a fully operational data and AI infrastructure — real visibility, automated operations, and a system that compounds your growth every single month.</p>
-  <div class="reveal">
-    <a href="https://wa.me/17543056145" target="_blank" class="btn-prim" style="font-size:16px;padding:18px 44px;display:inline-flex">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      Book Your Free Strategy Session
-    </a>
-    <div class="cta-meta">
-      <span>Free 30-min session</span>
-      <span>Full business audit</span>
-      <span>No obligation</span>
-      <span>$500k–$20M+ companies</span>
+  <div class="inner" style="position:relative;z-index:1">
+    <div class="s-tag" style="justify-content:center">Ready to Transform?</div>
+    <h2 class="reveal">Stop guessing.<br><span class="accent">Start scaling.</span></h2>
+    <p class="reveal">In 30 days you could have a fully operational data and AI infrastructure — real visibility, automated operations, and a system that compounds growth every month.</p>
+    <div class="reveal">
+      <a href="https://wa.me/17543056145" target="_blank" class="btn-prim" style="font-size:15px;padding:18px 44px;display:inline-flex">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book Your Free Strategy Session
+      </a>
+      <div class="cta-meta"><span>Free 30-min session</span><span>Full business audit</span><span>No obligation</span><span>$500k–$20M+ companies</span></div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="foot-logo">
-    <div class="logo-mark" style="width:26px;height:26px">
-      <svg viewBox="0 0 18 18" fill="none" style="width:14px;height:14px">
-        <path d="M3 13 L3 5 L11 5 L11 8 L6 8 L6 10 L10 10 L10 12 L6 12 L6 13 Z" fill="white" opacity=".5"/>
-        <path d="M10 7 L14 3 L14 7 Z" fill="white" opacity=".35"/>
-      </svg>
-    </div>
-    <span class="foot-word">ELEVRA</span>
-  </div>
+  <div class="foot-logo"><img id="logo-foot" src="" alt="Elevra Digital"></div>
   <ul class="foot-links">
-    <li><a href="#solutions">Solutions</a></li>
-    <li><a href="#results">Results</a></li>
-    <li><a href="#process">Process</a></li>
-    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#solutions">Solutions</a></li><li><a href="#results">Results</a></li>
+    <li><a href="#process">Process</a></li><li><a href="#pricing">Pricing</a></li>
     <li><a href="https://wa.me/17543056145" target="_blank">Contact</a></li>
   </ul>
   <span class="foot-copy">© 2026 Elevra Digital. All rights reserved.</span>
 </footer>
 
 <script>
-const gc=document.getElementById('grid-canvas');
-const gx=gc.getContext('2d');
-function drawGrid(){
-  gc.width=window.innerWidth;gc.height=window.innerHeight;
-  gx.clearRect(0,0,gc.width,gc.height);
-  const sz=52;
-  gx.strokeStyle='rgba(37,99,235,0.28)';gx.lineWidth=0.5;
-  for(let x=0;x<gc.width;x+=sz){gx.beginPath();gx.moveTo(x,0);gx.lineTo(x,gc.height);gx.stroke()}
-  for(let y=0;y<gc.height;y+=sz){gx.beginPath();gx.moveTo(0,y);gx.lineTo(gc.width,y);gx.stroke()}
+// ═══════════════════════════════════════════════════
+//  INJECT LOGO
+// ═══════════════════════════════════════════════════
+const LOGO = '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IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIP/2gAMAwEAAgADAAAAEDTTTTRTTTTTTTQTTTTTSRSRRTTSTTTRTcvvvvptvvvnvrlvnvvvqhpnnvqhqpvvvnvtvvuvtsvvvvrqvvvvjfvvttuprmtkvvvrvkrnsvvstvvvrnuM/slvjurksvrksfvvvvrvuvkogp7FBOJxewvvn6usoluhjrnvvvuqvvqggiMsRkYuAlvttvsvgipnv6vvvvnvvvighlFh3xvagvvrikrhjvvrjsvvvvnvqlrhvmflwK1gktvtuolvutvigrvvtvvvvtslvp6e1kAKhjutqghhpsonguvvvvrvutnnvpfgD6sIhgrvhrivqrgjjqvvvvt/8sNvms0eoRLjQu66hvuugggksvtusuxGLivPvoqD7AmcAqsOAlG8AgkhjrojjtdhFIduIOXtjkgaFpYXSonDAggog7nvvj3lzlWIjkCCziJyhpVdYqYmbgggjgkvqsneXXj16NmVWjuQwYWvk4al6kgovilvinN+xKeeBjuFMUnKEGEip8D8AgjrgrtvlvvNdDtDduby5tFbNEqSR/CAAhvusvvuhrCR1T8T52hJSRGRTdYjFWbIyjvsgvnukutskkgnrkvvnpnogggggggglkuggvvvgooonogngognogvgggggggggongggf/EADYRAAEDAgQDBAcIAwAAAAAAAAEAAhEDBBITITEFEFEwQEGRBjJCUqHB0RUgImBhcYGxQ1Pw/9oACAECAQE/AMtqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2/lIamArXhxd+Kr5LiLQ2oANo7z6PWlK5NTNbMR81U4VaD2An8OtfcCdYW49kK5o21uwvLQregbmpLdAqtRtvTk7BV67qzsTu8+iurqv8fNekdRzboBp8B81mv6lZj+pTGPruFMalUqLLWlHgN1d3JuHz4DbvXCuItsadV3tGI+K4Two3IN1dicWwP9/RP4VZ+4E7htqNmBNt6NEyxoC4jeZpy2bD4974Dw5t7XJqeq3X91xbiDLClp6x2H/eCfdVnuLnOMn9Ua9T3j5o1nkRiPmgO9+ie9X+Pmr7hFveVMyrMxG6f6PWg2nzTuBWw6+adwa3HXzV3Z29sy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';
+document.getElementById('logo-img').src = 'data:image/jpeg;base64,' + LOGO;
+document.getElementById('logo-foot').src = 'data:image/jpeg;base64,' + LOGO;
+
+// ═══════════════════════════════════════════════════
+//  1. MILKY WAY + STARS — drawn on #sky (FULL PAGE HEIGHT)
+// ═══════════════════════════════════════════════════
+const sky = document.getElementById('sky');
+const sc  = sky.getContext('2d');
+const PI2 = Math.PI * 2;
+
+function drawSky() {
+  const W = window.innerWidth;
+  const H = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, 4000);
+  sky.width  = W;
+  sky.height = H;
+  sky.style.height = H + 'px';
+
+  // --- deep space base ---
+  const base = sc.createLinearGradient(0, 0, 0, H);
+  base.addColorStop(0,   '#010409');
+  base.addColorStop(0.4, '#02060e');
+  base.addColorStop(0.8, '#030810');
+  base.addColorStop(1,   '#010409');
+  sc.fillStyle = base;
+  sc.fillRect(0, 0, W, H);
+
+  // --- Milky Way band (diagonal smear across full height) ---
+  const bandW = W * 0.55;
+  for (let pass = 0; pass < 3; pass++) {
+    const offsets = [0, -bandW * 0.3, bandW * 0.15];
+    const alphas  = [0.13, 0.08, 0.10];
+    const radii   = [bandW * 0.5, bandW * 0.35, bandW * 0.25];
+    const cols    = [[60,100,200],[80,120,220],[100,140,240]];
+    const steps   = 80;
+    for (let i = 0; i < steps; i++) {
+      const t  = i / steps;
+      const cx = W * 0.18 + W * 0.64 * t + offsets[pass];
+      const cy = H * t;
+      const [r,g,b] = cols[pass];
+      const gr = sc.createRadialGradient(cx, cy, 0, cx, cy, radii[pass]);
+      gr.addColorStop(0, `rgba(${r},${g},${b},${alphas[pass]})`);
+      gr.addColorStop(0.5, `rgba(${r},${g},${b},${alphas[pass]*0.4})`);
+      gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      sc.fillStyle = gr;
+      sc.beginPath(); sc.arc(cx, cy, radii[pass], 0, PI2); sc.fill();
+    }
+  }
+
+  // --- Nebula puffs spread across full height ---
+  const nebulas = [
+    {rx:0.12,ry:0.06, size:250,[Symbol.toPrimitive](){},col:[0,180,255],  a:0.06},
+    {rx:0.78,ry:0.14, size:200, col:[80,60,220],   a:0.055},
+    {rx:0.45,ry:0.28, size:320, col:[0,190,240],   a:0.05},
+    {rx:0.88,ry:0.38, size:180, col:[40,100,230],  a:0.065},
+    {rx:0.08,ry:0.52, size:260, col:[0,160,230],   a:0.05},
+    {rx:0.65,ry:0.62, size:220, col:[60,80,210],   a:0.055},
+    {rx:0.3, ry:0.75, size:190, col:[0,200,250],   a:0.06},
+    {rx:0.82,ry:0.85, size:240, col:[50,110,220],  a:0.05},
+    {rx:0.5, ry:0.95, size:200, col:[0,170,240],   a:0.055},
+  ];
+  nebulas.forEach(n => {
+    const cx = n.rx * W, cy = n.ry * H;
+    for (let k = 0; k < 6; k++) {
+      const ox = (Math.random()-0.5)*n.size*0.7;
+      const oy = (Math.random()-0.5)*n.size*0.7;
+      const gr = sc.createRadialGradient(cx+ox,cy+oy,0,cx+ox,cy+oy,n.size*0.65);
+      const [r,g,b] = n.col;
+      gr.addColorStop(0, `rgba(${r},${g},${b},${n.a})`);
+      gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      sc.fillStyle = gr;
+      sc.beginPath(); sc.arc(cx+ox,cy+oy,n.size*0.65,0,PI2); sc.fill();
+    }
+  });
+
+  // --- Stars layer 1: tiny dust (3000) ---
+  for (let i = 0; i < 3000; i++) {
+    const x = Math.random()*W, y = Math.random()*H;
+    const r = Math.random()*0.65+0.1;
+    const a = Math.random()*0.55+0.08;
+    sc.beginPath(); sc.arc(x,y,r,0,PI2);
+    sc.fillStyle = `rgba(190,215,255,${a})`; sc.fill();
+  }
+
+  // --- Stars layer 2: medium (800) ---
+  for (let i = 0; i < 800; i++) {
+    const x = Math.random()*W, y = Math.random()*H;
+    const r = Math.random()*1.2+0.4;
+    const a = Math.random()*0.7+0.25;
+    const t = Math.random();
+    const col = t<0.5 ? `rgba(180,210,255,${a})`
+              : t<0.75 ? `rgba(255,242,200,${a})`
+              : `rgba(200,240,255,${a})`;
+    sc.beginPath(); sc.arc(x,y,r,0,PI2);
+    sc.fillStyle = col; sc.fill();
+  }
+
+  // --- Stars layer 3: bright with glow + spike (100) ---
+  for (let i = 0; i < 100; i++) {
+    const x = Math.random()*W, y = Math.random()*H;
+    const r = Math.random()*2.2+1.0;
+    const a = 0.75+Math.random()*0.25;
+    const t = Math.random();
+    let sr,sg,sb;
+    if(t<0.4){sr=185;sg=215;sb=255;}
+    else if(t<0.7){sr=255;sg=248;sb=200;}
+    else{sr=200;sg=248;sb=255;}
+    // outer glow
+    const gr = sc.createRadialGradient(x,y,0,x,y,r*8);
+    gr.addColorStop(0,  `rgba(${sr},${sg},${sb},${a*0.45})`);
+    gr.addColorStop(0.4,`rgba(${sr},${sg},${sb},${a*0.15})`);
+    gr.addColorStop(1,  `rgba(${sr},${sg},${sb},0)`);
+    sc.fillStyle = gr;
+    sc.beginPath(); sc.arc(x,y,r*8,0,PI2); sc.fill();
+    // core
+    sc.beginPath(); sc.arc(x,y,r,0,PI2);
+    sc.fillStyle = `rgba(${sr},${sg},${sb},${a})`; sc.fill();
+    // diffraction spikes on large stars
+    if (r > 2.0) {
+      const len = r * 7;
+      sc.save();
+      sc.globalAlpha = a * 0.3;
+      sc.strokeStyle = `rgb(${sr},${sg},${sb})`;
+      sc.lineWidth = 0.5;
+      sc.beginPath(); sc.moveTo(x-len,y); sc.lineTo(x+len,y); sc.stroke();
+      sc.beginPath(); sc.moveTo(x,y-len); sc.lineTo(x,y+len); sc.stroke();
+      sc.restore();
+    }
+  }
+
+  // --- Constellations (lines + nodes) spread across full page ---
+  const consts = [
+    {pts:[[0.07,0.04],[0.11,0.08],[0.09,0.13],[0.14,0.16],[0.17,0.10],[0.15,0.05]]},
+    {pts:[[0.72,0.03],[0.77,0.05],[0.82,0.04],[0.87,0.06],[0.90,0.10],[0.85,0.13],[0.80,0.13]]},
+    {pts:[[0.05,0.22],[0.10,0.19],[0.15,0.21],[0.12,0.27],[0.06,0.28]]},
+    {pts:[[0.80,0.31],[0.86,0.27],[0.92,0.31],[0.86,0.36],[0.80,0.31]]},
+    {pts:[[0.42,0.15],[0.47,0.18],[0.52,0.17],[0.56,0.20],[0.57,0.26],[0.53,0.31]]},
+    {pts:[[0.06,0.45],[0.11,0.42],[0.17,0.44],[0.21,0.49],[0.16,0.54]]},
+    {pts:[[0.70,0.52],[0.76,0.48],[0.82,0.50],[0.85,0.56],[0.79,0.60]]},
+    {pts:[[0.28,0.62],[0.34,0.58],[0.40,0.60],[0.37,0.67],[0.30,0.67]]},
+    {pts:[[0.60,0.72],[0.65,0.68],[0.72,0.70],[0.74,0.76],[0.68,0.80],[0.61,0.78]]},
+    {pts:[[0.08,0.80],[0.13,0.76],[0.19,0.78],[0.22,0.83],[0.17,0.88]]},
+    {pts:[[0.78,0.88],[0.84,0.84],[0.90,0.86],[0.87,0.92],[0.81,0.93]]},
+    {pts:[[0.45,0.92],[0.50,0.88],[0.56,0.90],[0.53,0.96]]},
+  ];
+  consts.forEach(con => {
+    // lines
+    sc.beginPath();
+    con.pts.forEach((p,i) => {
+      const px = p[0]*W, py = p[1]*H;
+      i===0 ? sc.moveTo(px,py) : sc.lineTo(px,py);
+    });
+    sc.strokeStyle = 'rgba(0,200,255,0.22)';
+    sc.lineWidth = 0.8; sc.stroke();
+    // star nodes
+    con.pts.forEach(p => {
+      const px = p[0]*W, py = p[1]*H;
+      const gr = sc.createRadialGradient(px,py,0,px,py,6);
+      gr.addColorStop(0,'rgba(0,228,255,0.95)');
+      gr.addColorStop(1,'rgba(0,228,255,0)');
+      sc.fillStyle = gr;
+      sc.beginPath(); sc.arc(px,py,6,0,PI2); sc.fill();
+      sc.beginPath(); sc.arc(px,py,1.8,0,PI2);
+      sc.fillStyle = 'rgba(220,248,255,1)'; sc.fill();
+    });
+  });
 }
-drawGrid();
-window.addEventListener('resize',drawGrid);
 
-const vals=[42,55,48,62,58,71,65,78,72,85,80,94];
-const colors=['#3b82f6','#6366f1','#3b82f6','#6366f1','#3b82f6','#06b6d4','#3b82f6','#06b6d4','#6366f1','#3b82f6','#06b6d4','#6366f1'];
-const bc=document.getElementById('bars');
-if(bc){vals.forEach((v,i)=>{
-  const b=document.createElement('div');
-  b.className='bar';
-  b.style.height=v+'%';
-  b.style.background=colors[i];
-  b.style.opacity=i===vals.length-1?'1':'0.6';
-  bc.appendChild(b);
-});}
+// Draw immediately and also after fonts/images load
+drawSky();
+window.addEventListener('load', () => { setTimeout(drawSky, 300); });
+window.addEventListener('resize', () => { clearTimeout(window._skyT); window._skyT = setTimeout(drawSky, 200); });
 
-const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cur.style.left=mx+'px';cur.style.top=my+'px';
-});
-(function loop(){
-  rx+=(mx-rx)*.14;ry+=(my-ry)*.14;
-  ring.style.left=rx+'px';ring.style.top=ry+'px';
+// ═══════════════════════════════════════════════════
+//  2. NEURAL NETWORK — fixed viewport overlay
+// ═══════════════════════════════════════════════════
+const NC  = document.getElementById('neural');
+const nc  = NC.getContext('2d');
+let NW, NH, mouse = {x:600, y:400};
+let nodes=[], pulses=[], rings=[];
+const TAU = Math.PI*2;
+
+function resizeNeural(){ NW=NC.width=window.innerWidth; NH=NC.height=window.innerHeight; }
+resizeNeural();
+window.addEventListener('resize',()=>{ resizeNeural(); initNeural(); });
+document.addEventListener('mousemove',e=>{ mouse.x=e.clientX; mouse.y=e.clientY; });
+
+class Node{
+  constructor(){
+    this.x=Math.random()*NW; this.y=Math.random()*NH;
+    this.z=Math.random();
+    this.vx=(Math.random()-.5)*.22; this.vy=(Math.random()-.5)*.18;
+    this.vz=(Math.random()-.5)*.002;
+    this.type=Math.random()<.1?'hub':(Math.random()<.2?'mid':'leaf');
+    this.r=this.type==='hub'?this.z*4+2:this.type==='mid'?this.z*3+1.2:this.z*2.5+.4;
+    this.pulse=false; this.pulseR=0; this.pulseA=0; this.age=Math.random()*TAU;
+    const t=Math.random();
+    this.col=t<.55?[0,212,255]:t<.82?[46,141,232]:[0,229,160];
+  }
+  update(dt){
+    this.age+=dt*.0008; this.z+=this.vz;
+    if(this.z<0){this.z=0;this.vz*=-1;} if(this.z>1){this.z=1;this.vz*=-1;}
+    this.x+=this.vx; this.y+=this.vy;
+    if(this.x<-80)this.x=NW+80; if(this.x>NW+80)this.x=-80;
+    if(this.y<-80)this.y=NH+80; if(this.y>NH+80)this.y=-80;
+    this.rx=this.x+(mouse.x/NW-.5)*this.z*28;
+    this.ry=this.y+(mouse.y/NH-.5)*this.z*18;
+    if(this.pulse){this.pulseR+=dt*.07; this.pulseA=Math.max(0,1-this.pulseR/65); if(this.pulseA<=0)this.pulse=false;}
+  }
+  draw(){
+    const[r,g,b]=this.col, breath=.7+.3*Math.sin(this.age), rad=this.r*breath, a=.25+.35*this.z;
+    if(this.type!=='leaf'){
+      const g2=nc.createRadialGradient(this.rx,this.ry,0,this.rx,this.ry,rad*5);
+      g2.addColorStop(0,`rgba(${r},${g},${b},${a*.5})`); g2.addColorStop(1,`rgba(${r},${g},${b},0)`);
+      nc.beginPath(); nc.arc(this.rx,this.ry,rad*5,0,TAU); nc.fillStyle=g2; nc.fill();
+    }
+    nc.beginPath(); nc.arc(this.rx,this.ry,rad,0,TAU); nc.fillStyle=`rgba(${r},${g},${b},${a})`; nc.fill();
+    if(this.pulse&&this.pulseA>0){
+      nc.beginPath(); nc.arc(this.rx,this.ry,rad+this.pulseR,0,TAU);
+      nc.strokeStyle=`rgba(${r},${g},${b},${this.pulseA*.7})`; nc.lineWidth=1; nc.stroke();
+    }
+  }
+}
+class Pulse{
+  constructor(a,b){this.a=a;this.b=b;this.t=0;this.spd=.007+Math.random()*.007;this.col=a.col;}
+  done(){return this.t>=1;}
+  update(dt){this.t=Math.min(1,this.t+this.spd*(dt/16));}
+  draw(){
+    const x=this.a.rx+(this.b.rx-this.a.rx)*this.t, y=this.a.ry+(this.b.ry-this.a.ry)*this.t;
+    const[r,g,b]=this.col;
+    const g2=nc.createRadialGradient(x,y,0,x,y,7);
+    g2.addColorStop(0,`rgba(${r},${g},${b},1)`); g2.addColorStop(.5,`rgba(${r},${g},${b},.4)`); g2.addColorStop(1,`rgba(${r},${g},${b},0)`);
+    nc.beginPath(); nc.arc(x,y,7,0,TAU); nc.fillStyle=g2; nc.fill();
+    nc.beginPath(); nc.arc(x,y,2,0,TAU); nc.fillStyle='rgba(255,255,255,.9)'; nc.fill();
+  }
+}
+class Ring{
+  constructor(){
+    this.x=Math.random()*NW; this.y=Math.random()*NH;
+    this.r=55+Math.random()*90; this.spd=(Math.random()>.5?1:-1)*(.003+Math.random()*.004);
+    this.angle=Math.random()*TAU; this.a=.03+Math.random()*.05;
+    this.sats=Math.floor(2+Math.random()*4);
+    this.col=Math.random()<.6?[0,212,255]:[46,141,232];
+  }
+  update(dt){this.angle+=this.spd*(dt/16);}
+  draw(){
+    const[r,g,b]=this.col;
+    nc.beginPath(); nc.arc(this.x,this.y,this.r,0,TAU);
+    nc.strokeStyle=`rgba(${r},${g},${b},${this.a})`; nc.lineWidth=.8; nc.stroke();
+    nc.beginPath(); nc.arc(this.x,this.y,this.r+14,0,TAU);
+    nc.strokeStyle=`rgba(${r},${g},${b},${this.a*.4})`; nc.lineWidth=.4; nc.stroke();
+    for(let i=0;i<this.sats;i++){
+      const a=this.angle+(TAU/this.sats)*i;
+      const sx=this.x+Math.cos(a)*this.r, sy=this.y+Math.sin(a)*this.r;
+      nc.beginPath(); nc.arc(sx,sy,2,0,TAU); nc.fillStyle=`rgba(${r},${g},${b},${this.a*4})`; nc.fill();
+    }
+  }
+}
+
+function initNeural(){nodes=Array.from({length:100},()=>new Node()); rings=Array.from({length:6},()=>new Ring());}
+initNeural();
+
+let pTimer=0, lastT=performance.now();
+function loop(ts){
+  const dt=Math.min(ts-lastT,40); lastT=ts;
+  nc.clearRect(0,0,NW,NH);
+  rings.forEach(r=>{r.update(dt);r.draw();});
+  for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
+    const a=nodes[i],b=nodes[j],dx=a.rx-b.rx,dy=a.ry-b.ry,d=Math.sqrt(dx*dx+dy*dy);
+    if(d<165){
+      const al=(1-d/165)*.2*(a.z+b.z)*.6;
+      const[ar,ag,ab]=a.col,[br,bg,bb]=b.col;
+      const gd=nc.createLinearGradient(a.rx,a.ry,b.rx,b.ry);
+      gd.addColorStop(0,`rgba(${ar},${ag},${ab},${al})`); gd.addColorStop(1,`rgba(${br},${bg},${bb},${al})`);
+      nc.beginPath(); nc.moveTo(a.rx,a.ry); nc.lineTo(b.rx,b.ry);
+      nc.strokeStyle=gd; nc.lineWidth=(a.type==='hub'||b.type==='hub')?1.1:.45; nc.stroke();
+    }
+  }
+  nodes.forEach(n=>{n.update(dt);n.draw();});
+  pulses=pulses.filter(p=>!p.done()); pulses.forEach(p=>{p.update(dt);p.draw();});
+  pTimer+=dt;
+  if(pTimer>1900){pTimer=0;
+    const hubs=nodes.filter(n=>n.type==='hub');
+    if(hubs.length){const src=hubs[Math.floor(Math.random()*hubs.length)];src.pulse=true;src.pulseR=0;src.pulseA=1;
+      nodes.forEach(n=>{if(n===src)return;const dx=n.rx-src.rx,dy=n.ry-src.ry;if(Math.sqrt(dx*dx+dy*dy)<240&&Math.random()<.4)pulses.push(new Pulse(src,n));});
+    }
+  }
   requestAnimationFrame(loop);
-})();
-document.querySelectorAll('a,button,.sol-card,.res-card,.why-card,.prob-card,.proc-step').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.classList.add('big');ring.style.transform='translate(-50%,-50%) scale(1.7)';ring.style.borderColor='rgba(99,102,241,.6)'});
-  el.addEventListener('mouseleave',()=>{cur.classList.remove('big');ring.style.transform='translate(-50%,-50%) scale(1)';ring.style.borderColor='rgba(99,102,241,.5)'});
-});
-if('ontouchstart' in window){document.body.style.cursor='auto';cur.style.display='none';ring.style.display='none'}
+}
+requestAnimationFrame(loop);
 
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}});
-},{threshold:0.1});
-document.querySelectorAll('.reveal').forEach((el,i)=>{
-  const sibs=[...(el.parentElement?el.parentElement.querySelectorAll(':scope > .reveal'):[])];
-  const idx=sibs.indexOf(el);
-  if(idx>0)el.style.transitionDelay=(idx*80)+'ms';
-  obs.observe(el);
-});
+// ─── Chart bars ───
+const vals=[42,55,48,62,58,71,65,78,72,85,80,94];
+const bc=document.getElementById('bars');
+if(bc){['#2e8de8','#00d4ff','#2e8de8','#00d4ff','#2e8de8','#00e5a0','#2e8de8','#00e5a0','#00d4ff','#2e8de8','#00e5a0','#00d4ff'].forEach((c,i)=>{const b=document.createElement('div');b.className='bar';b.style.height=vals[i]+'%';b.style.background=c;b.style.opacity=i===11?'1':'0.55';bc.appendChild(b);});}
 
+// ─── Scroll reveal ───
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target);}}),{threshold:0.1});
+document.querySelectorAll('.reveal').forEach((el,i)=>{const s=[...(el.parentElement?.querySelectorAll(':scope > .reveal')??[])];const idx=s.indexOf(el);if(idx>0)el.style.transitionDelay=(idx*90)+'ms';obs.observe(el);});
+
+// ─── Hamburger ───
 const ham=document.getElementById('ham'),mob=document.getElementById('mobMenu');
-ham.addEventListener('click',()=>{
-  ham.classList.toggle('open');mob.classList.toggle('open');
-  document.body.style.overflow=mob.classList.contains('open')?'hidden':'';
-});
-document.querySelectorAll('.mob-link,.mob-btn').forEach(l=>{
-  l.addEventListener('click',()=>{ham.classList.remove('open');mob.classList.remove('open');document.body.style.overflow=''});
-});
+ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('open');document.body.style.overflow=mob.classList.contains('open')?'hidden':'';});
+document.querySelectorAll('.mob-link').forEach(l=>l.addEventListener('click',()=>{ham.classList.remove('open');mob.classList.remove('open');document.body.style.overflow='';}));
 </script>
 </body>
 </html>
