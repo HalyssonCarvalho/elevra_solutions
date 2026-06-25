@@ -3,892 +3,606 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Elevra Digital — Data, AI & Growth</title>
+<title>Elevra Digital — Growth Agency | Miami, South Florida</title>
+<meta name="description" content="Elevra helps South Florida businesses generate more leads, close more customers and automate growth through Marketing, AI and Data. Get your free business audit.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --blue:#1a6fd4; --blue2:#2e8de8; --cyan:#00d4ff; --green:#00e5a0;
-  --white:#eef4ff; --muted:#3d5470; --muted2:#6a8bab;
-  --border:rgba(0,212,255,0.09); --border2:rgba(0,212,255,0.2);
-  --card:rgba(4,12,26,0.82);
+  --navy:#0B1F3A;--navy2:#1A3A5C;--blue:#2B6CB0;--blue-lt:#EBF4FF;
+  --white:#FFFFFF;--off:#F7F8FA;--ink:#0D0D0D;--ink-mid:#3A3A3A;
+  --ink-lt:#6B7280;--border:#E2E8F0;--gold:#C9A96E;
+  --font-d:'Cormorant Garamond',Georgia,serif;
+  --font-b:'Inter',-apple-system,sans-serif;
+  --max:1200px;--sp:120px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-
-/* THE MOST IMPORTANT PART: full page starfield */
-body{
-  font-family:'Outfit',sans-serif;
-  color:var(--white);
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-  /* starfield rendered by JS into #sky, behind everything */
-  background:#02060e;
-}
-
-/* Sky canvas covers ENTIRE document height, not just viewport */
-#sky{
-  position:absolute;
-  top:0; left:0;
-  width:100%;
-  /* height set by JS */
-  z-index:0;
-  pointer-events:none;
-}
-
-/* Neural overlay — fixed to viewport, always visible while scrolling */
-#neural{
-  position:fixed;
-  inset:0;
-  z-index:1;
-  pointer-events:none;
-  opacity:0.6;
-}
-
-/* All content on top */
-nav,section,.ticker-wrap,.proof,.trust,footer{position:relative;z-index:10;}
-
-/* Sections transparent so stars show through */
-section{background:transparent;}
-.problems,.solutions,.results,.process,.why,.pricing,.final{background:transparent;}
-
-/* Cards get semi-transparent dark background */
-.prob-card,.sol-card,.res-card,.proc-step,.why-card,.plan,.kpi,.mini,.dash,.dash-mini,
-.prob-callout,.res-quote{background:var(--card)!important;}
-.dash{background:rgba(4,12,26,0.92)!important;}
-
-nav{background:rgba(2,6,14,.82);backdrop-filter:blur(28px);
-  border-bottom:1px solid var(--border2);
-  position:fixed;top:0;left:0;right:0;height:72px;
-  padding:0 60px;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo img{height:52px;filter:drop-shadow(0 0 14px rgba(0,212,255,.6))}
-.nav-links{display:flex;gap:36px;list-style:none}
-.nav-links a{font-size:12px;color:var(--muted2);text-decoration:none;
-  letter-spacing:.1em;text-transform:uppercase;transition:color .2s;
-  font-family:'JetBrains Mono',monospace}
-.nav-links a:hover{color:var(--cyan)}
-.nav-cta{background:linear-gradient(135deg,var(--blue),var(--blue2));
-  color:#fff;padding:10px 22px;border-radius:6px;font-size:12px;font-weight:600;
-  text-decoration:none;letter-spacing:.06em;text-transform:uppercase;
-  transition:all .3s;white-space:nowrap;border:1px solid rgba(0,212,255,.3);
-  box-shadow:0 0 20px rgba(0,212,255,.15)}
-.nav-cta:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(0,212,255,.4)}
-
-.inner{max-width:1200px;margin:0 auto;padding:0 60px}
-.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;
-  gap:60px;align-items:center;padding:100px 60px 60px;
-  max-width:1320px;margin:0 auto}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;
-  font-family:'JetBrains Mono',monospace;font-size:11px;
-  letter-spacing:.14em;color:var(--cyan);margin-bottom:28px;text-transform:uppercase}
-.hero-eyebrow-dot{width:6px;height:6px;background:var(--cyan);border-radius:50%;
-  animation:blink 1.8s infinite;box-shadow:0 0 8px var(--cyan)}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.hero h1{font-family:'Outfit',sans-serif;font-size:clamp(46px,5.8vw,76px);
-  font-weight:900;line-height:.95;letter-spacing:-.03em;margin-bottom:26px}
-.h1-plain{display:block;color:var(--white)}
-.h1-glow{display:block;background:linear-gradient(90deg,var(--blue2),var(--cyan));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  filter:drop-shadow(0 0 30px rgba(0,212,255,.5))}
-.hero-sub{font-size:16px;color:var(--muted2);line-height:1.85;
-  max-width:480px;margin-bottom:40px;font-weight:300}
-.hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-.btn-prim{background:linear-gradient(135deg,var(--blue),var(--blue2));
-  color:#fff;padding:15px 30px;border-radius:7px;font-size:14px;font-weight:600;
-  text-decoration:none;letter-spacing:.04em;transition:all .3s;
-  display:inline-flex;align-items:center;gap:9px;
-  border:1px solid rgba(0,212,255,.25);box-shadow:0 0 24px rgba(0,212,255,.2)}
-.btn-prim:hover{transform:translateY(-2px);box-shadow:0 0 44px rgba(0,212,255,.5)}
-.btn-ghost{border:1px solid var(--border2);color:var(--white);
-  padding:15px 28px;border-radius:7px;font-size:14px;font-weight:500;
-  text-decoration:none;transition:all .3s;background:rgba(0,0,0,.3)}
-.btn-ghost:hover{background:rgba(0,212,255,.08);border-color:var(--cyan)}
-.hero-note{margin-top:18px;font-family:'JetBrains Mono',monospace;
-  font-size:10px;color:var(--muted);letter-spacing:.07em}
-.hero-stats{display:flex;gap:40px;margin-top:44px;
-  padding-top:28px;border-top:1px solid var(--border2)}
-.stat-val{font-family:'Outfit',sans-serif;font-size:30px;font-weight:900;
-  background:linear-gradient(135deg,var(--white),var(--cyan));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.stat-lbl{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;
-  letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
-
-.hero-right{position:relative}
-.dash-float{position:absolute;top:-16px;right:-16px;z-index:5;
-  background:rgba(4,12,28,.95);border:1px solid var(--border2);
-  border-radius:10px;padding:11px 16px;box-shadow:0 0 20px rgba(0,212,255,.2)}
-.float-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;
-  color:var(--muted2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
-.float-val{font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;
-  color:var(--green);filter:drop-shadow(0 0 8px rgba(0,229,160,.5))}
-.dash{border:1px solid var(--border2);border-radius:16px;overflow:hidden;
-  box-shadow:0 40px 100px rgba(0,0,0,.8),0 0 60px rgba(0,212,255,.07)}
-.dash-bar{background:rgba(8,20,40,.95);padding:12px 18px;
-  display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
-.dd{width:9px;height:9px;border-radius:50%}
-.dash-title{font-family:'JetBrains Mono',monospace;font-size:10px;
-  color:var(--muted2);margin-left:6px;letter-spacing:.06em}
-.dash-body{padding:20px}
-.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
-.kpi{border:1px solid var(--border);border-radius:8px;padding:13px}
-.kpi-v{font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;margin-bottom:2px}
-.kpi-l{font-size:9px;color:var(--muted2);font-family:'JetBrains Mono',monospace;letter-spacing:.05em}
-.kpi-d{font-size:9px;color:var(--green);margin-top:4px;font-family:'JetBrains Mono',monospace}
-.chart-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;
-  color:var(--muted);margin-bottom:8px;letter-spacing:.06em}
-.bars-wrap{height:72px;display:flex;align-items:flex-end;gap:4px}
-.bar{flex:1;border-radius:3px 3px 0 0}
-.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.mini{border:1px solid var(--border);border-radius:8px;padding:12px}
-.mini-t{font-family:'JetBrains Mono',monospace;font-size:9px;
-  color:var(--muted2);margin-bottom:8px;letter-spacing:.05em}
-.mini-row{display:flex;justify-content:space-between;margin-bottom:5px}
-.mini-row span:first-child{font-size:10px;color:var(--muted2)}
-.mini-row span:last-child{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--white)}
-.bar-t{height:2px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:2px}
-.bar-f{height:100%;border-radius:2px}
-
-.ticker-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  padding:12px 0;overflow:hidden;background:rgba(2,6,14,.7)}
-.ticker{display:flex;gap:60px;animation:tick 32s linear infinite;
-  width:max-content;white-space:nowrap}
-.t-item{font-family:'JetBrains Mono',monospace;font-size:10px;
-  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
-  display:flex;align-items:center;gap:10px}
-.t-item::before{content:'//';color:var(--cyan);font-size:9px}
-@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-.proof{padding:48px 0;border-bottom:1px solid var(--border)}
-.proof-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
-  text-align:center;margin-bottom:24px}
-.proof-logos{display:flex;align-items:center;justify-content:center;gap:44px;flex-wrap:wrap}
-.proof-logo{font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.13);
-  transition:color .3s;cursor:default}
-.proof-logo:hover{color:rgba(0,212,255,.5)}
-.proof-logo small{display:block;font-family:'JetBrains Mono',monospace;
-  font-size:8px;font-weight:400;margin-top:2px;letter-spacing:.05em}
-
-.s-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--cyan);margin-bottom:14px;
-  display:flex;align-items:center;gap:9px}
-.s-tag::before{content:'';width:22px;height:1px;background:var(--cyan)}
-.s-title{font-family:'Outfit',sans-serif;font-size:clamp(34px,4.2vw,56px);
-  font-weight:900;line-height:1.06;letter-spacing:-.025em;margin-bottom:52px}
-.accent{background:linear-gradient(90deg,var(--blue2),var(--cyan));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-
-.problems{padding:120px 0}
-.prob-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:center}
-.prob-left .s-title{margin-bottom:22px;font-size:clamp(28px,3.4vw,46px)}
-.prob-left p{font-size:15px;color:var(--muted2);line-height:1.85;margin-bottom:28px;font-weight:300}
-.prob-callout{border:1px solid var(--border2);border-left:3px solid var(--cyan);
-  border-radius:0 8px 8px 0;padding:18px 22px}
-.prob-callout p{font-family:'JetBrains Mono',monospace;font-size:12px;
-  color:rgba(0,212,255,.8);line-height:1.75}
-.prob-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.prob-card{border:1px solid var(--border);border-radius:10px;
-  padding:22px 18px;transition:all .35s}
-.prob-card:hover{border-color:var(--border2);transform:translateY(-3px)}
-.prob-icon{font-size:22px;margin-bottom:11px}
-.prob-card h4{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;margin-bottom:7px}
-.prob-card p{font-size:12px;color:var(--muted2);line-height:1.7;font-weight:300}
-
-.solutions{padding:120px 0}
-.sol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-  background:rgba(0,212,255,.07);border:1px solid var(--border2);
-  border-radius:14px;overflow:hidden}
-.sol-card{padding:36px 28px;transition:all .35s;position:relative;overflow:hidden}
-.sol-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,var(--blue2),var(--cyan));
-  transform:scaleX(0);transform-origin:left;transition:transform .4s}
-.sol-card:hover::after{transform:scaleX(1)}
-.sol-num{font-family:'JetBrains Mono',monospace;font-size:10px;
-  color:var(--muted);letter-spacing:.1em;margin-bottom:18px}
-.sol-icon{font-size:28px;margin-bottom:14px;display:block}
-.sol-card h3{font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;margin-bottom:10px}
-.sol-card p{font-size:12.5px;color:var(--muted2);line-height:1.72;font-weight:300}
-.sol-tag{margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:9px;
-  letter-spacing:.08em;text-transform:uppercase;color:var(--cyan)}
-
-.results{padding:120px 0}
-.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.res-card{border:1px solid var(--border);border-radius:14px;
-  padding:32px;transition:all .35s;overflow:hidden;position:relative}
-.res-card::before{content:'"';position:absolute;top:-12px;right:14px;
-  font-size:110px;color:rgba(0,212,255,.05);line-height:1;font-family:'Outfit'}
-.res-card:hover{border-color:var(--border2);transform:translateY(-5px);
-  box-shadow:0 20px 50px rgba(0,0,0,.6),0 0 30px rgba(0,212,255,.06)}
-.res-head{display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border)}
-.res-name{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700}
-.res-badge{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.07em;
-  text-transform:uppercase;color:var(--cyan);
-  background:rgba(0,212,255,.07);border:1px solid var(--border2);
-  padding:3px 9px;border-radius:100px}
-.res-nums{display:flex;gap:14px;margin-bottom:18px;flex-wrap:wrap}
-.res-n{font-family:'Outfit',sans-serif;font-size:28px;font-weight:900;
-  background:linear-gradient(135deg,var(--blue2),var(--cyan));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  display:block;filter:drop-shadow(0 0 8px rgba(0,212,255,.3))}
-.res-l{font-family:'JetBrains Mono',monospace;font-size:9px;
-  color:var(--muted2);letter-spacing:.05em;text-transform:uppercase}
-.res-quote{border-left:2px solid var(--cyan);padding-left:14px}
-.res-quote p{font-size:12.5px;color:var(--white);line-height:1.65;font-style:italic;font-weight:300}
-.res-cite{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;
-  color:var(--cyan);letter-spacing:.07em;text-transform:uppercase;margin-top:8px}
-
-.process{padding:120px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
-  background:rgba(0,212,255,.07);border:1px solid var(--border2);
-  border-radius:14px;overflow:hidden}
-.proc-step{padding:36px 24px;transition:all .35s}
-.proc-num{width:44px;height:44px;border-radius:50%;
-  background:linear-gradient(135deg,var(--blue),var(--blue2));
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Outfit',sans-serif;font-weight:900;font-size:16px;
-  margin-bottom:18px;box-shadow:0 0 20px rgba(0,212,255,.35)}
-.proc-step h3{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px}
-.proc-step p{font-size:12.5px;color:var(--muted2);line-height:1.72;font-weight:300}
-
-.why{padding:120px 0}
-.why-layout{display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:center}
-.why-left .s-title{margin-bottom:18px;font-size:clamp(28px,3.5vw,46px)}
-.why-left p{font-size:15px;color:var(--muted2);line-height:1.85;margin-bottom:22px;font-weight:300}
-.why-pull{border-left:3px solid var(--cyan);padding-left:20px;margin-top:32px}
-.why-pull p{font-family:'Outfit',sans-serif;font-size:17px;font-weight:600;
-  font-style:italic;color:var(--white);line-height:1.6}
-.why-pull cite{display:block;font-family:'JetBrains Mono',monospace;
-  font-size:10px;color:var(--cyan);margin-top:9px;letter-spacing:.09em;text-transform:uppercase}
-.why-cards{display:flex;flex-direction:column;gap:10px}
-.why-card{border:1px solid var(--border);border-radius:9px;padding:18px 20px;
-  display:flex;align-items:center;gap:16px;transition:all .3s}
-.why-card:hover{border-color:var(--border2);transform:translateX(6px)}
-.why-icon{font-size:18px;width:42px;height:42px;background:rgba(0,212,255,.08);
-  border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.why-card h4{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;margin-bottom:3px}
-.why-card p{font-size:12px;color:var(--muted2);line-height:1.55;font-weight:300}
-
-.trust{padding:52px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.trust-row{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.trust-val{font-family:'Outfit',sans-serif;font-size:30px;font-weight:900;
-  background:linear-gradient(135deg,var(--white),var(--cyan));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.trust-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;
-  color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
-.trust-div{width:1px;height:44px;background:var(--border2)}
-
-.pricing{padding:120px 0}
-.price-note{text-align:center;font-family:'JetBrains Mono',monospace;
-  font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.04em}
-.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-  background:rgba(0,212,255,.07);border:1px solid var(--border2);
-  border-radius:14px;overflow:hidden}
-.plan{padding:44px 32px}
-.plan.feat{background:linear-gradient(160deg,rgba(0,212,255,.07),rgba(46,141,232,.04))!important;}
-.plan-badge{display:inline-block;background:linear-gradient(135deg,var(--blue),var(--blue2));
-  color:#fff;padding:3px 12px;border-radius:100px;font-family:'JetBrains Mono',monospace;
-  font-size:9px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
-.plan-name{font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;margin-bottom:7px}
-.plan-sub{font-size:12.5px;color:var(--muted2);margin-bottom:22px;line-height:1.65;font-weight:300}
-.plan-price-wrap{padding:16px 0;margin-bottom:24px;
-  border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.plan-from{font-family:'JetBrains Mono',monospace;font-size:9px;
-  color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
-.plan-price{font-family:'Outfit',sans-serif;font-size:32px;font-weight:900;
-  background:linear-gradient(135deg,var(--white),var(--cyan));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.plan-psub{font-family:'JetBrains Mono',monospace;font-size:9px;
-  color:var(--muted);margin-top:5px;letter-spacing:.04em}
-.plan-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
-.plan-list li{font-size:12.5px;color:var(--muted2);
-  display:flex;align-items:flex-start;gap:9px;line-height:1.55;font-weight:300}
-.plan-list li::before{content:'→';color:var(--cyan);flex-shrink:0;
-  font-family:'JetBrains Mono',monospace;font-size:10px;margin-top:1px}
-.plan-btn{display:block;text-align:center;padding:14px;border-radius:7px;
-  font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;
-  letter-spacing:.04em;text-decoration:none;transition:all .3s}
-.plan-btn-out{border:1px solid var(--border2);color:var(--white)}
-.plan-btn-out:hover{border-color:var(--cyan);background:rgba(0,212,255,.08);color:var(--cyan)}
-.plan-btn-fill{background:linear-gradient(135deg,var(--blue),var(--blue2));
-  color:#fff;box-shadow:0 0 24px rgba(0,212,255,.25)}
-.plan-btn-fill:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(0,212,255,.45)}
-.plan-note{text-align:center;margin-top:9px;font-family:'JetBrains Mono',monospace;
-  font-size:9px;color:var(--muted);letter-spacing:.05em}
-
-.final{padding:160px 0;text-align:center;position:relative}
-.final-glow{position:absolute;width:700px;height:500px;
-  background:radial-gradient(ellipse,rgba(0,212,255,.1),transparent 65%);
-  top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
-.final h2{font-family:'Outfit',sans-serif;font-size:clamp(38px,5.2vw,72px);
-  font-weight:900;line-height:1.04;letter-spacing:-.025em;margin-bottom:20px}
-.final p{font-size:16px;color:var(--muted2);max-width:460px;
-  margin:0 auto 44px;line-height:1.85;font-weight:300}
-.cta-meta{display:flex;align-items:center;justify-content:center;
-  gap:28px;margin-top:22px;flex-wrap:wrap}
-.cta-meta span{font-family:'JetBrains Mono',monospace;font-size:10px;
-  color:var(--muted);letter-spacing:.06em;display:flex;align-items:center;gap:6px}
-.cta-meta span::before{content:'✓';color:var(--cyan)}
-
-footer{border-top:1px solid var(--border);padding:44px 60px;
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:20px;background:rgba(2,6,14,.85)}
-.foot-logo img{height:38px;filter:drop-shadow(0 0 8px rgba(0,212,255,.4))}
-.foot-links{display:flex;gap:28px;list-style:none}
-.foot-links a{font-family:'JetBrains Mono',monospace;font-size:10px;
-  color:var(--muted);text-decoration:none;letter-spacing:.07em;
-  text-transform:uppercase;transition:color .2s}
-.foot-links a:hover{color:var(--cyan)}
-.foot-copy{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)}
-
-.reveal{opacity:0;transform:translateY(28px);transition:all .8s cubic-bezier(.16,1,.3,1)}
-.reveal.on{opacity:1;transform:translateY(0)}
-.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;
-  background:none;border:none;padding:6px}
-.ham span{display:block;width:22px;height:1.5px;background:var(--white);
-  border-radius:2px;transition:all .3s}
+body{font-family:var(--font-b);color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+#sky{position:absolute;top:0;left:0;width:100%;pointer-events:none;z-index:0}
+#neural{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0.3}
+.container{max-width:var(--max);margin:0 auto;padding:0 48px}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--blue)}
+.btn-p{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;font-family:var(--font-b);font-size:13px;font-weight:500;letter-spacing:.06em;padding:16px 32px;border:none;cursor:pointer;transition:background .25s,transform .2s}
+.btn-p:hover{background:var(--navy2);transform:translateY(-1px)}
+.btn-g{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--navy);font-family:var(--font-b);font-size:13px;font-weight:500;letter-spacing:.06em;padding:15px 31px;border:1px solid var(--navy);cursor:pointer;transition:background .25s,color .25s}
+.btn-g:hover{background:var(--navy);color:#fff}
+.btn-wh{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--navy);font-family:var(--font-b);font-size:13px;font-weight:500;letter-spacing:.06em;padding:16px 32px;border:none;cursor:pointer;transition:opacity .25s,transform .2s}
+.btn-wh:hover{opacity:.88;transform:translateY(-1px)}
+.btn-gwh{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;font-family:var(--font-b);font-size:13px;font-weight:500;letter-spacing:.06em;padding:15px 31px;border:1px solid rgba(255,255,255,.45);cursor:pointer;transition:background .25s,color .25s}
+.btn-gwh:hover{background:#fff;color:var(--navy)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.on{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .4s,box-shadow .4s}
+nav.sc{background:rgba(255,255,255,.97);box-shadow:0 1px 0 var(--border);backdrop-filter:blur(12px)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:var(--max);margin:0 auto;padding:0 48px}
+.nav-logo img{height:44px;filter:drop-shadow(0 0 12px rgba(201,169,110,.4))}
+.nav-links{display:flex;align-items:center;gap:36px}
+.nav-links a{font-size:13px;font-weight:400;letter-spacing:.04em;color:rgba(255,255,255,.8);transition:color .3s}
+nav.sc .nav-links a{color:var(--ink-mid)}
+.nav-links a:hover{color:#fff}
+nav.sc .nav-links a:hover{color:var(--navy)}
+.nav-cta{font-size:12px!important;font-weight:500!important;letter-spacing:.08em!important;text-transform:uppercase;color:#fff!important;border:1px solid rgba(255,255,255,.45)!important;padding:10px 22px!important;transition:background .25s,color .25s,border-color .25s!important}
+.nav-cta:hover{background:#fff!important;color:var(--navy)!important;border-color:#fff!important}
+nav.sc .nav-cta{color:var(--navy)!important;border-color:var(--navy)!important}
+nav.sc .nav-cta:hover{background:var(--navy)!important;color:#fff!important}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:6px}
+.ham span{display:block;width:22px;height:1.5px;background:#fff;border-radius:2px;transition:all .3s}
+nav.sc .ham span{background:var(--navy)}
 .ham.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
 .ham.open span:nth-child(2){opacity:0}
 .ham.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-.mob-menu{display:none;position:fixed;inset:0;background:rgba(2,6,14,.97);
-  backdrop-filter:blur(24px);z-index:500;flex-direction:column;
-  align-items:center;justify-content:center;gap:32px}
+.mob-menu{display:none;position:fixed;inset:0;background:var(--navy);z-index:500;flex-direction:column;align-items:center;justify-content:center;gap:32px}
 .mob-menu.open{display:flex}
-.mob-menu a{font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;
-  color:var(--white);text-decoration:none;transition:color .2s}
-.mob-menu a:hover{color:var(--cyan)}
-.mob-menu .mob-cta{background:linear-gradient(135deg,var(--blue),var(--blue2));
-  color:#fff!important;padding:14px 36px;border-radius:7px;font-size:18px!important}
-
-@media(max-width:1024px){
-  .hero{grid-template-columns:1fr;padding:100px 40px 60px}
-  .hero-right{display:none}
-  .prob-grid{grid-template-columns:1fr;gap:40px}
-  .why-layout{grid-template-columns:1fr;gap:48px}
-}
-@media(max-width:900px){
-  nav{padding:0 24px}.nav-links{display:none}.ham{display:flex}
-  .inner{padding:0 24px}
-  .sol-grid{grid-template-columns:1fr 1fr}
-  .proc-grid{grid-template-columns:1fr 1fr}
-  .res-grid{grid-template-columns:1fr}
-  .plan-grid{grid-template-columns:1fr}
-  .trust-row{justify-content:center;gap:16px}.trust-div{display:none}
-  footer{padding:36px 24px;flex-direction:column;align-items:center;text-align:center}
-  .foot-links{flex-wrap:wrap;justify-content:center;gap:16px}
-}
-@media(max-width:600px){
-  .sol-grid,.proc-grid,.prob-cards{grid-template-columns:1fr}
-  .hero h1{font-size:42px}
-  .hero-stats{flex-wrap:wrap;gap:16px}
-}
+.mob-menu a{font-family:var(--font-d);font-size:32px;font-weight:300;color:#fff;transition:color .2s}
+.mob-menu a:hover{color:var(--gold)}
+.mob-cta2{color:var(--gold)!important}
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;background:#0B1F3A}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(160deg,rgba(11,31,58,.88) 0%,rgba(11,31,58,.65) 50%,rgba(11,31,58,.8) 100%),url('https://images.unsplash.com/photo-1582560475093-ba66accbc424?w=1800&q=85&auto=format&fit=crop') center/cover no-repeat;transform:scale(1.04);animation:hzoom 18s ease-in-out infinite alternate;z-index:2}
+@keyframes hzoom{from{transform:scale(1.04)}to{transform:scale(1)}}
+.hero-content{position:relative;z-index:10;max-width:var(--max);margin:0 auto;padding:72px 48px 0}
+.hero-label{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;opacity:0;animation:fu .8s .4s forwards}
+.hero-h1{font-family:var(--font-d);font-size:clamp(52px,7vw,92px);font-weight:300;line-height:1;letter-spacing:-.01em;color:#fff;margin-bottom:32px;opacity:0;animation:fu .9s .55s forwards}
+.hero-h1 em{font-style:italic;color:rgba(255,255,255,.72)}
+.hero-sub{font-size:16px;font-weight:300;line-height:1.75;color:rgba(255,255,255,.72);max-width:520px;margin-bottom:48px;opacity:0;animation:fu .9s .7s forwards}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:72px;opacity:0;animation:fu .9s .85s forwards}
+.hero-note{font-size:12px;color:rgba(255,255,255,.4);letter-spacing:.04em}
+.hero-scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:10;opacity:0;animation:fi 1s 1.4s forwards}
+.hero-scroll span{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.scroll-ln{width:1px;height:50px;background:linear-gradient(to bottom,rgba(255,255,255,.4),transparent);animation:sp 2s ease-in-out infinite}
+@keyframes sp{0%,100%{opacity:.4}50%{opacity:1}}
+@keyframes fu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.ticker-wrap{background:var(--navy);padding:14px 0;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.06)}
+.ticker{display:flex;gap:60px;animation:tick 32s linear infinite;width:max-content;white-space:nowrap}
+.t-item{font-family:var(--font-b);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:10px}
+.t-item::before{content:'/';color:var(--gold);font-size:11px}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+#proof{background:var(--navy);padding:72px 0}
+.proof-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.proof-item{text-align:center;padding:0 24px;border-right:1px solid rgba(255,255,255,.08)}
+.proof-item:last-child{border-right:none}
+.proof-num{font-family:var(--font-d);font-size:clamp(40px,5vw,60px);font-weight:300;color:#fff;line-height:1;margin-bottom:8px}
+.proof-num span{color:var(--gold)}
+.proof-lbl{font-size:12px;font-weight:400;letter-spacing:.05em;color:rgba(255,255,255,.5);line-height:1.5}
+#clients{background:var(--off);padding:56px 0}
+.cl-label{text-align:center;font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-lt);margin-bottom:36px}
+.cl-logos{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:48px}
+.cl-name{font-family:var(--font-d);font-size:17px;font-weight:400;color:var(--ink-lt);opacity:.55;letter-spacing:.04em;transition:opacity .3s;cursor:default}
+.cl-name:hover{opacity:1}
+section{padding:var(--sp) 0}
+.s-hd{margin-bottom:64px}
+.s-hd .eyebrow{margin-bottom:14px}
+.s-hl{font-family:var(--font-d);font-size:clamp(36px,4vw,56px);font-weight:300;line-height:1.1;letter-spacing:-.01em;color:var(--navy)}
+.s-sub{font-size:15px;font-weight:300;line-height:1.75;color:var(--ink-lt);margin-top:14px;max-width:520px}
+#problem{background:var(--white)}
+.prob-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:80px;align-items:center}
+.prob-left .s-hl{font-size:clamp(28px,3.2vw,44px);margin-bottom:20px}
+.prob-left p{font-size:15px;color:var(--ink-lt);line-height:1.85;margin-bottom:24px;font-weight:300}
+.prob-callout{border-left:3px solid var(--gold);padding-left:20px;margin-top:8px}
+.prob-callout p{font-size:13px;color:var(--ink-mid);line-height:1.75;font-style:italic}
+.prob-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.prob-card{border:1px solid var(--border);padding:24px 20px;transition:border-color .3s,transform .25s}
+.prob-card:hover{border-color:var(--navy);transform:translateY(-3px)}
+.prob-icon{font-size:20px;margin-bottom:12px}
+.prob-card h4{font-family:var(--font-d);font-size:17px;font-weight:500;color:var(--navy);margin-bottom:8px}
+.prob-card p{font-size:12px;color:var(--ink-lt);line-height:1.7;font-weight:300}
+#cases{background:var(--off)}
+.cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.case-card{background:#fff;padding:48px 40px;display:flex;flex-direction:column;gap:28px;transition:box-shadow .3s}
+.case-card:hover{box-shadow:0 8px 40px rgba(11,31,58,.08)}
+.case-tag{font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+.case-co{font-family:var(--font-d);font-size:26px;font-weight:400;color:var(--navy);line-height:1.15}
+.case-ch{font-size:13px;color:var(--ink-lt);line-height:1.65;border-left:2px solid var(--border);padding-left:16px}
+.case-mets{display:flex;flex-direction:column;gap:14px}
+.case-mv{display:flex;align-items:baseline;gap:10px}
+.case-n{font-family:var(--font-d);font-size:32px;font-weight:300;color:var(--navy)}
+.case-d{font-size:12px;color:var(--ink-lt);line-height:1.5}
+.case-q{font-size:13px;font-style:italic;color:var(--ink-mid);line-height:1.7;border-top:1px solid var(--border);padding-top:22px}
+.case-au{font-size:11px;color:var(--ink-lt);letter-spacing:.06em;margin-top:7px}
+#services{background:#fff}
+.srv-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
+.srv-card{padding:40px 28px;background:var(--off);display:flex;flex-direction:column;gap:18px;transition:background .3s}
+.srv-card:hover{background:var(--navy)}
+.srv-card:hover .srv-icon,.srv-card:hover .srv-name,.srv-card:hover .srv-out{color:#fff}
+.srv-card:hover .srv-tag{color:rgba(255,255,255,.45)}
+.srv-icon{font-size:22px}
+.srv-name{font-family:var(--font-d);font-size:19px;font-weight:400;color:var(--navy);transition:color .3s}
+.srv-tag{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);transition:color .3s}
+.srv-out{font-size:12.5px;font-weight:300;line-height:1.65;color:var(--ink-mid);transition:color .3s}
+#why{background:var(--navy);padding:var(--sp) 0}
+#why .s-hl{color:#fff}
+#why .eyebrow{color:var(--gold)}
+#why .s-sub{color:rgba(255,255,255,.52)}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.why-list{display:flex;flex-direction:column;margin-top:48px}
+.why-item{display:flex;align-items:flex-start;gap:22px;padding:26px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.why-item:first-child{border-top:1px solid rgba(255,255,255,.07)}
+.why-ck{width:26px;height:26px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid var(--gold);color:var(--gold);font-size:12px;margin-top:2px}
+.why-tt{font-family:var(--font-d);font-size:19px;font-weight:400;color:#fff;margin-bottom:5px}
+.why-td{font-size:13px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.65}
+.why-vis{position:sticky;top:120px}
+.why-scs{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.why-sc{background:rgba(255,255,255,.05);padding:34px 28px}
+.why-sn{font-family:var(--font-d);font-size:38px;font-weight:300;color:#fff;line-height:1;margin-bottom:8px}
+.why-sl{font-size:12px;color:rgba(255,255,255,.4);letter-spacing:.04em}
+#process{background:#fff}
+.proc-steps{display:grid;grid-template-columns:repeat(4,1fr)}
+.proc-step{padding:48px 32px 48px 0;border-right:1px solid var(--border)}
+.proc-step:last-child{border-right:none;padding-right:0;padding-left:32px}
+.proc-step:not(:first-child){padding-left:32px}
+.proc-num{font-family:var(--font-d);font-size:11px;font-weight:400;letter-spacing:.2em;color:var(--gold);margin-bottom:22px}
+.proc-name{font-family:var(--font-d);font-size:22px;font-weight:400;color:var(--navy);margin-bottom:14px}
+.proc-desc{font-size:13px;font-weight:300;line-height:1.7;color:var(--ink-lt)}
+#pricing{background:var(--off)}
+.price-note{text-align:center;font-size:12px;color:var(--ink-lt);margin-bottom:16px;letter-spacing:.03em}
+.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.plan{background:#fff;padding:44px 36px;display:flex;flex-direction:column}
+.plan.feat{border-top:3px solid var(--navy)}
+.plan-badge{display:inline-block;background:var(--navy);color:#fff;padding:4px 14px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;align-self:flex-start}
+.plan-name{font-family:var(--font-d);font-size:24px;font-weight:400;color:var(--navy);margin-bottom:8px}
+.plan-sub{font-size:13px;color:var(--ink-lt);line-height:1.65;font-weight:300;margin-bottom:24px}
+.plan-pw{padding:18px 0;margin-bottom:24px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.plan-from{font-size:10px;color:var(--ink-lt);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.plan-price{font-family:var(--font-d);font-size:34px;font-weight:300;color:var(--navy)}
+.plan-psub{font-size:11px;color:var(--ink-lt);margin-top:5px;letter-spacing:.03em}
+.plan-list{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;margin-top:4px}
+.plan-list li{font-size:13px;color:var(--ink-lt);display:flex;align-items:flex-start;gap:10px;line-height:1.55;font-weight:300}
+.plan-list li::before{content:'>';color:var(--navy);flex-shrink:0;font-size:11px;margin-top:1px}
+.plan-btn{display:block;text-align:center;padding:15px;font-family:var(--font-b);font-weight:500;font-size:13px;letter-spacing:.04em;border:1px solid var(--navy);color:var(--navy);transition:all .25s}
+.plan-btn:hover{background:var(--navy);color:#fff}
+.plan-btn.fill{background:var(--navy);color:#fff}
+.plan-btn.fill:hover{background:var(--navy2)}
+.plan-note{text-align:center;margin-top:9px;font-size:11px;color:var(--ink-lt);letter-spacing:.03em}
+#audit{background:var(--white);padding:var(--sp) 0}
+.audit-inner{max-width:660px;margin:0 auto;text-align:center}
+.audit-inner .s-hl{font-size:clamp(32px,4vw,52px)}
+.audit-inner .s-sub{margin:18px auto 0;text-align:center}
+.audit-form{margin:48px auto 0;display:flex;flex-direction:column;gap:14px;max-width:480px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.a-input{font-family:var(--font-b);font-size:14px;font-weight:300;color:var(--ink);background:#fff;border:1px solid var(--border);padding:15px 18px;outline:none;transition:border-color .2s;width:100%}
+.a-input::placeholder{color:var(--ink-lt)}
+.a-input:focus{border-color:var(--navy)}
+.a-submit{font-family:var(--font-b);font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;background:var(--navy);color:#fff;border:none;padding:18px 32px;cursor:pointer;transition:background .25s;width:100%}
+.a-submit:hover{background:var(--navy2)}
+.a-note{font-size:12px;color:var(--ink-lt);margin-top:14px}
+footer{background:var(--navy);padding:64px 0 36px}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;margin-bottom:52px}
+.ft-logo img{height:38px;filter:drop-shadow(0 0 8px rgba(201,169,110,.35));margin-bottom:16px}
+.ft-desc{font-size:13px;font-weight:300;color:rgba(255,255,255,.4);line-height:1.7;max-width:240px}
+.ft-col-t{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:18px}
+.ft-lk{display:block;font-size:13px;font-weight:300;color:rgba(255,255,255,.55);margin-bottom:11px;transition:color .25s}
+.ft-lk:hover{color:#fff}
+.ft-btm{border-top:1px solid rgba(255,255,255,.07);padding-top:28px;display:flex;align-items:center;justify-content:space-between}
+.ft-copy{font-size:12px;color:rgba(255,255,255,.25)}
+.ft-badge{font-size:11px;color:var(--gold);letter-spacing:.1em}
+@media(max-width:1024px){.srv-grid{grid-template-columns:repeat(3,1fr)}.cases-grid{grid-template-columns:1fr 1fr}.why-grid{gap:48px}.ft-grid{grid-template-columns:1fr 1fr;gap:36px}.prob-grid{grid-template-columns:1fr;gap:40px}}
+@media(max-width:900px){.nav-links{display:none}.ham{display:flex}.container,.nav-inner,.hero-content{padding-left:24px;padding-right:24px}.proof-grid{grid-template-columns:repeat(2,1fr)}.proof-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.08);padding:28px 16px}.cases-grid,.plan-grid{grid-template-columns:1fr}.srv-grid{grid-template-columns:1fr 1fr}.why-grid{grid-template-columns:1fr}.why-vis{position:static}.proc-steps{grid-template-columns:1fr 1fr}.ft-grid{grid-template-columns:1fr}.ft-btm{flex-direction:column;gap:12px;text-align:center}}
+@media(max-width:600px){:root{--sp:72px}.srv-grid,.proc-steps,.prob-cards,.why-scs,.form-row{grid-template-columns:1fr}.hero-h1{font-size:48px}}
+@media(prefers-reduced-motion:reduce){.hero-bg{animation:none}.reveal{opacity:1;transform:none;transition:none}.scroll-ln{animation:none}}
 </style>
 </head>
 <body>
-
-<!-- FULL PAGE STARFIELD (absolute, scrolls with page) -->
 <canvas id="sky"></canvas>
-<!-- NEURAL NETWORK (fixed viewport overlay) -->
 <canvas id="neural"></canvas>
-
-<nav>
-  <div class="nav-logo"><img id="logo-img" src="" alt="Elevra Digital"></div>
-  <ul class="nav-links">
-    <li><a href="#solutions">Solutions</a></li>
-    <li><a href="#results">Results</a></li>
-    <li><a href="#process">Process</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-  </ul>
-  <a href="https://wa.me/17543056145" target="_blank" class="nav-cta">Book a Strategy Call</a>
-  <button class="ham" id="ham"><span></span><span></span><span></span></button>
-</nav>
 <div class="mob-menu" id="mobMenu">
-  <a href="#solutions" class="mob-link">Solutions</a>
-  <a href="#results" class="mob-link">Results</a>
+  <a href="#cases" class="mob-link">Case Studies</a>
+  <a href="#services" class="mob-link">Services</a>
   <a href="#process" class="mob-link">Process</a>
   <a href="#pricing" class="mob-link">Pricing</a>
-  <a href="https://wa.me/17543056145" target="_blank" class="mob-cta mob-link">Book a Strategy Call</a>
+  <a href="https://wa.me/17543056145" target="_blank" class="mob-cta2 mob-link">Free Audit</a>
 </div>
-
-<section>
-<div class="hero">
-  <div>
-    <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>Data · AI · Growth Consultancy</div>
-    <h1><span class="h1-plain">Turn Data</span><span class="h1-glow">Into Growth.</span></h1>
-    <p class="hero-sub">We help businesses make smarter decisions, automate operations, and accelerate revenue through AI, Analytics, and Business Intelligence.</p>
-    <div class="hero-actions">
-      <a href="https://wa.me/17543056145" target="_blank" class="btn-prim">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Book a Free Strategy Call
-      </a>
-      <a href="#solutions" class="btn-ghost">See Our Solutions</a>
-    </div>
-    <p class="hero-note">No commitment · 30-min session · Free business audit included</p>
-    <div class="hero-stats">
-      <div><div class="stat-val">$8.4M+</div><div class="stat-lbl">Revenue Attributed</div></div>
-      <div><div class="stat-val">3×</div><div class="stat-lbl">Avg Growth Lift</div></div>
-      <div><div class="stat-val">30d</div><div class="stat-lbl">Time to Live</div></div>
-    </div>
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo"><img id="logo-img" src="" alt="Elevra Digital"></div>
+    <ul class="nav-links">
+      <li><a href="#cases">Case Studies</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="https://wa.me/17543056145" target="_blank" class="nav-cta">Free Audit</a></li>
+    </ul>
+    <button class="ham" id="ham"><span></span><span></span><span></span></button>
   </div>
-  <div class="hero-right">
-    <div style="position:relative">
-      <div class="dash-float"><div class="float-lbl">Lead Conversion</div><div class="float-val">+35.4%</div></div>
-      <div class="dash">
-        <div class="dash-bar">
-          <div class="dd" style="background:#ff5f57"></div>
-          <div class="dd" style="background:#ffbd2e"></div>
-          <div class="dd" style="background:#28c840"></div>
-          <span class="dash-title">Growth Intelligence Dashboard · Elevra</span>
-        </div>
-        <div class="dash-body">
-          <div class="kpi-row">
-            <div class="kpi"><div class="kpi-v" style="background:linear-gradient(135deg,#2e8de8,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">$2.4M</div><div class="kpi-l">Pipeline Value</div><div class="kpi-d">↑ 28.3% MoM</div></div>
-            <div class="kpi"><div class="kpi-v" style="background:linear-gradient(135deg,#a78bfa,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">847</div><div class="kpi-l">Leads Captured</div><div class="kpi-d">↑ 41.2% MoM</div></div>
-            <div class="kpi"><div class="kpi-v" style="background:linear-gradient(135deg,#00e5a0,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">67%</div><div class="kpi-l">Automation Rate</div><div class="kpi-d">↑ 19.1% MoM</div></div>
-          </div>
-          <div class="chart-lbl">Revenue vs Target — Last 12 Months</div>
-          <div class="bars-wrap" id="bars"></div>
-          <div class="mini-grid">
-            <div class="mini">
-              <div class="mini-t">Channel Attribution</div>
-              <div class="mini-row"><span>Paid Search</span><span>34%</span></div>
-              <div class="bar-t"><div class="bar-f" style="width:34%;background:linear-gradient(90deg,#2e8de8,#00d4ff)"></div></div>
-              <div class="mini-row"><span>Organic</span><span>28%</span></div>
-              <div class="bar-t"><div class="bar-f" style="width:28%;background:linear-gradient(90deg,#00d4ff,#2e8de8)"></div></div>
-              <div class="mini-row"><span>Referral</span><span>21%</span></div>
-              <div class="bar-t"><div class="bar-f" style="width:21%;background:linear-gradient(90deg,#a78bfa,#2e8de8)"></div></div>
-            </div>
-            <div class="mini">
-              <div class="mini-t">AI Automation Status</div>
-              <div class="mini-row"><span>Lead Response</span><span style="color:#00e5a0">Active</span></div>
-              <div class="bar-t"><div class="bar-f" style="width:100%;background:linear-gradient(90deg,#00d4ff,#00e5a0)"></div></div>
-              <div class="mini-row"><span>Follow-up Seq.</span><span style="color:#00e5a0">Active</span></div>
-              <div class="bar-t"><div class="bar-f" style="width:88%;background:linear-gradient(90deg,#00d4ff,#00e5a0)"></div></div>
-              <div class="mini-row"><span>Report Gen.</span><span style="color:#00e5a0">Active</span></div>
-              <div class="bar-t"><div class="bar-f" style="width:76%;background:linear-gradient(90deg,#00d4ff,#00e5a0)"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
+</nav>
+<section id="hero" style="padding:0;margin:0">
+<style>
+#miami-hero{width:100%;height:100vh;min-height:640px;position:relative;overflow:hidden;background:#000;display:block}
+#miami-hero canvas{position:absolute;top:0;left:0}
+#miami-hero .h-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(8,18,36,0.74) 0%,rgba(8,18,36,0.38) 55%,rgba(8,18,36,0.68) 100%);pointer-events:none;z-index:5}
+#miami-hero .h-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;text-align:center;padding:0 40px;padding-top:72px}
+.h-badge{font-family:'Inter',sans-serif;font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#C9A96E;margin-bottom:26px;opacity:0;animation:hfu .8s .6s forwards}
+.h-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(48px,7vw,92px);font-weight:300;line-height:.97;letter-spacing:-.02em;color:#fff;margin-bottom:30px;opacity:0;animation:hfu .9s .8s forwards}
+.h-title em{font-style:italic;color:rgba(255,255,255,.68)}
+.h-sub{font-family:'Inter',sans-serif;font-size:16px;font-weight:300;line-height:1.75;color:rgba(255,255,255,.68);max-width:500px;margin-bottom:44px;opacity:0;animation:hfu .9s 1s forwards}
+.h-ctas{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;opacity:0;animation:hfu .9s 1.15s forwards}
+.h-note{font-family:'Inter',sans-serif;font-size:12px;color:rgba(255,255,255,.38);letter-spacing:.04em;margin-top:18px;opacity:0;animation:hfu .9s 1.3s forwards}
+.h-btn-w{background:#fff;color:#0B1F3A;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;padding:15px 32px;border:none;cursor:pointer;transition:opacity .2s,transform .2s;text-decoration:none;display:inline-flex;align-items:center}
+.h-btn-w:hover{opacity:.88;transform:translateY(-1px)}
+.h-btn-g{background:transparent;color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;padding:14px 30px;border:1px solid rgba(255,255,255,.4);cursor:pointer;transition:background .2s,color .2s;text-decoration:none;display:inline-flex;align-items:center}
+.h-btn-g:hover{background:#fff;color:#0B1F3A}
+.h-scroll{position:absolute;bottom:130px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;z-index:10;opacity:0;animation:hfi 1s 2s forwards}
+.h-scroll span{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.32)}
+.h-scroll-ln{width:1px;height:40px;background:linear-gradient(to bottom,rgba(255,255,255,.4),transparent);animation:hsp 2s ease-in-out infinite}
+.h-stats{position:absolute;bottom:0;left:0;right:0;background:rgba(9,24,46,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:center;align-items:stretch;z-index:10;opacity:0;animation:hfi .8s 1.8s forwards}
+.h-stat{text-align:center;padding:18px 44px;border-right:1px solid rgba(255,255,255,.07);flex:1;max-width:220px}
+.h-stat:last-child{border-right:none}
+.h-stat-n{font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;font-weight:300;color:#fff;line-height:1;margin-bottom:5px}
+.h-stat-n span{color:#C9A96E}
+.h-stat-l{font-family:'Inter',sans-serif;font-size:10px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.38)}
+@keyframes hfu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes hfi{from{opacity:0}to{opacity:1}}
+@keyframes hsp{0%,100%{opacity:.4}50%{opacity:1}}
+@media(max-width:600px){
+  .h-stat{padding:14px 16px}.h-stat-n{font-size:22px}
+  .h-content{padding:0 24px;padding-top:72px}
+}
+</style>
+
+<div id="miami-hero">
+  <canvas id="skyCv"></canvas>
+  <canvas id="cityCv"></canvas>
+  <div class="h-overlay"></div>
+  <div class="h-content">
+    <p class="h-badge">South Florida's Growth Agency</p>
+    <h1 class="h-title">Grow Faster.<br><em>Automate Smarter.</em><br>Scale Predictably.</h1>
+    <p class="h-sub">We help South Florida businesses generate more leads, close more customers, and automate growth through Marketing, AI and Data.</p>
+    <div class="h-ctas">
+      <a href="#audit" class="h-btn-w">Get Your Free Business Audit</a>
+      <a href="#cases" class="h-btn-g">View Case Studies</a>
     </div>
+    <p class="h-note">No commitment &nbsp;&middot;&nbsp; 30-min session &nbsp;&middot;&nbsp; Free business audit included</p>
+  </div>
+  <div class="h-scroll"><div class="h-scroll-ln"></div><span>Scroll</span></div>
+  <div class="h-stats">
+    <div class="h-stat"><div class="h-stat-n"><span id="sc1">0</span></div><div class="h-stat-l">Annual Revenue Generated</div></div>
+    <div class="h-stat"><div class="h-stat-n"><span id="sc2">0</span></div><div class="h-stat-l">Revenue Growth Rate</div></div>
+    <div class="h-stat"><div class="h-stat-n"><span id="sc3">0</span></div><div class="h-stat-l">Conversion Increase</div></div>
+    <div class="h-stat"><div class="h-stat-n"><span id="sc4">0</span></div><div class="h-stat-l">Automations Delivered</div></div>
   </div>
 </div>
 </section>
-
 <div class="ticker-wrap">
   <div class="ticker">
     <span class="t-item">Marketing Analytics</span><span class="t-item">Business Intelligence</span><span class="t-item">AI Automation</span><span class="t-item">Data Consulting</span><span class="t-item">Custom AI Solutions</span><span class="t-item">Process Automation</span><span class="t-item">Growth Strategy</span><span class="t-item">Revenue Intelligence</span>
     <span class="t-item">Marketing Analytics</span><span class="t-item">Business Intelligence</span><span class="t-item">AI Automation</span><span class="t-item">Data Consulting</span><span class="t-item">Custom AI Solutions</span><span class="t-item">Process Automation</span><span class="t-item">Growth Strategy</span><span class="t-item">Revenue Intelligence</span>
   </div>
 </div>
-<div class="proof">
-  <p class="proof-lbl">Companies we've helped scale</p>
-  <div class="proof-logos">
-    <div class="proof-logo">Northside Roofing<small>Construction · TX</small></div>
-    <div class="proof-logo">Lumière Med Spa<small>Aesthetics · FL</small></div>
-    <div class="proof-logo">SolarEdge Pro<small>Solar · CA</small></div>
-    <div class="proof-logo">Vantage Legal<small>Law Firm · NY</small></div>
-    <div class="proof-logo">Apex Dental<small>Healthcare · TX</small></div>
-    <div class="proof-logo">Meridian HVAC<small>Home Services · GA</small></div>
+<section id="proof">
+  <div class="container">
+    <div class="proof-grid">
+      <div class="proof-item reveal"><div class="proof-num"><span class="counter" data-target="149" data-suffix="K+">0</span></div><div class="proof-lbl">Incremental Annual<br>Revenue Generated</div></div>
+      <div class="proof-item reveal d1"><div class="proof-num"><span class="counter" data-target="8" data-suffix=".3%">0</span></div><div class="proof-lbl">Average Revenue<br>Growth Rate</div></div>
+      <div class="proof-item reveal d2"><div class="proof-num"><span class="counter" data-target="42" data-suffix="%">0</span></div><div class="proof-lbl">Conversion Rate<br>Increase</div></div>
+      <div class="proof-item reveal d3"><div class="proof-num"><span class="counter" data-target="50" data-suffix="+">0</span></div><div class="proof-lbl">Automations<br>Delivered</div></div>
+    </div>
   </div>
-</div>
-
-<section class="problems">
-  <div class="inner">
+</section>
+<section id="clients" style="padding:56px 0">
+  <div class="container">
+    <p class="cl-label">Companies We've Helped Scale</p>
+    <div class="cl-logos">
+      <span class="cl-name">Northside Roofing</span><span class="cl-name">Lumi&egrave;re Med Spa</span><span class="cl-name">SolarEdge Pro</span><span class="cl-name">Vantage Legal</span><span class="cl-name">Apex Dental</span><span class="cl-name">Meridian HVAC</span>
+    </div>
+  </div>
+</section>
+<section id="problem">
+  <div class="container">
     <div class="prob-grid">
-      <div class="prob-left">
-        <div class="s-tag">The Problem</div>
-        <h2 class="s-title">Most businesses don't have a marketing problem.<br><span class="accent">They have a visibility problem.</span></h2>
-        <p>Your data is scattered. Your decisions are based on gut. Your team spends hours on reports that should be automated.</p>
-        <div class="prob-callout reveal"><p>"Companies that invest in data and AI automation grow 2.5× faster than those that don't — and spend 40% less on manual operations." — McKinsey, 2024</p></div>
+      <div class="prob-left reveal">
+        <p class="eyebrow">The Problem</p>
+        <h2 class="s-hl">Most businesses don't have a marketing problem. They have a <em style="font-style:italic;color:var(--blue)">visibility problem.</em></h2>
+        <p style="margin-top:20px">Your data is scattered. Your decisions are based on gut. Your team spends hours on reports that should be automated.</p>
+        <div class="prob-callout"><p>"Companies that invest in data and AI automation grow 2.5&times; faster than those that don't &mdash; and spend 40% less on manual operations." &mdash; McKinsey, 2024</p></div>
       </div>
-      <div class="prob-cards reveal">
-        <div class="prob-card"><div class="prob-icon">📊</div><h4>Data Scattered Everywhere</h4><p>CRM, ads, website, finance — all in different platforms. No single source of truth.</p></div>
-        <div class="prob-card"><div class="prob-icon">🔍</div><h4>Unclear ROI on Marketing</h4><p>You're spending on ads and tools — but can't attribute which dollar drives which revenue.</p></div>
-        <div class="prob-card"><div class="prob-icon">⏱</div><h4>Manual Reporting Killing Time</h4><p>Your team spends 15–20 hours/week on reports that should be automated and real-time.</p></div>
-        <div class="prob-card"><div class="prob-icon">🐌</div><h4>Slow Decision-Making</h4><p>By the time you have the data you need, the opportunity has already passed.</p></div>
-        <div class="prob-card"><div class="prob-icon">🔁</div><h4>Repetitive Ops Burning Resources</h4><p>Lead follow-up, scheduling, onboarding — all manual. Your team is expensive automation.</p></div>
-        <div class="prob-card"><div class="prob-icon">📉</div><h4>No Predictive Visibility</h4><p>You see what happened last month. You need to see what will happen next quarter.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="solutions" id="solutions">
-  <div class="inner">
-    <div class="s-tag">Solutions</div>
-    <h2 class="s-title reveal">A complete growth<br><span class="accent">intelligence system</span></h2>
-    <div class="sol-grid reveal">
-      <div class="sol-card"><div class="sol-num">01</div><span class="sol-icon">📈</span><h3>Marketing Analytics</h3><p>Full-funnel attribution from first click to closed revenue. Understand exactly which channels, campaigns, and messages drive growth.</p><div class="sol-tag">→ Attribution · Funnel Analysis · ROI Reporting</div></div>
-      <div class="sol-card"><div class="sol-num">02</div><span class="sol-icon">🧠</span><h3>Business Intelligence</h3><p>Custom BI dashboards that consolidate every data source into one command center. Real-time KPIs and revenue forecasts.</p><div class="sol-tag">→ Power BI · Looker · Custom Dashboards</div></div>
-      <div class="sol-card"><div class="sol-num">03</div><span class="sol-icon">🤖</span><h3>AI Automation</h3><p>Eliminate repetitive work with intelligent automation. Lead response, follow-up sequences, reporting — automated 24/7.</p><div class="sol-tag">→ CRM Automation · AI Workflows · Smart Routing</div></div>
-      <div class="sol-card"><div class="sol-num">04</div><span class="sol-icon">💡</span><h3>Data Consulting</h3><p>We audit your data landscape, clean and unify your sources, build the infrastructure for reliable analytics.</p><div class="sol-tag">→ Data Audit · ETL · Governance · Warehousing</div></div>
-      <div class="sol-card"><div class="sol-num">05</div><span class="sol-icon">⚙️</span><h3>Custom AI Solutions</h3><p>Purpose-built AI models trained on your data, integrated into your workflows, and optimized for your outcomes.</p><div class="sol-tag">→ Custom Models · Voice AI · Intelligent Agents</div></div>
-      <div class="sol-card"><div class="sol-num">06</div><span class="sol-icon">🏗</span><h3>Custom Applications</h3><p>Web-based tools, client portals, and internal systems built for how your business actually operates.</p><div class="sol-tag">→ Web Apps · Client Portals · Internal Tools</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="results" id="results">
-  <div class="inner">
-    <div class="s-tag">Results</div>
-    <h2 class="s-title reveal">Business outcomes,<br><span class="accent">not vanity metrics.</span></h2>
-    <div class="res-grid">
-      <div class="res-card reveal">
-        <div class="res-head"><div class="res-name">Northside Roofing</div><div class="res-badge">Construction · TX</div></div>
-        <div class="res-nums"><div><span class="res-n">340%</span><div class="res-l">More Booked Estimates</div></div><div><span class="res-n">47s</span><div class="res-l">Lead Response</div></div><div><span class="res-n">$1.2M</span><div class="res-l">New Pipeline / 90d</div></div></div>
-        <div class="res-quote"><p>"From 12 to 53 booked estimates per month in 90 days. The AI response system paid for everything in week one."</p><cite class="res-cite">— Marcus T., Owner · Northside Roofing</cite></div>
-      </div>
-      <div class="res-card reveal">
-        <div class="res-head"><div class="res-name">Lumière Med Spa</div><div class="res-badge">Aesthetics · FL</div></div>
-        <div class="res-nums"><div><span class="res-n">$82k</span><div class="res-l">Revenue Recovered</div></div><div><span class="res-n">97%</span><div class="res-l">No-Show Reduction</div></div><div><span class="res-n">3.1×</span><div class="res-l">Return Client Rate</div></div></div>
-        <div class="res-quote"><p>"We recovered $82,000 in 90 days from automation alone. Now our staff focuses on patients, not chasing confirmations."</p><cite class="res-cite">— Dr. Camila R., Medical Director · Lumière</cite></div>
-      </div>
-      <div class="res-card reveal">
-        <div class="res-head"><div class="res-name">SolarEdge Pro</div><div class="res-badge">Solar · CA</div></div>
-        <div class="res-nums"><div><span class="res-n">2.4×</span><div class="res-l">Close Rate</div></div><div><span class="res-n">4h→47s</span><div class="res-l">Response Time</div></div><div><span class="res-n">+$640k</span><div class="res-l">Incremental Revenue</div></div></div>
-        <div class="res-quote"><p>"The dashboard showed exactly where we were losing deals. Fixed 3 friction points and our close rate doubled in 6 weeks."</p><cite class="res-cite">— Jason W., VP Sales · SolarEdge Pro</cite></div>
+      <div class="prob-cards reveal d1">
+        <div class="prob-card"><div class="prob-icon">&#128202;</div><h4>Data Scattered Everywhere</h4><p>CRM, ads, website, finance &mdash; all in different platforms. No single source of truth.</p></div>
+        <div class="prob-card"><div class="prob-icon">&#128269;</div><h4>Unclear ROI on Marketing</h4><p>You're spending on ads and tools &mdash; but can't attribute which dollar drives which revenue.</p></div>
+        <div class="prob-card"><div class="prob-icon">&#9201;</div><h4>Manual Reporting Killing Time</h4><p>Your team spends 15&ndash;20 hours/week on reports that should be automated and real-time.</p></div>
+        <div class="prob-card"><div class="prob-icon">&#128012;</div><h4>Slow Decision-Making</h4><p>By the time you have the data you need, the opportunity has already passed.</p></div>
+        <div class="prob-card"><div class="prob-icon">&#128257;</div><h4>Repetitive Ops Burning Resources</h4><p>Lead follow-up, scheduling, onboarding &mdash; all manual. Your team is expensive automation.</p></div>
+        <div class="prob-card"><div class="prob-icon">&#128201;</div><h4>No Predictive Visibility</h4><p>You see what happened last month. You need to see what will happen next quarter.</p></div>
       </div>
     </div>
   </div>
 </section>
-
-<section class="process" id="process">
-  <div class="inner">
-    <div class="s-tag">How We Work</div>
-    <h2 class="s-title reveal">From scattered data<br><span class="accent">to intelligent systems</span></h2>
-    <div class="proc-grid reveal">
-      <div class="proc-step"><div class="proc-num">1</div><h3>Discover</h3><p>We audit your current data infrastructure, tools, processes, and revenue leaks. A custom diagnostic built around your business.</p></div>
-      <div class="proc-step"><div class="proc-num">2</div><h3>Analyze</h3><p>We map every data source, identify attribution gaps, and build the intelligence architecture for your growth decisions.</p></div>
-      <div class="proc-step"><div class="proc-num">3</div><h3>Automate</h3><p>We build and deploy your systems — dashboards, AI models, automation flows — live and operational within 30 days.</p></div>
-      <div class="proc-step"><div class="proc-num">4</div><h3>Scale</h3><p>Once profitable, we layer in advanced models, new channels, and deeper intelligence — compounding your advantage every month.</p></div>
+<section id="cases" style="background:var(--off)">
+  <div class="container">
+    <div class="s-hd reveal"><p class="eyebrow">Case Studies</p><h2 class="s-hl">Business outcomes,<br>not vanity metrics.</h2><p class="s-sub">Real results from real companies across South Florida and beyond.</p></div>
+    <div class="cases-grid">
+      <div class="case-card reveal">
+        <div><p class="case-tag">Construction &middot; TX</p><h3 class="case-co">Northside<br>Roofing</h3></div>
+        <p class="case-ch">Receiving 12 estimate requests per month with no system to respond quickly. Leads going cold within hours of first contact.</p>
+        <div class="case-mets">
+          <div class="case-mv"><span class="case-n">340%</span><span class="case-d">More booked<br>estimates monthly</span></div>
+          <div class="case-mv"><span class="case-n">47s</span><span class="case-d">Lead response<br>time (down from 4h)</span></div>
+          <div class="case-mv"><span class="case-n">$1.2M</span><span class="case-d">New pipeline<br>in 90 days</span></div>
+        </div>
+        <div class="case-q">"From 12 to 53 booked estimates per month in 90 days. The AI response system paid for everything in week one."<div class="case-au">&mdash; Marcus T., Owner &middot; Northside Roofing</div></div>
+      </div>
+      <div class="case-card reveal d1">
+        <div><p class="case-tag">Aesthetics &middot; FL</p><h3 class="case-co">Lumi&egrave;re<br>Med Spa</h3></div>
+        <p class="case-ch">High no-show rate costing thousands weekly. Staff spending hours manually confirming appointments instead of serving patients.</p>
+        <div class="case-mets">
+          <div class="case-mv"><span class="case-n">$82K</span><span class="case-d">Revenue recovered<br>in 90 days</span></div>
+          <div class="case-mv"><span class="case-n">97%</span><span class="case-d">No-show rate<br>reduction</span></div>
+          <div class="case-mv"><span class="case-n">3.1&times;</span><span class="case-d">Return client<br>rate improvement</span></div>
+        </div>
+        <div class="case-q">"We recovered $82,000 in 90 days from automation alone. Now our staff focuses on patients, not chasing confirmations."<div class="case-au">&mdash; Dr. Camila R., Medical Director &middot; Lumi&egrave;re</div></div>
+      </div>
+      <div class="case-card reveal d2">
+        <div><p class="case-tag">Solar &middot; CA</p><h3 class="case-co">SolarEdge<br>Pro</h3></div>
+        <p class="case-ch">Strong traffic but weak conversion. Sales team couldn't identify where deals were dying or which channels drove real revenue.</p>
+        <div class="case-mets">
+          <div class="case-mv"><span class="case-n">2.4&times;</span><span class="case-d">Close rate<br>improvement</span></div>
+          <div class="case-mv"><span class="case-n">4h&#8594;47s</span><span class="case-d">Response time<br>reduction</span></div>
+          <div class="case-mv"><span class="case-n">$640K</span><span class="case-d">Incremental<br>annual revenue</span></div>
+        </div>
+        <div class="case-q">"The dashboard showed exactly where we were losing deals. Fixed 3 friction points and our close rate doubled in 6 weeks."<div class="case-au">&mdash; Jason W., VP Sales &middot; SolarEdge Pro</div></div>
+      </div>
     </div>
   </div>
 </section>
-
-<section class="why">
-  <div class="inner">
-    <div class="why-layout">
-      <div class="why-left">
-        <div class="s-tag">Why Elevra</div>
-        <h2 class="s-title">Built for companies<br><span class="accent">ready to scale.</span></h2>
-        <p>Most agencies deliver deliverables. We deliver intelligence — the data infrastructure, AI systems, and commercial clarity that actually move revenue.</p>
-        <p>We measure success the way you do: revenue growth, operational efficiency, and decisions made with data — not gut.</p>
-        <div class="why-pull"><p>"Stop guessing. Start scaling. — Data and AI are no longer optional for companies serious about growth."</p><cite>— Elevra Digital</cite></div>
+<section id="services">
+  <div class="container">
+    <div class="s-hd reveal"><p class="eyebrow">What We Do</p><h2 class="s-hl">A complete growth<br>intelligence system.</h2><p class="s-sub">We don't sell software. We build the system that compounds your growth, month after month.</p></div>
+    <div class="srv-grid">
+      <div class="srv-card reveal"><div class="srv-icon">&#128200;</div><p class="srv-tag">Analytics</p><h3 class="srv-name">Marketing Analytics</h3><p class="srv-out">Full-funnel attribution from first click to closed revenue. Know exactly which channels, campaigns and messages drive growth.</p></div>
+      <div class="srv-card reveal d1"><div class="srv-icon">&#129504;</div><p class="srv-tag">Intelligence</p><h3 class="srv-name">Business Intelligence</h3><p class="srv-out">Custom dashboards consolidating every data source into one command center. Real-time KPIs and revenue forecasts.</p></div>
+      <div class="srv-card reveal d2"><div class="srv-icon">&#129302;</div><p class="srv-tag">Automation</p><h3 class="srv-name">AI Automation</h3><p class="srv-out">Eliminate repetitive work. Lead response, follow-up sequences, reporting &mdash; automated and running 24/7.</p></div>
+      <div class="srv-card reveal d3"><div class="srv-icon">&#9881;</div><p class="srv-tag">Strategy</p><h3 class="srv-name">Growth Strategy</h3><p class="srv-out">A data-backed roadmap to accelerate revenue. We identify your highest-leverage opportunities and build a 90-day execution plan.</p></div>
+      <div class="srv-card reveal d4"><div class="srv-icon">&#128736;</div><p class="srv-tag">Technology</p><h3 class="srv-name">Custom Applications</h3><p class="srv-out">Web apps, client portals and internal tools built for how your business actually operates &mdash; not off-the-shelf software forced to fit.</p></div>
+    </div>
+  </div>
+</section>
+<section id="why">
+  <div class="container">
+    <div class="why-grid">
+      <div>
+        <div class="reveal"><p class="eyebrow">Why Elevra</p><h2 class="s-hl">Why businesses<br>choose Elevra.</h2><p class="s-sub">Most agencies deliver deliverables. We deliver intelligence &mdash; the systems and clarity that actually move revenue.</p></div>
+        <div class="why-list">
+          <div class="why-item reveal"><div class="why-ck">&#10003;</div><div><div class="why-tt">More Leads</div><div class="why-td">A steady, predictable flow of qualified prospects entering your pipeline every month.</div></div></div>
+          <div class="why-item reveal d1"><div class="why-ck">&#10003;</div><div><div class="why-tt">Better Conversion Rates</div><div class="why-td">We identify exactly where deals die and engineer the fixes that double your close rate.</div></div></div>
+          <div class="why-item reveal d2"><div class="why-ck">&#10003;</div><div><div class="why-tt">Automated Operations</div><div class="why-td">Your team stops doing work that machines do better. Focus on what only humans can do.</div></div></div>
+          <div class="why-item reveal d3"><div class="why-ck">&#10003;</div><div><div class="why-tt">Smarter Marketing Decisions</div><div class="why-td">Every dollar attributed. Every channel measured. No more spending on what doesn't work.</div></div></div>
+          <div class="why-item reveal d4"><div class="why-ck">&#10003;</div><div><div class="why-tt">Predictable Growth</div><div class="why-td">A compounding system &mdash; not a campaign. Revenue that grows month after month.</div></div></div>
+        </div>
       </div>
-      <div class="why-cards">
-        <div class="why-card reveal"><div class="why-icon">📊</div><div><h4>Data-First Approach</h4><p>Every recommendation is backed by data. We don't guess — we measure, model, and act.</p></div></div>
-        <div class="why-card reveal"><div class="why-icon">🤖</div><div><h4>AI-Powered Systems</h4><p>AI isn't a feature we bolt on. It's the foundation of every system we build.</p></div></div>
-        <div class="why-card reveal"><div class="why-icon">🔧</div><div><h4>Custom-Built Solutions</h4><p>No templates. Every dashboard, model, and workflow is engineered for your specific business.</p></div></div>
-        <div class="why-card reveal"><div class="why-icon">🎯</div><div><h4>Growth-Focused Execution</h4><p>We don't deliver reports — we deliver systems that compound. Results in 30 days, momentum in 90.</p></div></div>
-        <div class="why-card reveal"><div class="why-icon">👁</div><div><h4>Executive-Level Visibility</h4><p>Real-time dashboards give you clarity to make decisions in minutes, not weeks.</p></div></div>
+      <div class="why-vis reveal d2">
+        <div class="why-scs">
+          <div class="why-sc"><div class="why-sn">$8.4M+</div><div class="why-sl">Revenue Attributed</div></div>
+          <div class="why-sc"><div class="why-sn">30d</div><div class="why-sl">Time to First System</div></div>
+          <div class="why-sc"><div class="why-sn">12+</div><div class="why-sl">Industries Served</div></div>
+          <div class="why-sc"><div class="why-sn">100%</div><div class="why-sl">Custom-Built Solutions</div></div>
+        </div>
+        <div style="background:rgba(255,255,255,.04);padding:34px 28px;margin-top:2px">
+          <p style="font-family:var(--font-d);font-size:20px;font-weight:300;color:#fff;line-height:1.5;font-style:italic">"Stop guessing.<br>Start scaling."</p>
+          <p style="font-size:12px;color:rgba(255,255,255,.3);margin-top:14px;letter-spacing:.06em">&mdash; Elevra Digital</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
-
-<div class="trust">
-  <div class="inner">
-    <div class="trust-row">
-      <div><div class="trust-val">$500k–$20M+</div><div class="trust-lbl">Client Revenue Range</div></div>
-      <div class="trust-div"></div>
-      <div><div class="trust-val">$8.4M+</div><div class="trust-lbl">Revenue Attributed</div></div>
-      <div class="trust-div"></div>
-      <div><div class="trust-val">30d</div><div class="trust-lbl">Time to First System</div></div>
-      <div class="trust-div"></div>
-      <div><div class="trust-val">12+</div><div class="trust-lbl">Industries Served</div></div>
-      <div class="trust-div"></div>
-      <div><div class="trust-val">100%</div><div class="trust-lbl">Custom Builds</div></div>
+<section id="process">
+  <div class="container">
+    <div class="s-hd reveal"><p class="eyebrow">How We Work</p><h2 class="s-hl">From scattered data<br>to intelligent systems.</h2></div>
+    <div class="proc-steps">
+      <div class="proc-step reveal"><p class="proc-num">01 &mdash; Discover</p><h3 class="proc-name">Discover</h3><p class="proc-desc">We audit your current data infrastructure, tools, processes and revenue leaks. A custom diagnostic built around your business.</p></div>
+      <div class="proc-step reveal d1"><p class="proc-num">02 &mdash; Analyze</p><h3 class="proc-name">Analyze</h3><p class="proc-desc">We map every data source, identify attribution gaps and design the intelligence architecture for your growth decisions.</p></div>
+      <div class="proc-step reveal d2"><p class="proc-num">03 &mdash; Automate</p><h3 class="proc-name">Automate</h3><p class="proc-desc">We build and deploy your systems &mdash; dashboards, AI models, automation flows &mdash; live and operational within 30 days.</p></div>
+      <div class="proc-step reveal d3"><p class="proc-num">04 &mdash; Scale</p><h3 class="proc-name">Scale</h3><p class="proc-desc">Once profitable, we layer in advanced intelligence and new channels &mdash; compounding your advantage every month.</p></div>
     </div>
   </div>
-</div>
-
-<section class="pricing" id="pricing">
-  <div class="inner">
-    <div class="s-tag">Investment</div>
-    <h2 class="s-title reveal">Premium infrastructure.<br><span class="accent">Transparent tiers.</span></h2>
-    <p class="price-note reveal">Final scope defined on strategy call — based on your infrastructure, goals, and industry.</p>
+</section>
+<section id="pricing">
+  <div class="container">
+    <div class="s-hd reveal" style="text-align:center"><p class="eyebrow">Investment</p><h2 class="s-hl" style="margin:0 auto">Premium infrastructure.<br>Transparent tiers.</h2></div>
+    <p class="price-note reveal">Final scope defined on strategy call &mdash; based on your infrastructure, goals and industry.</p>
     <div class="plan-grid reveal">
       <div class="plan">
         <div class="plan-name">Data Foundation</div>
         <div class="plan-sub">For companies ready to unify their data and gain real visibility into business performance.</div>
-        <div class="plan-price-wrap"><div class="plan-from">Monthly retainer from</div><div class="plan-price">$3,500 / mo</div><div class="plan-psub">+ one-time setup · scoped on call</div></div>
-        <ul class="plan-list"><li>Data Audit & Source Mapping</li><li>Custom KPI Dashboard (Power BI / Looker)</li><li>CRM Implementation & Pipeline Setup</li><li>AI Lead Response System (&lt;60s)</li><li>Automated Follow-Up Sequences</li><li>Monthly Revenue Intelligence Report</li><li>Bi-weekly Strategy Session</li></ul>
-        <a href="https://wa.me/17543056145" target="_blank" class="plan-btn plan-btn-out">Schedule a Call</a>
-        <p class="plan-note">30-min discovery · No commitment</p>
+        <div class="plan-pw"><div class="plan-from">Monthly retainer from</div><div class="plan-price">$3,500 / mo</div><div class="plan-psub">+ one-time setup &middot; scoped on call</div></div>
+        <ul class="plan-list"><li>Data Audit &amp; Source Mapping</li><li>Custom KPI Dashboard (Power BI / Looker)</li><li>CRM Implementation &amp; Pipeline Setup</li><li>AI Lead Response System (&lt;60s)</li><li>Automated Follow-Up Sequences</li><li>Monthly Revenue Intelligence Report</li><li>Bi-weekly Strategy Session</li></ul>
+        <a href="https://wa.me/17543056145" target="_blank" class="plan-btn">Schedule a Call</a>
+        <p class="plan-note">30-min discovery &middot; No commitment</p>
       </div>
       <div class="plan feat">
         <div class="plan-badge">Most Chosen</div>
         <div class="plan-name">Growth Intelligence</div>
         <div class="plan-sub">The complete AI and data infrastructure for companies scaling revenue through intelligence and automation.</div>
-        <div class="plan-price-wrap"><div class="plan-from">Monthly retainer from</div><div class="plan-price">$7,500 / mo</div><div class="plan-psub">+ one-time setup · custom on call</div></div>
-        <ul class="plan-list"><li>Everything in Data Foundation +</li><li>Full Marketing Analytics & Attribution</li><li>Paid Traffic Management (Meta + Google)</li><li>Funnel Analytics & Conversion Modeling</li><li>BI Integration & Data Warehouse Setup</li><li>Predictive Revenue Dashboards</li><li>Weekly Performance Reporting</li><li>Dedicated Growth Strategist</li></ul>
-        <a href="https://wa.me/17543056145" target="_blank" class="plan-btn plan-btn-fill">Book Strategy Session</a>
-        <p class="plan-note">30-min call · We'll scope your build live</p>
+        <div class="plan-pw"><div class="plan-from">Monthly retainer from</div><div class="plan-price">$7,500 / mo</div><div class="plan-psub">+ one-time setup &middot; custom on call</div></div>
+        <ul class="plan-list"><li>Everything in Data Foundation +</li><li>Full Marketing Analytics &amp; Attribution</li><li>Paid Traffic Management (Meta + Google)</li><li>Funnel Analytics &amp; Conversion Modeling</li><li>BI Integration &amp; Data Warehouse Setup</li><li>Predictive Revenue Dashboards</li><li>Weekly Performance Reporting</li><li>Dedicated Growth Strategist</li></ul>
+        <a href="https://wa.me/17543056145" target="_blank" class="plan-btn fill">Book Strategy Session</a>
+        <p class="plan-note">30-min call &middot; We'll scope your build live</p>
       </div>
       <div class="plan">
         <div class="plan-name">Enterprise AI</div>
-        <div class="plan-sub">For market leaders who want full-stack AI, custom applications, and end-to-end intelligence ownership.</div>
-        <div class="plan-price-wrap"><div class="plan-from">Monthly retainer from</div><div class="plan-price">$15,000 / mo</div><div class="plan-psub">Custom scoped on strategy call</div></div>
-        <ul class="plan-list"><li>Everything in Growth Intelligence +</li><li>Custom AI Model Training</li><li>Voice AI Receptionist</li><li>Custom Web Application / Client Portal</li><li>Advanced Predictive Modeling & LTV</li><li>Process Automation (Full Ops Stack)</li><li>SEO & Content Intelligence</li><li>Weekly C-Level Strategy Calls</li><li>White-Glove Onboarding</li></ul>
-        <a href="https://wa.me/17543056145" target="_blank" class="plan-btn plan-btn-out">Schedule a Call</a>
+        <div class="plan-sub">For market leaders who want full-stack AI, custom applications and end-to-end intelligence ownership.</div>
+        <div class="plan-pw"><div class="plan-from">Monthly retainer from</div><div class="plan-price">$15,000 / mo</div><div class="plan-psub">Custom scoped on strategy call</div></div>
+        <ul class="plan-list"><li>Everything in Growth Intelligence +</li><li>Custom AI Model Training</li><li>Voice AI Receptionist</li><li>Custom Web Application / Client Portal</li><li>Advanced Predictive Modeling &amp; LTV</li><li>Process Automation (Full Ops Stack)</li><li>SEO &amp; Content Intelligence</li><li>Weekly C-Level Strategy Calls</li><li>White-Glove Onboarding</li></ul>
+        <a href="https://wa.me/17543056145" target="_blank" class="plan-btn">Schedule a Call</a>
         <p class="plan-note">For companies serious about data leadership</p>
       </div>
     </div>
   </div>
 </section>
-
-<section class="final" id="contact">
-  <div class="final-glow"></div>
-  <div class="inner" style="position:relative;z-index:1">
-    <div class="s-tag" style="justify-content:center">Ready to Transform?</div>
-    <h2 class="reveal">Stop guessing.<br><span class="accent">Start scaling.</span></h2>
-    <p class="reveal">In 30 days you could have a fully operational data and AI infrastructure — real visibility, automated operations, and a system that compounds growth every month.</p>
-    <div class="reveal">
-      <a href="https://wa.me/17543056145" target="_blank" class="btn-prim" style="font-size:15px;padding:18px 44px;display:inline-flex">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Book Your Free Strategy Session
-      </a>
-      <div class="cta-meta"><span>Free 30-min session</span><span>Full business audit</span><span>No obligation</span><span>$500k–$20M+ companies</span></div>
+<section id="audit">
+  <div class="container">
+    <div class="audit-inner reveal">
+      <p class="eyebrow">Free Business Audit</p>
+      <h2 class="s-hl">Find out where your<br>business is losing revenue.</h2>
+      <p class="s-sub">Get a free strategic audit and discover growth opportunities in your marketing, operations and customer acquisition process.</p>
+      <div class="audit-form">
+        <div class="form-row"><input class="a-input" type="text" placeholder="First Name" autocomplete="given-name"><input class="a-input" type="text" placeholder="Last Name" autocomplete="family-name"></div>
+        <input class="a-input" type="email" placeholder="Business Email" autocomplete="email">
+        <input class="a-input" type="text" placeholder="Company / Business Name">
+        <input class="a-input" type="tel" placeholder="Phone Number" autocomplete="tel">
+        <button class="a-submit" id="auditBtn">Claim My Free Audit &#8594;</button>
+        <p class="a-note">No commitment &nbsp;&middot;&nbsp; 30-minute session &nbsp;&middot;&nbsp; Specific to your business</p>
+      </div>
     </div>
   </div>
 </section>
-
 <footer>
-  <div class="foot-logo"><img id="logo-foot" src="" alt="Elevra Digital"></div>
-  <ul class="foot-links">
-    <li><a href="#solutions">Solutions</a></li><li><a href="#results">Results</a></li>
-    <li><a href="#process">Process</a></li><li><a href="#pricing">Pricing</a></li>
-    <li><a href="https://wa.me/17543056145" target="_blank">Contact</a></li>
-  </ul>
-  <span class="foot-copy">© 2026 Elevra Digital. All rights reserved.</span>
+  <div class="container">
+    <div class="ft-grid">
+      <div><div class="ft-logo"><img id="logo-foot" src="" alt="Elevra Digital"></div><p class="ft-desc">Miami's growth agency. We help South Florida businesses generate more leads, automate operations and scale with confidence.</p></div>
+      <div><p class="ft-col-t">Services</p><a href="#services" class="ft-lk">Marketing Analytics</a><a href="#services" class="ft-lk">Business Intelligence</a><a href="#services" class="ft-lk">AI Automation</a><a href="#services" class="ft-lk">Growth Strategy</a><a href="#services" class="ft-lk">Custom Applications</a></div>
+      <div><p class="ft-col-t">Company</p><a href="#cases" class="ft-lk">Case Studies</a><a href="#process" class="ft-lk">Our Process</a><a href="#pricing" class="ft-lk">Pricing</a><a href="#audit" class="ft-lk">Free Audit</a></div>
+      <div><p class="ft-col-t">Contact</p><a href="https://wa.me/17543056145" target="_blank" class="ft-lk">WhatsApp</a><a href="#audit" class="ft-lk">Book a Call</a><span class="ft-lk" style="cursor:default">South Florida, FL</span></div>
+    </div>
+    <div class="ft-btm"><p class="ft-copy">&copy; 2026 Elevra Digital. All rights reserved.</p><p class="ft-badge">ELEVRA &middot; SOUTH FLORIDA</p></div>
+  </div>
 </footer>
-
 <script>
-// ═══════════════════════════════════════════════════
-//  INJECT LOGO
-// ═══════════════════════════════════════════════════
-const LOGO = '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IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIP/2gAMAwEAAgADAAAAEDTTTTRTTTTTTTQTTTTTSRSRRTTSTTTRTcvvvvptvvvnvrlvnvvvqhpnnvqhqpvvvnvtvvuvtsvvvvrqvvvvjfvvttuprmtkvvvrvkrnsvvstvvvrnuM/slvjurksvrksfvvvvrvuvkogp7FBOJxewvvn6usoluhjrnvvvuqvvqggiMsRkYuAlvttvsvgipnv6vvvvnvvvighlFh3xvagvvrikrhjvvrjsvvvvnvqlrhvmflwK1gktvtuolvutvigrvvtvvvvtslvp6e1kAKhjutqghhpsonguvvvvrvutnnvpfgD6sIhgrvhrivqrgjjqvvvvt/8sNvms0eoRLjQu66hvuugggksvtusuxGLivPvoqD7AmcAqsOAlG8AgkhjrojjtdhFIduIOXtjkgaFpYXSonDAggog7nvvj3lzlWIjkCCziJyhpVdYqYmbgggjgkvqsneXXj16NmVWjuQwYWvk4al6kgovilvinN+xKeeBjuFMUnKEGEip8D8AgjrgrtvlvvNdDtDduby5tFbNEqSR/CAAhvusvvuhrCR1T8T52hJSRGRTdYjFWbIyjvsgvnukutskkgnrkvvnpnogggggggglkuggvvvgooonogngognogvgggggggggongggf/EADYRAAEDAgQDBAcIAwAAAAAAAAEAAhEDBBITITEFEFEwQEGRBjJCUqHB0RUgImBhcYGxQ1Pw/9oACAECAQE/AMtqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2/lIamArXhxd+Kr5LiLQ2oANo7z6PWlK5NTNbMR81U4VaD2An8OtfcCdYW49kK5o21uwvLQregbmpLdAqtRtvTk7BV67qzsTu8+iurqv8fNekdRzboBp8B81mv6lZj+pTGPruFMalUqLLWlHgN1d3JuHz4DbvXCuItsadV3tGI+K4Two3IN1dicWwP9/RP4VZ+4E7htqNmBNt6NEyxoC4jeZpy2bD4974Dw5t7XJqeq3X91xbiDLClp6x2H/eCfdVnuLnOMn9Ua9T3j5o1nkRiPmgO9+ie9X+Pmr7hFveVMyrMxG6f6PWg2nzTuBWw6+adwa3HXzV3Z29sy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';
-document.getElementById('logo-img').src = 'data:image/jpeg;base64,' + LOGO;
-document.getElementById('logo-foot').src = 'data:image/jpeg;base64,' + LOGO;
+const LOGO_DATA = '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IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIP/2gAMAwEAAgADAAAAEDTTTTRTTTTTTTQTTTTTSRSRRTTSTTTRTcvvvvptvvvnvrlvnvvvqhpnnvqhqpvvvnvtvvuvtsvvvvrqvvvvjfvvttuprmtkvvvrvkrnsvvstvvvrnuM/slvjurksvrksfvvvvrvuvkogp7FBOJxewvvn6usoluhjrnvvvuqvvqggiMsRkYuAlvttvsvgipnv6vvvvnvvvighlFh3xvagvvrikrhjvvrjsvvvvnvqlrhvmflwK1gktvtuolvutvigrvvtvvvvtslvp6e1kAKhjutqghhpsonguvvvvrvutnnvpfgD6sIhgrvhrivqrgjjqvvvvt/8sNvms0eoRLjQu66hvuugggksvtusuxGLivPvoqD7AmcAqsOAlG8AgkhjrojjtdhFIduIOXtjkgaFpYXSonDAggog7nvvj3lzlWIjkCCziJyhpVdYqYmbgggjgkvqsneXXj16NmVWjuQwYWvk4al6kgovilvinN+xKeeBjuFMUnKEGEip8D8AgjrgrtvlvvNdDtDduby5tFbNEqSR/CAAhvusvvuhrCR1T8T52hJSRGRTdYjFWbIyjvsgvnukutskkgnrkvvnpnogggggggglkuggvvvgooonogngognogvgggggggggongggf/EADYRAAEDAgQDBAcIAwAAAAAAAAEAAhEDBBITITEFEFEwQEGRBjJCUqHB0RUgImBhcYGxQ1Pw/9oACAECAQE/AMtqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2rLastqy2/lIamArXhxd+Kr5LiLQ2oANo7z6PWlK5NTNbMR81U4VaD2An8OtfcCdYW49kK5o21uwvLQregbmpLdAqtRtvTk7BV67qzsTu8+iurqv8fNekdRzboBp8B81mv6lZj+pTGPruFMalUqLLWlHgN1d3JuHz4DbvXCuItsadV3tGI+K4Two3IN1dicWwP9/RP4VZ+4E7htqNmBNt6NEyxoC4jeZpy2bD4974Dw5t7XJqeq3X91xbiDLClp6x2H/eCfdVnuLnOMn9Ua9T3j5o1nkRiPmgO9+ie9X+Pmr7hFveVMyrMxG6f6PWg2nzTuBWw6+adwa3HXzV3Z29sy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';
+document.getElementById('logo-img').src  = 'data:image/jpeg;base64,' + LOGO_DATA;
+document.getElementById('logo-foot').src = 'data:image/jpeg;base64,' + LOGO_DATA;
 
-// ═══════════════════════════════════════════════════
-//  1. MILKY WAY + STARS — drawn on #sky (FULL PAGE HEIGHT)
-// ═══════════════════════════════════════════════════
-const sky = document.getElementById('sky');
-const sc  = sky.getContext('2d');
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('sc', scrollY > 60), {passive:true});
+
+const ham = document.getElementById('ham'), mob = document.getElementById('mobMenu');
+ham.addEventListener('click', () => {
+  ham.classList.toggle('open'); mob.classList.toggle('open');
+  document.body.style.overflow = mob.classList.contains('open') ? 'hidden' : '';
+});
+document.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', () => {
+  ham.classList.remove('open'); mob.classList.remove('open'); document.body.style.overflow = '';
+}));
+
+const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } }), {threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+function animCounter(el){
+  const target = parseFloat(el.dataset.target), suffix = el.dataset.suffix||'', dur = 1800, start = performance.now();
+  const dec = String(target).includes('.');
+  (function step(now){
+    const p = Math.min((now-start)/dur,1), ease = 1-Math.pow(1-p,3), val = target*ease;
+    el.textContent = (dec ? val.toFixed(1) : Math.round(val)) + suffix;
+    if(p<1) requestAnimationFrame(step);
+  })(start);
+}
+const cio = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ animCounter(e.target); cio.unobserve(e.target); } }), {threshold:0.5});
+document.querySelectorAll('.counter').forEach(el => cio.observe(el));
+
+document.getElementById('auditBtn').addEventListener('click', function(){
+  this.textContent = 'Request Received - We\'ll be in touch shortly.';
+  this.style.background = '#1A3A5C';
+});
+
+const skyCv = document.getElementById('sky');
+const sc  = skyCv.getContext('2d');
 const PI2 = Math.PI * 2;
 
 function drawSky() {
-  const W = window.innerWidth;
-  const H = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, 4000);
-  sky.width  = W;
-  sky.height = H;
-  sky.style.height = H + 'px';
-
-  // --- deep space base ---
-  const base = sc.createLinearGradient(0, 0, 0, H);
-  base.addColorStop(0,   '#010409');
-  base.addColorStop(0.4, '#02060e');
-  base.addColorStop(0.8, '#030810');
-  base.addColorStop(1,   '#010409');
-  sc.fillStyle = base;
-  sc.fillRect(0, 0, W, H);
-
-  // --- Milky Way band (diagonal smear across full height) ---
-  const bandW = W * 0.55;
-  for (let pass = 0; pass < 3; pass++) {
-    const offsets = [0, -bandW * 0.3, bandW * 0.15];
-    const alphas  = [0.13, 0.08, 0.10];
-    const radii   = [bandW * 0.5, bandW * 0.35, bandW * 0.25];
-    const cols    = [[60,100,200],[80,120,220],[100,140,240]];
-    const steps   = 80;
-    for (let i = 0; i < steps; i++) {
-      const t  = i / steps;
-      const cx = W * 0.18 + W * 0.64 * t + offsets[pass];
-      const cy = H * t;
-      const [r,g,b] = cols[pass];
-      const gr = sc.createRadialGradient(cx, cy, 0, cx, cy, radii[pass]);
-      gr.addColorStop(0, `rgba(${r},${g},${b},${alphas[pass]})`);
-      gr.addColorStop(0.5, `rgba(${r},${g},${b},${alphas[pass]*0.4})`);
-      gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
-      sc.fillStyle = gr;
-      sc.beginPath(); sc.arc(cx, cy, radii[pass], 0, PI2); sc.fill();
+  const heroEl = document.getElementById('hero');
+  const W = window.innerWidth, H = heroEl ? heroEl.offsetHeight : window.innerHeight;
+  skyCv.width = W; skyCv.height = H; skyCv.style.height = H + 'px';
+  const base = sc.createLinearGradient(0,0,0,H);
+  base.addColorStop(0,'#010409'); base.addColorStop(0.4,'#02060e');
+  base.addColorStop(0.8,'#030810'); base.addColorStop(1,'#010409');
+  sc.fillStyle = base; sc.fillRect(0,0,W,H);
+  const bandW = W*0.55;
+  for(let pass=0;pass<3;pass++){
+    const offsets=[0,-bandW*0.3,bandW*0.15], alphas=[0.1,0.06,0.08];
+    const radii=[bandW*0.5,bandW*0.35,bandW*0.25], cols=[[60,100,200],[80,120,220],[100,140,240]];
+    for(let i=0;i<60;i++){
+      const t=i/60,cx=W*0.18+W*0.64*t+offsets[pass],cy=H*t;
+      const [r,g,b]=cols[pass],gr=sc.createRadialGradient(cx,cy,0,cx,cy,radii[pass]);
+      gr.addColorStop(0,`rgba(${r},${g},${b},${alphas[pass]})`);
+      gr.addColorStop(0.5,`rgba(${r},${g},${b},${alphas[pass]*0.4})`);
+      gr.addColorStop(1,`rgba(${r},${g},${b},0)`);
+      sc.fillStyle=gr; sc.beginPath(); sc.arc(cx,cy,radii[pass],0,PI2); sc.fill();
     }
   }
-
-  // --- Nebula puffs spread across full height ---
-  const nebulas = [
-    {rx:0.12,ry:0.06, size:250,[Symbol.toPrimitive](){},col:[0,180,255],  a:0.06},
-    {rx:0.78,ry:0.14, size:200, col:[80,60,220],   a:0.055},
-    {rx:0.45,ry:0.28, size:320, col:[0,190,240],   a:0.05},
-    {rx:0.88,ry:0.38, size:180, col:[40,100,230],  a:0.065},
-    {rx:0.08,ry:0.52, size:260, col:[0,160,230],   a:0.05},
-    {rx:0.65,ry:0.62, size:220, col:[60,80,210],   a:0.055},
-    {rx:0.3, ry:0.75, size:190, col:[0,200,250],   a:0.06},
-    {rx:0.82,ry:0.85, size:240, col:[50,110,220],  a:0.05},
-    {rx:0.5, ry:0.95, size:200, col:[0,170,240],   a:0.055},
-  ];
-  nebulas.forEach(n => {
-    const cx = n.rx * W, cy = n.ry * H;
-    for (let k = 0; k < 6; k++) {
-      const ox = (Math.random()-0.5)*n.size*0.7;
-      const oy = (Math.random()-0.5)*n.size*0.7;
-      const gr = sc.createRadialGradient(cx+ox,cy+oy,0,cx+ox,cy+oy,n.size*0.65);
-      const [r,g,b] = n.col;
-      gr.addColorStop(0, `rgba(${r},${g},${b},${n.a})`);
-      gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
-      sc.fillStyle = gr;
-      sc.beginPath(); sc.arc(cx+ox,cy+oy,n.size*0.65,0,PI2); sc.fill();
-    }
-  });
-
-  // --- Stars layer 1: tiny dust (3000) ---
-  for (let i = 0; i < 3000; i++) {
-    const x = Math.random()*W, y = Math.random()*H;
-    const r = Math.random()*0.65+0.1;
-    const a = Math.random()*0.55+0.08;
-    sc.beginPath(); sc.arc(x,y,r,0,PI2);
-    sc.fillStyle = `rgba(190,215,255,${a})`; sc.fill();
+  for(let i=0;i<2000;i++){
+    const x=Math.random()*W,y=Math.random()*H,r=Math.random()*0.65+0.1,a=Math.random()*0.5+0.08;
+    sc.beginPath(); sc.arc(x,y,r,0,PI2); sc.fillStyle=`rgba(190,215,255,${a})`; sc.fill();
   }
-
-  // --- Stars layer 2: medium (800) ---
-  for (let i = 0; i < 800; i++) {
-    const x = Math.random()*W, y = Math.random()*H;
-    const r = Math.random()*1.2+0.4;
-    const a = Math.random()*0.7+0.25;
-    const t = Math.random();
-    const col = t<0.5 ? `rgba(180,210,255,${a})`
-              : t<0.75 ? `rgba(255,242,200,${a})`
-              : `rgba(200,240,255,${a})`;
-    sc.beginPath(); sc.arc(x,y,r,0,PI2);
-    sc.fillStyle = col; sc.fill();
+  for(let i=0;i<500;i++){
+    const x=Math.random()*W,y=Math.random()*H,r=Math.random()*1.2+0.4,a=Math.random()*0.7+0.25;
+    const t=Math.random(),col=t<0.5?`rgba(180,210,255,${a})`:t<0.75?`rgba(255,242,200,${a})`:`rgba(200,240,255,${a})`;
+    sc.beginPath(); sc.arc(x,y,r,0,PI2); sc.fillStyle=col; sc.fill();
   }
-
-  // --- Stars layer 3: bright with glow + spike (100) ---
-  for (let i = 0; i < 100; i++) {
-    const x = Math.random()*W, y = Math.random()*H;
-    const r = Math.random()*2.2+1.0;
-    const a = 0.75+Math.random()*0.25;
-    const t = Math.random();
-    let sr,sg,sb;
-    if(t<0.4){sr=185;sg=215;sb=255;}
-    else if(t<0.7){sr=255;sg=248;sb=200;}
-    else{sr=200;sg=248;sb=255;}
-    // outer glow
-    const gr = sc.createRadialGradient(x,y,0,x,y,r*8);
-    gr.addColorStop(0,  `rgba(${sr},${sg},${sb},${a*0.45})`);
-    gr.addColorStop(0.4,`rgba(${sr},${sg},${sb},${a*0.15})`);
-    gr.addColorStop(1,  `rgba(${sr},${sg},${sb},0)`);
-    sc.fillStyle = gr;
-    sc.beginPath(); sc.arc(x,y,r*8,0,PI2); sc.fill();
-    // core
-    sc.beginPath(); sc.arc(x,y,r,0,PI2);
-    sc.fillStyle = `rgba(${sr},${sg},${sb},${a})`; sc.fill();
-    // diffraction spikes on large stars
-    if (r > 2.0) {
-      const len = r * 7;
-      sc.save();
-      sc.globalAlpha = a * 0.3;
-      sc.strokeStyle = `rgb(${sr},${sg},${sb})`;
-      sc.lineWidth = 0.5;
-      sc.beginPath(); sc.moveTo(x-len,y); sc.lineTo(x+len,y); sc.stroke();
-      sc.beginPath(); sc.moveTo(x,y-len); sc.lineTo(x,y+len); sc.stroke();
-      sc.restore();
-    }
+  for(let i=0;i<60;i++){
+    const x=Math.random()*W,y=Math.random()*H,r=Math.random()*2.2+1,a=0.75+Math.random()*0.25;
+    const t=Math.random(); let sr,sg,sb;
+    if(t<0.4){sr=185;sg=215;sb=255;}else if(t<0.7){sr=255;sg=248;sb=200;}else{sr=200;sg=248;sb=255;}
+    const gr=sc.createRadialGradient(x,y,0,x,y,r*8);
+    gr.addColorStop(0,`rgba(${sr},${sg},${sb},${a*0.4})`); gr.addColorStop(1,`rgba(${sr},${sg},${sb},0)`);
+    sc.fillStyle=gr; sc.beginPath(); sc.arc(x,y,r*8,0,PI2); sc.fill();
+    sc.beginPath(); sc.arc(x,y,r,0,PI2); sc.fillStyle=`rgba(${sr},${sg},${sb},${a})`; sc.fill();
   }
-
-  // --- Constellations (lines + nodes) spread across full page ---
-  const consts = [
-    {pts:[[0.07,0.04],[0.11,0.08],[0.09,0.13],[0.14,0.16],[0.17,0.10],[0.15,0.05]]},
-    {pts:[[0.72,0.03],[0.77,0.05],[0.82,0.04],[0.87,0.06],[0.90,0.10],[0.85,0.13],[0.80,0.13]]},
-    {pts:[[0.05,0.22],[0.10,0.19],[0.15,0.21],[0.12,0.27],[0.06,0.28]]},
-    {pts:[[0.80,0.31],[0.86,0.27],[0.92,0.31],[0.86,0.36],[0.80,0.31]]},
-    {pts:[[0.42,0.15],[0.47,0.18],[0.52,0.17],[0.56,0.20],[0.57,0.26],[0.53,0.31]]},
-    {pts:[[0.06,0.45],[0.11,0.42],[0.17,0.44],[0.21,0.49],[0.16,0.54]]},
-    {pts:[[0.70,0.52],[0.76,0.48],[0.82,0.50],[0.85,0.56],[0.79,0.60]]},
-    {pts:[[0.28,0.62],[0.34,0.58],[0.40,0.60],[0.37,0.67],[0.30,0.67]]},
-    {pts:[[0.60,0.72],[0.65,0.68],[0.72,0.70],[0.74,0.76],[0.68,0.80],[0.61,0.78]]},
-    {pts:[[0.08,0.80],[0.13,0.76],[0.19,0.78],[0.22,0.83],[0.17,0.88]]},
-    {pts:[[0.78,0.88],[0.84,0.84],[0.90,0.86],[0.87,0.92],[0.81,0.93]]},
-    {pts:[[0.45,0.92],[0.50,0.88],[0.56,0.90],[0.53,0.96]]},
-  ];
-  consts.forEach(con => {
-    // lines
-    sc.beginPath();
-    con.pts.forEach((p,i) => {
-      const px = p[0]*W, py = p[1]*H;
-      i===0 ? sc.moveTo(px,py) : sc.lineTo(px,py);
-    });
-    sc.strokeStyle = 'rgba(0,200,255,0.22)';
-    sc.lineWidth = 0.8; sc.stroke();
-    // star nodes
-    con.pts.forEach(p => {
-      const px = p[0]*W, py = p[1]*H;
-      const gr = sc.createRadialGradient(px,py,0,px,py,6);
-      gr.addColorStop(0,'rgba(0,228,255,0.95)');
-      gr.addColorStop(1,'rgba(0,228,255,0)');
-      sc.fillStyle = gr;
-      sc.beginPath(); sc.arc(px,py,6,0,PI2); sc.fill();
-      sc.beginPath(); sc.arc(px,py,1.8,0,PI2);
-      sc.fillStyle = 'rgba(220,248,255,1)'; sc.fill();
-    });
-  });
 }
-
-// Draw immediately and also after fonts/images load
 drawSky();
-window.addEventListener('load', () => { setTimeout(drawSky, 300); });
-window.addEventListener('resize', () => { clearTimeout(window._skyT); window._skyT = setTimeout(drawSky, 200); });
+window.addEventListener('load', () => setTimeout(drawSky,300));
+window.addEventListener('resize', () => { clearTimeout(window._skyT); window._skyT = setTimeout(drawSky,200); });
 
-// ═══════════════════════════════════════════════════
-//  2. NEURAL NETWORK — fixed viewport overlay
-// ═══════════════════════════════════════════════════
-const NC  = document.getElementById('neural');
-const nc  = NC.getContext('2d');
-let NW, NH, mouse = {x:600, y:400};
-let nodes=[], pulses=[], rings=[];
-const TAU = Math.PI*2;
-
-function resizeNeural(){ NW=NC.width=window.innerWidth; NH=NC.height=window.innerHeight; }
+const NC=document.getElementById('neural'), nc=NC.getContext('2d');
+let NW,NH,mouse={x:600,y:400},nodes=[],pulses=[],rings=[];
+const TAU=Math.PI*2;
+function resizeNeural(){NW=NC.width=window.innerWidth;NH=NC.height=window.innerHeight;}
 resizeNeural();
-window.addEventListener('resize',()=>{ resizeNeural(); initNeural(); });
-document.addEventListener('mousemove',e=>{ mouse.x=e.clientX; mouse.y=e.clientY; });
+window.addEventListener('resize',()=>{resizeNeural();initNeural();});
+document.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
 
 class Node{
   constructor(){
-    this.x=Math.random()*NW; this.y=Math.random()*NH;
-    this.z=Math.random();
-    this.vx=(Math.random()-.5)*.22; this.vy=(Math.random()-.5)*.18;
-    this.vz=(Math.random()-.5)*.002;
-    this.type=Math.random()<.1?'hub':(Math.random()<.2?'mid':'leaf');
+    this.x=Math.random()*NW;this.y=Math.random()*NH;this.z=Math.random();
+    this.vx=(Math.random()-.5)*.22;this.vy=(Math.random()-.5)*.18;this.vz=(Math.random()-.5)*.002;
+    this.type=Math.random()<.1?'hub':Math.random()<.2?'mid':'leaf';
     this.r=this.type==='hub'?this.z*4+2:this.type==='mid'?this.z*3+1.2:this.z*2.5+.4;
-    this.pulse=false; this.pulseR=0; this.pulseA=0; this.age=Math.random()*TAU;
+    this.pulse=false;this.pulseR=0;this.pulseA=0;this.age=Math.random()*TAU;
     const t=Math.random();
-    this.col=t<.55?[0,212,255]:t<.82?[46,141,232]:[0,229,160];
+    this.col=t<.55?[11,56,125]:t<.82?[43,108,176]:[201,169,110];
   }
   update(dt){
-    this.age+=dt*.0008; this.z+=this.vz;
-    if(this.z<0){this.z=0;this.vz*=-1;} if(this.z>1){this.z=1;this.vz*=-1;}
-    this.x+=this.vx; this.y+=this.vy;
-    if(this.x<-80)this.x=NW+80; if(this.x>NW+80)this.x=-80;
-    if(this.y<-80)this.y=NH+80; if(this.y>NH+80)this.y=-80;
-    this.rx=this.x+(mouse.x/NW-.5)*this.z*28;
-    this.ry=this.y+(mouse.y/NH-.5)*this.z*18;
-    if(this.pulse){this.pulseR+=dt*.07; this.pulseA=Math.max(0,1-this.pulseR/65); if(this.pulseA<=0)this.pulse=false;}
+    this.age+=dt*.0008;this.z+=this.vz;
+    if(this.z<0){this.z=0;this.vz*=-1;}if(this.z>1){this.z=1;this.vz*=-1;}
+    this.x+=this.vx;this.y+=this.vy;
+    if(this.x<-80)this.x=NW+80;if(this.x>NW+80)this.x=-80;
+    if(this.y<-80)this.y=NH+80;if(this.y>NH+80)this.y=-80;
+    this.rx=this.x+(mouse.x/NW-.5)*this.z*28;this.ry=this.y+(mouse.y/NH-.5)*this.z*18;
+    if(this.pulse){this.pulseR+=dt*.07;this.pulseA=Math.max(0,1-this.pulseR/65);if(this.pulseA<=0)this.pulse=false;}
   }
   draw(){
-    const[r,g,b]=this.col, breath=.7+.3*Math.sin(this.age), rad=this.r*breath, a=.25+.35*this.z;
+    const[r,g,b]=this.col,breath=.7+.3*Math.sin(this.age),rad=this.r*breath,a=.12+.18*this.z;
     if(this.type!=='leaf'){
       const g2=nc.createRadialGradient(this.rx,this.ry,0,this.rx,this.ry,rad*5);
-      g2.addColorStop(0,`rgba(${r},${g},${b},${a*.5})`); g2.addColorStop(1,`rgba(${r},${g},${b},0)`);
-      nc.beginPath(); nc.arc(this.rx,this.ry,rad*5,0,TAU); nc.fillStyle=g2; nc.fill();
+      g2.addColorStop(0,`rgba(${r},${g},${b},${a*.4})`);g2.addColorStop(1,`rgba(${r},${g},${b},0)`);
+      nc.beginPath();nc.arc(this.rx,this.ry,rad*5,0,TAU);nc.fillStyle=g2;nc.fill();
     }
-    nc.beginPath(); nc.arc(this.rx,this.ry,rad,0,TAU); nc.fillStyle=`rgba(${r},${g},${b},${a})`; nc.fill();
+    nc.beginPath();nc.arc(this.rx,this.ry,rad,0,TAU);nc.fillStyle=`rgba(${r},${g},${b},${a})`;nc.fill();
     if(this.pulse&&this.pulseA>0){
-      nc.beginPath(); nc.arc(this.rx,this.ry,rad+this.pulseR,0,TAU);
-      nc.strokeStyle=`rgba(${r},${g},${b},${this.pulseA*.7})`; nc.lineWidth=1; nc.stroke();
+      nc.beginPath();nc.arc(this.rx,this.ry,rad+this.pulseR,0,TAU);
+      nc.strokeStyle=`rgba(${r},${g},${b},${this.pulseA*.5})`;nc.lineWidth=1;nc.stroke();
     }
   }
 }
@@ -897,82 +611,352 @@ class Pulse{
   done(){return this.t>=1;}
   update(dt){this.t=Math.min(1,this.t+this.spd*(dt/16));}
   draw(){
-    const x=this.a.rx+(this.b.rx-this.a.rx)*this.t, y=this.a.ry+(this.b.ry-this.a.ry)*this.t;
-    const[r,g,b]=this.col;
-    const g2=nc.createRadialGradient(x,y,0,x,y,7);
-    g2.addColorStop(0,`rgba(${r},${g},${b},1)`); g2.addColorStop(.5,`rgba(${r},${g},${b},.4)`); g2.addColorStop(1,`rgba(${r},${g},${b},0)`);
-    nc.beginPath(); nc.arc(x,y,7,0,TAU); nc.fillStyle=g2; nc.fill();
-    nc.beginPath(); nc.arc(x,y,2,0,TAU); nc.fillStyle='rgba(255,255,255,.9)'; nc.fill();
+    const x=this.a.rx+(this.b.rx-this.a.rx)*this.t,y=this.a.ry+(this.b.ry-this.a.ry)*this.t;
+    const[r,g,b]=this.col,g2=nc.createRadialGradient(x,y,0,x,y,5);
+    g2.addColorStop(0,`rgba(${r},${g},${b},0.7)`);g2.addColorStop(1,`rgba(${r},${g},${b},0)`);
+    nc.beginPath();nc.arc(x,y,5,0,TAU);nc.fillStyle=g2;nc.fill();
+    nc.beginPath();nc.arc(x,y,1.5,0,TAU);nc.fillStyle='rgba(201,169,110,.8)';nc.fill();
   }
 }
 class Ring{
   constructor(){
-    this.x=Math.random()*NW; this.y=Math.random()*NH;
-    this.r=55+Math.random()*90; this.spd=(Math.random()>.5?1:-1)*(.003+Math.random()*.004);
-    this.angle=Math.random()*TAU; this.a=.03+Math.random()*.05;
-    this.sats=Math.floor(2+Math.random()*4);
-    this.col=Math.random()<.6?[0,212,255]:[46,141,232];
+    this.x=Math.random()*NW;this.y=Math.random()*NH;
+    this.r=55+Math.random()*90;this.spd=(Math.random()>.5?1:-1)*(.003+Math.random()*.004);
+    this.angle=Math.random()*TAU;this.a=.015+Math.random()*.025;this.sats=Math.floor(2+Math.random()*4);
+    this.col=Math.random()<.6?[43,108,176]:[11,56,125];
   }
   update(dt){this.angle+=this.spd*(dt/16);}
   draw(){
     const[r,g,b]=this.col;
-    nc.beginPath(); nc.arc(this.x,this.y,this.r,0,TAU);
-    nc.strokeStyle=`rgba(${r},${g},${b},${this.a})`; nc.lineWidth=.8; nc.stroke();
-    nc.beginPath(); nc.arc(this.x,this.y,this.r+14,0,TAU);
-    nc.strokeStyle=`rgba(${r},${g},${b},${this.a*.4})`; nc.lineWidth=.4; nc.stroke();
+    nc.beginPath();nc.arc(this.x,this.y,this.r,0,TAU);nc.strokeStyle=`rgba(${r},${g},${b},${this.a})`;nc.lineWidth=.7;nc.stroke();
     for(let i=0;i<this.sats;i++){
-      const a=this.angle+(TAU/this.sats)*i;
-      const sx=this.x+Math.cos(a)*this.r, sy=this.y+Math.sin(a)*this.r;
-      nc.beginPath(); nc.arc(sx,sy,2,0,TAU); nc.fillStyle=`rgba(${r},${g},${b},${this.a*4})`; nc.fill();
+      const a=this.angle+(TAU/this.sats)*i,sx=this.x+Math.cos(a)*this.r,sy=this.y+Math.sin(a)*this.r;
+      nc.beginPath();nc.arc(sx,sy,1.5,0,TAU);nc.fillStyle=`rgba(${r},${g},${b},${this.a*4})`;nc.fill();
     }
   }
 }
-
-function initNeural(){nodes=Array.from({length:100},()=>new Node()); rings=Array.from({length:6},()=>new Ring());}
+function initNeural(){nodes=Array.from({length:80},()=>new Node());rings=Array.from({length:5},()=>new Ring());}
 initNeural();
-
-let pTimer=0, lastT=performance.now();
+let pTimer=0,lastT=performance.now();
 function loop(ts){
-  const dt=Math.min(ts-lastT,40); lastT=ts;
-  nc.clearRect(0,0,NW,NH);
+  const dt=Math.min(ts-lastT,40);lastT=ts;nc.clearRect(0,0,NW,NH);
   rings.forEach(r=>{r.update(dt);r.draw();});
   for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
     const a=nodes[i],b=nodes[j],dx=a.rx-b.rx,dy=a.ry-b.ry,d=Math.sqrt(dx*dx+dy*dy);
-    if(d<165){
-      const al=(1-d/165)*.2*(a.z+b.z)*.6;
+    if(d<160){
+      const al=(1-d/160)*.1*(a.z+b.z)*.6;
       const[ar,ag,ab]=a.col,[br,bg,bb]=b.col;
       const gd=nc.createLinearGradient(a.rx,a.ry,b.rx,b.ry);
-      gd.addColorStop(0,`rgba(${ar},${ag},${ab},${al})`); gd.addColorStop(1,`rgba(${br},${bg},${bb},${al})`);
-      nc.beginPath(); nc.moveTo(a.rx,a.ry); nc.lineTo(b.rx,b.ry);
-      nc.strokeStyle=gd; nc.lineWidth=(a.type==='hub'||b.type==='hub')?1.1:.45; nc.stroke();
+      gd.addColorStop(0,`rgba(${ar},${ag},${ab},${al})`);gd.addColorStop(1,`rgba(${br},${bg},${bb},${al})`);
+      nc.beginPath();nc.moveTo(a.rx,a.ry);nc.lineTo(b.rx,b.ry);
+      nc.strokeStyle=gd;nc.lineWidth=(a.type==='hub'||b.type==='hub')?0.9:.35;nc.stroke();
     }
   }
   nodes.forEach(n=>{n.update(dt);n.draw();});
-  pulses=pulses.filter(p=>!p.done()); pulses.forEach(p=>{p.update(dt);p.draw();});
+  pulses=pulses.filter(p=>!p.done());pulses.forEach(p=>{p.update(dt);p.draw();});
   pTimer+=dt;
-  if(pTimer>1900){pTimer=0;
+  if(pTimer>2200){pTimer=0;
     const hubs=nodes.filter(n=>n.type==='hub');
     if(hubs.length){const src=hubs[Math.floor(Math.random()*hubs.length)];src.pulse=true;src.pulseR=0;src.pulseA=1;
-      nodes.forEach(n=>{if(n===src)return;const dx=n.rx-src.rx,dy=n.ry-src.ry;if(Math.sqrt(dx*dx+dy*dy)<240&&Math.random()<.4)pulses.push(new Pulse(src,n));});
-    }
+      nodes.forEach(n=>{if(n===src)return;const dx=n.rx-src.rx,dy=n.ry-src.ry;if(Math.sqrt(dx*dx+dy*dy)<220&&Math.random()<.35)pulses.push(new Pulse(src,n));});}
   }
   requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
+</script>
 
-// ─── Chart bars ───
-const vals=[42,55,48,62,58,71,65,78,72,85,80,94];
-const bc=document.getElementById('bars');
-if(bc){['#2e8de8','#00d4ff','#2e8de8','#00d4ff','#2e8de8','#00e5a0','#2e8de8','#00e5a0','#00d4ff','#2e8de8','#00e5a0','#00d4ff'].forEach((c,i)=>{const b=document.createElement('div');b.className='bar';b.style.height=vals[i]+'%';b.style.background=c;b.style.opacity=i===11?'1':'0.55';bc.appendChild(b);});}
+<script>
+(function(){
+var skyCv = document.getElementById('skyCv');
+var cityCv = document.getElementById('cityCv');
+if(!skyCv || !cityCv) return;
+var sctx = skyCv.getContext('2d');
+var ctx  = cityCv.getContext('2d');
 
-// ─── Scroll reveal ───
-const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target);}}),{threshold:0.1});
-document.querySelectorAll('.reveal').forEach((el,i)=>{const s=[...(el.parentElement?.querySelectorAll(':scope > .reveal')??[])];const idx=s.indexOf(el);if(idx>0)el.style.transitionDelay=(idx*90)+'ms';obs.observe(el);});
+function resize(){
+  var hero = document.getElementById('miami-hero');
+  var W = hero.offsetWidth, H = hero.offsetHeight;
+  skyCv.width = cityCv.width = W;
+  skyCv.height = cityCv.height = H;
+  skyCv.style.width = cityCv.style.width = W+'px';
+  skyCv.style.height = cityCv.style.height = H+'px';
+  return {W:W, H:H};
+}
 
-// ─── Hamburger ───
-const ham=document.getElementById('ham'),mob=document.getElementById('mobMenu');
-ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('open');document.body.style.overflow=mob.classList.contains('open')?'hidden':'';});
-document.querySelectorAll('.mob-link').forEach(l=>l.addEventListener('click',()=>{ham.classList.remove('open');mob.classList.remove('open');document.body.style.overflow='';}));
+var dim = resize();
+var W = dim.W, H = dim.H;
+
+// Stars
+var STARS=[];
+for(var i=0;i<280;i++) STARS.push({x:Math.random()*W,y:Math.random()*H*0.5,r:0.2+Math.random()*1.1,a:0.2+Math.random()*0.7,tw:Math.random()*Math.PI*2});
+
+// Milky way nodes
+var MILKY=[];
+for(var i=0;i<14;i++) MILKY.push({t:i/14});
+
+// Buildings — Miami Brickell skyline
+var BLDS=[
+  {x:0.24,y:0.22,w:0.022,h:0.34,lit:0.68,c:'#0A1E38'},
+  {x:0.27,y:0.18,w:0.028,h:0.38,lit:0.72,c:'#091628'},
+  {x:0.30,y:0.21,w:0.020,h:0.35,lit:0.60,c:'#0B2040'},
+  {x:0.33,y:0.15,w:0.034,h:0.41,lit:0.75,c:'#081528'},
+  {x:0.37,y:0.19,w:0.026,h:0.37,lit:0.62,c:'#0A1C35'},
+  {x:0.40,y:0.22,w:0.018,h:0.34,lit:0.50,c:'#091628'},
+  {x:0.43,y:0.10,w:0.015,h:0.46,lit:0.82,c:'#0C2242'},
+  {x:0.46,y:0.13,w:0.032,h:0.43,lit:0.78,c:'#081830'},
+  {x:0.49,y:0.17,w:0.024,h:0.39,lit:0.65,c:'#0A1F3C'},
+  {x:0.52,y:0.20,w:0.020,h:0.36,lit:0.58,c:'#091628'},
+  {x:0.55,y:0.16,w:0.030,h:0.40,lit:0.70,c:'#0B2040'},
+  {x:0.58,y:0.22,w:0.022,h:0.34,lit:0.52,c:'#081528'},
+  {x:0.61,y:0.19,w:0.018,h:0.37,lit:0.48,c:'#0A1C35'},
+  {x:0.64,y:0.23,w:0.026,h:0.33,lit:0.44,c:'#091628'},
+  {x:0.68,y:0.20,w:0.020,h:0.36,lit:0.40,c:'#0A2040'},
+  // far left
+  {x:0.12,y:0.26,w:0.020,h:0.30,lit:0.35,c:'#091628'},
+  {x:0.15,y:0.23,w:0.028,h:0.33,lit:0.40,c:'#0A1E38'},
+  {x:0.19,y:0.25,w:0.018,h:0.31,lit:0.32,c:'#081424'},
+  // far right
+  {x:0.74,y:0.22,w:0.024,h:0.34,lit:0.35,c:'#0A1D32'},
+  {x:0.78,y:0.25,w:0.018,h:0.31,lit:0.30,c:'#08142A'},
+  {x:0.82,y:0.24,w:0.022,h:0.32,lit:0.28,c:'#091628'},
+];
+
+// Roads (perspective lines from bottom)
+var ROADS=[
+  {x1:0.0, y1:1.0, x2:0.28,y2:0.62, w:18},
+  {x1:1.0, y1:1.0, x2:0.72,y2:0.62, w:18},
+  {x1:0.5, y1:1.0, x2:0.50,y2:0.62, w:20},
+  {x1:0.2, y1:1.0, x2:0.36,y2:0.62, w:13},
+  {x1:0.8, y1:1.0, x2:0.64,y2:0.62, w:13},
+  {x1:0.05,y1:0.80,x2:0.95,y2:0.80, w:11},
+  {x1:0.03,y1:0.88,x2:0.97,y2:0.88, w:11},
+  {x1:0.08,y1:0.72,x2:0.92,y2:0.72, w:9},
+  {x1:0.0, y1:0.64,x2:1.0, y2:0.64, w:8},
+];
+
+// Street lights
+var LIGHTS=[];
+for(var i=0;i<70;i++) LIGHTS.push({
+  x:0.06+Math.random()*0.88, y:0.62+Math.random()*0.36,
+  r:0.8+Math.random()*1.5,
+  hue: Math.random()<0.65 ? [255,210,128] : [160,200,255]
+});
+
+// Water reflections
+var REFS=[];
+for(var i=0;i<35;i++) REFS.push({
+  x:Math.random(), y:0.53+Math.random()*0.06,
+  len:0.04+Math.random()*0.1, w:1+Math.random()*2,
+  spd:0.3+Math.random()*0.6, ph:Math.random()*Math.PI*2,
+  warm: Math.random()<0.5
+});
+
+// Cars
+var CARS=[];
+for(var i=0;i<50;i++) CARS.push({
+  prog:Math.random(), road:Math.floor(Math.random()*ROADS.length),
+  spd:0.0018+Math.random()*0.004,
+  warm: Math.random()<0.55
+});
+
+// Window state (pre-randomized per building per row/col for stability)
+var WIN_CACHE={};
+function getWin(bKey, row, col){
+  var k = bKey+'_'+row+'_'+col;
+  if(WIN_CACHE[k]===undefined) WIN_CACHE[k]=Math.random();
+  return WIN_CACHE[k];
+}
+
+function lerp(a,b,t){return a+(b-a)*t;}
+function PI2(){return Math.PI*2;}
+
+// Sky canvas drawn once (static)
+function drawSky(){
+  var W=skyCv.width, H=skyCv.height;
+  sctx.clearRect(0,0,W,H);
+  var sky=sctx.createLinearGradient(0,0,0,H*0.54);
+  sky.addColorStop(0,'#010812'); sky.addColorStop(0.5,'#02101E'); sky.addColorStop(1,'#061A30');
+  sctx.fillStyle=sky; sctx.fillRect(0,0,W,H*0.54);
+  // Milky Way
+  for(var i=0;i<16;i++){
+    var bx=W*0.12+W*0.76*(i/16), by=H*0.04+H*0.22*(i/16);
+    var gr=sctx.createRadialGradient(bx,by,0,bx,by,W*0.12);
+    gr.addColorStop(0,'rgba(60,100,200,0.07)'); gr.addColorStop(1,'rgba(0,0,0,0)');
+    sctx.fillStyle=gr; sctx.beginPath(); sctx.arc(bx,by,W*0.12,0,Math.PI*2); sctx.fill();
+  }
+  // Stars
+  STARS.forEach(function(s){
+    sctx.beginPath(); sctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    sctx.fillStyle='rgba(200,225,255,'+s.a+')'; sctx.fill();
+  });
+}
+drawSky();
+
+var camDriftX=0, camDriftY=0;
+var lastFrame=0;
+
+function frame(ts){
+  var t=ts*0.001;
+  var W=cityCv.width, H=cityCv.height;
+  ctx.clearRect(0,0,W,H);
+
+  // Subtle camera drift — saved as offset applied to ctx transform
+  camDriftX = Math.sin(t*0.16)*10;
+  camDriftY = Math.cos(t*0.11)*5;
+  ctx.save();
+  ctx.translate(camDriftX*0.4, camDriftY*0.4);
+
+  // Horizon glow
+  var gh=ctx.createLinearGradient(0,H*0.37,0,H*0.56);
+  gh.addColorStop(0,'rgba(0,0,0,0)');
+  gh.addColorStop(0.5,'rgba(30,65,130,0.20)');
+  gh.addColorStop(1,'rgba(20,50,110,0.45)');
+  ctx.fillStyle=gh; ctx.fillRect(0,H*0.37,W,H*0.19);
+  // Warm gold horizon accent
+  var gw=ctx.createLinearGradient(0,H*0.47,0,H*0.54);
+  gw.addColorStop(0,'rgba(201,169,110,0.0)');
+  gw.addColorStop(1,'rgba(201,169,110,0.18)');
+  ctx.fillStyle=gw; ctx.fillRect(0,H*0.47,W,H*0.07);
+
+  // Water
+  var wat=ctx.createLinearGradient(0,H*0.53,0,H*0.63);
+  wat.addColorStop(0,'#0A2245'); wat.addColorStop(0.5,'#071530'); wat.addColorStop(1,'#050F22');
+  ctx.fillStyle=wat; ctx.fillRect(-20,H*0.53,W+40,H*0.10);
+  // Reflections
+  REFS.forEach(function(r){
+    var wobble=Math.sin(t*r.spd*3+r.ph)*3;
+    ctx.beginPath();
+    ctx.moveTo(r.x*W+wobble, H*0.535);
+    ctx.lineTo(r.x*W-r.len*W*0.5+wobble*2, H*0.60);
+    ctx.strokeStyle=r.warm ? 'rgba(201,169,110,0.32)' : 'rgba(43,108,176,0.28)';
+    ctx.lineWidth=r.w*(0.7+0.3*Math.sin(t*2+r.ph)); ctx.stroke();
+  });
+
+  // Ground
+  var grd=ctx.createLinearGradient(0,H*0.63,0,H);
+  grd.addColorStop(0,'#050E1C'); grd.addColorStop(1,'#030810');
+  ctx.fillStyle=grd; ctx.fillRect(-20,H*0.63,W+40,H*0.37);
+
+  // Roads
+  ROADS.forEach(function(r){
+    var x1=r.x1*W,y1=r.y1*H,x2=r.x2*W,y2=r.y2*H;
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2);
+    ctx.strokeStyle='#0C1E30'; ctx.lineWidth=r.w*1.5+2; ctx.stroke();
+    ctx.strokeStyle='#091626'; ctx.lineWidth=r.w; ctx.stroke();
+    // Dashes
+    var dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy),steps=Math.floor(len/30);
+    for(var s=0;s<steps;s++){
+      var ta=(s+0.1)/steps,tb=(s+0.4)/steps;
+      ctx.beginPath();
+      ctx.moveTo(x1+dx*ta,y1+dy*ta); ctx.lineTo(x1+dx*tb,y1+dy*tb);
+      ctx.strokeStyle='rgba(201,169,110,'+(0.22-r.w*0.006)+')';
+      ctx.lineWidth=0.8; ctx.stroke();
+    }
+  });
+
+  // Cars
+  CARS.forEach(function(c){
+    c.prog=(c.prog+c.spd)%1;
+    var r=ROADS[c.road];
+    var cx=(lerp(r.x1,r.x2,c.prog))*W;
+    var cy=(lerp(r.y1,r.y2,c.prog))*H;
+    var col=c.warm ? [255,210,130] : [255,60,90];
+    var gr2=ctx.createRadialGradient(cx,cy,0,cx,cy,7);
+    gr2.addColorStop(0,'rgba('+col[0]+','+col[1]+','+col[2]+',0.85)');
+    gr2.addColorStop(0.4,'rgba('+col[0]+','+col[1]+','+col[2]+',0.2)');
+    gr2.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=gr2; ctx.beginPath(); ctx.arc(cx,cy,7,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='rgba('+col[0]+','+col[1]+','+col[2]+',0.9)';
+    ctx.beginPath(); ctx.arc(cx,cy,1.8,0,Math.PI*2); ctx.fill();
+  });
+
+  // Buildings
+  BLDS.forEach(function(b,bi){
+    var bx=b.x*W, by=b.y*H, bw=b.w*W, bh=b.h*H;
+    ctx.fillStyle=b.c; ctx.fillRect(bx,by,bw,bh);
+    // Edge highlight
+    ctx.fillStyle='rgba(43,108,176,0.07)'; ctx.fillRect(bx,by,2,bh);
+    ctx.fillStyle='rgba(43,108,176,0.04)'; ctx.fillRect(bx+bw-1,by,1,bh);
+    // Windows
+    var wRows=Math.floor(bh/12), wCols=Math.floor(bw/9);
+    for(var wr=0;wr<wRows;wr++){
+      for(var wc=0;wc<wCols;wc++){
+        var wx=bx+3+wc*9, wy=by+7+wr*12;
+        var seed=getWin(bi,wr,wc);
+        if(seed<b.lit){
+          var flicker=0.55+0.45*Math.sin(t*2.4+wr*0.8+wc*1.2+bi*0.3);
+          ctx.fillStyle='rgba(255,218,130,'+(0.50*flicker)+')';
+          ctx.fillRect(wx,wy,5,7);
+        } else {
+          ctx.fillStyle='rgba(30,65,100,0.12)';
+          ctx.fillRect(wx,wy,5,7);
+        }
+      }
+    }
+    // Rooftop blink
+    var blink=0.5+0.5*Math.sin(t*2.0+bi*1.1);
+    ctx.fillStyle='rgba(255,60,60,'+(0.55*blink)+')';
+    ctx.beginPath(); ctx.arc(bx+bw/2,by-2,2.2,0,Math.PI*2); ctx.fill();
+  });
+
+  // Street lights bokeh
+  LIGHTS.forEach(function(l){
+    var flicker=0.82+0.18*Math.sin(t*3.3+l.x*W*0.08);
+    var gr3=ctx.createRadialGradient(l.x*W,l.y*H,0,l.x*W,l.y*H,l.r*16);
+    var c=l.hue;
+    gr3.addColorStop(0,'rgba('+c[0]+','+c[1]+','+c[2]+',0.75)');
+    gr3.addColorStop(0.3,'rgba('+c[0]+','+c[1]+','+c[2]+',0.2)');
+    gr3.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.globalAlpha=flicker;
+    ctx.fillStyle=gr3; ctx.beginPath(); ctx.arc(l.x*W,l.y*H,l.r*16,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='rgba('+c[0]+','+c[1]+','+c[2]+',0.9)';
+    ctx.beginPath(); ctx.arc(l.x*W,l.y*H,l.r,0,Math.PI*2); ctx.fill();
+    ctx.globalAlpha=1;
+  });
+
+  // City glow reflected on water
+  var cg=ctx.createLinearGradient(0,H*0.48,0,H*0.60);
+  cg.addColorStop(0,'rgba(43,108,176,0.16)');
+  cg.addColorStop(0.5,'rgba(11,31,58,0.25)');
+  cg.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=cg; ctx.fillRect(-20,H*0.48,W+40,H*0.12);
+
+  ctx.restore();
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+// Counters (fire after 1.9s)
+function animC(el,target,suf,dec,delay){
+  setTimeout(function(){
+    var dur=2000,start=performance.now();
+    (function step(now){
+      var p=Math.min((now-start)/dur,1),ease=1-Math.pow(1-p,3),val=target*ease;
+      el.textContent=(dec?val.toFixed(1):Math.round(val))+suf;
+      if(p<1)requestAnimationFrame(step);
+    })(start);
+  },delay);
+}
+setTimeout(function(){
+  animC(document.getElementById('sc1'),149,'K+',false,0);
+  animC(document.getElementById('sc2'),8,'.3%',true,200);
+  animC(document.getElementById('sc3'),42,'%',false,400);
+  animC(document.getElementById('sc4'),50,'+',false,600);
+},1900);
+
+// Resize handler
+window.addEventListener('resize',function(){
+  var hero=document.getElementById('miami-hero');
+  var nW=hero.offsetWidth, nH=hero.offsetHeight;
+  skyCv.width=cityCv.width=nW;
+  skyCv.height=cityCv.height=nH;
+  // Regen stars at new size
+  STARS=[];
+  for(var i=0;i<280;i++) STARS.push({x:Math.random()*nW,y:Math.random()*nH*0.5,r:0.2+Math.random()*1.1,a:0.2+Math.random()*0.7,tw:Math.random()*Math.PI*2});
+  drawSky();
+});
+
+})();
 </script>
 </body>
 </html>
